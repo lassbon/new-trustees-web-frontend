@@ -54,6 +54,7 @@ const SignIn = () => {
       onSuccess: async (resData) => {
         console.log("Login success", resData);
         const { message, data } = resData?.data;
+        console.log(resData?.data, "signin  data");
         //extract token
         const { token } = resData?.headers;
         //logic to extract the expiration time of the token
@@ -78,7 +79,7 @@ const SignIn = () => {
         setCookie(
           "auth",
           { token: token, rememberMe: check },
-          { maxAge: 260, sameSite: "lax" }
+          { maxAge: 3600 }
         );
 
         navigate("/Dashboard");

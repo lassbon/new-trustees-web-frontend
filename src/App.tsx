@@ -9,6 +9,7 @@ import RootLayout from "./components/layouts/RootLayout";
 import Home from "./pages/onboarding/Home";
 import Recommendation from "./pages/onboarding/Recommendation";
 import AuthRootLayout from "./components/layouts/AuthRootLayout";
+import AssetsLayout from "./components/layouts/AssetsLayout";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import VerifyOtp from "./pages/auth/VerifyOtp";
@@ -17,6 +18,7 @@ import NewPassword from "./pages/auth/NewPassword";
 import Dashboard from "./pages/main/Dashboard";
 import DashBoardHome from "./pages/main/DashBoardHome";
 import Assets from "./pages/main/Assets";
+import AddAsset from "./pages/main/AddAsset";
 
 import EstatePlans from "./pages/main/EstatePlans";
 import MyEstatePlan from "./pages/main/EstatePlan/MyEstatePlan";
@@ -58,7 +60,14 @@ function App() {
 
       children: [
         { index: true, element: <DashBoardHome /> },
-        { path: "Assets", element: <Assets /> },
+        {
+          path: "Assets",
+          element: <AssetsLayout />,
+          children: [
+            { index: true, element: <Assets /> },
+            { path: "addassets", element: <AddAsset /> },
+          ],
+        },
         {
           path: "EstatePlans",
           element: <EstatePlans />,

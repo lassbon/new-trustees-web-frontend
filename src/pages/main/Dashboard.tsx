@@ -12,11 +12,11 @@ import {
   Avatar,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Skeleton,
 } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
 import Sidebar from "../../components/Sidebar";
 import DashBoardPageNavigation from "../../components/DashBoardPageNavigation";
 import { Outlet, useLocation } from "react-router-dom";
@@ -25,12 +25,17 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 
 const Dashboard = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
   const { isLoading, error, data } = useUser();
   const info = data?.data?.data;
   const loaded = !isLoading && !error ? true : false;
   const location = useLocation();
-  console.log(location.pathname);
-  const path = location.pathname.split("/").pop();
+  const path: any = location.pathname.split("/").pop();
+  const paths = ["Dashboard", "Assets", "addassets", "EstatePlans", "settings"];
+
+  const handleLogout = () => {
+    removeCookie("auth");
+  };
   return (
     <Flex
       bgColor={"green"}
@@ -40,7 +45,7 @@ const Dashboard = () => {
     >
       {/* for small screen */}
       <Hide above="lg">
-        <DashBoardPageNavigation />
+        <DashBoardPageNavigation handleLogout={handleLogout} info={info} />
       </Hide>
 
       <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%">
@@ -66,13 +71,15 @@ const Dashboard = () => {
               <Skeleton isLoaded={loaded}>
                 <Heading
                   size={{ base: "md", lg: "lg" }}
-                  textTransform={"lowercase"}
+                  textTransform={"capitalize"}
                 >
-                  {path === "Dashboard"
+                  {paths.includes(path) && path === "Dashboard"
                     ? `Welcome ${info?.surname} ${info?.othernames}`
-                    : path}
+                    : paths.includes(path) && path === "addassets"
+                    ? "Add Assets"
+                    : paths.includes(path) && path}
                 </Heading>
-                {path === "Dashboard" && (
+                {paths.includes(path) && path === "Dashboard" && (
                   <Text>Here’s whats happening with your assets.</Text>
                 )}
               </Skeleton>
@@ -90,9 +97,10 @@ const Dashboard = () => {
               <Divider orientation="vertical" h={"4vh"} />
               <Avatar
                 name={info ? `${info?.surname} ${info?.othernames}` : ""}
-                src=""
+                src={info?.picture_url}
                 size="sm"
                 bgColor={"green"}
+                color={"white"}
               />
               <Menu>
                 <MenuButton
@@ -108,11 +116,7 @@ const Dashboard = () => {
                   <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>New File</MenuItem>
-                  <MenuItem>New Window</MenuItem>
-                  <MenuDivider />
-                  <MenuItem>Open...</MenuItem>
-                  <MenuItem>Save File</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </HStack>

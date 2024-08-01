@@ -19,6 +19,10 @@ import {
   Avatar,
   Divider,
   HStack,
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuList,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { sidebarData } from "../config/data";
@@ -26,8 +30,14 @@ import { sidebarData } from "../config/data";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from "../assets/images/logo2.png";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
-const DashBoardPageNavigation = () => {
+type Props = {
+  handleLogout: () => void;
+  info: any;
+};
+
+const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Flex
@@ -152,7 +162,29 @@ const DashBoardPageNavigation = () => {
           />
         </Center>
         <Divider orientation="vertical" h={"3vh"} />
-        <Avatar name="" src="" size="sm" />
+        <Avatar
+          name={info ? `${info?.surname} ${info?.othernames}` : ""}
+          src={info?.picture_url}
+          size="sm"
+          bgColor={"green"}
+          color={"white"}
+        />
+        <Menu>
+          <MenuButton
+            px={4}
+            py={1}
+            transition="all 0.2s"
+            _hover={{ bg: "green.100" }}
+            _expanded={{ bg: "green.400" }}
+            _focus={{ boxShadow: "outline" }}
+            textTransform={"capitalize"}
+          >
+            <ChevronDownIcon />
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
       </HStack>
     </Flex>
   );
