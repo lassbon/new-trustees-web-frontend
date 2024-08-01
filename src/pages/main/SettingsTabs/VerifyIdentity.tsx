@@ -1,5 +1,4 @@
 import { Flex, Heading, FormLabel, Text } from "@chakra-ui/react";
-import React from "react";
 import * as Yup from "yup";
 import AppFormFields from "../../../components/form/AppFields";
 import AppForm from "../../../components/form/AppForm";

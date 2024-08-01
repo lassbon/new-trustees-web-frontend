@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import { Input, FormErrorMessage, FormControl } from "@chakra-ui/react";
+import { Input, FormErrorMessage, FormControl, Select } from "@chakra-ui/react";
 
 type FormikProps = {
   errors: any;
@@ -14,6 +14,12 @@ type FormControlProps = {
 
 type TextProps = {
   name: string;
+};
+
+type SelectProps = {
+  name: string;
+  options: any[];
+  handleSelectProduct?: () => void;
 };
 
 type ErrorProps = {
@@ -59,6 +65,38 @@ const textInput = <T extends TextProps>({ name, ...others }: T) => {
   );
 };
 
+const selectionInput = <T extends SelectProps>({
+  name,
+  options,
+  handleSelectProduct,
+  ...others
+}: T) => {
+  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const selection = (value: any) => {
+    console.log(value, "value here");
+
+    setFieldValue(name, value);
+  };
+  return (
+    <Select
+      variant="filled"
+      bgColor={"rgba(9, 9, 9, 0.02)"}
+      borderColor={"rgba(9, 9, 9, 0.1)"}
+      onChange={(e) => {
+        if (e.target.value !== "") selection(e.target.value);
+      }}
+      onBlur={() => setFieldTouched(name)}
+      {...others}
+    >
+      {options?.map((opt: any, i: number) => (
+        <option key={i} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </Select>
+  );
+};
+
 const errorMessage = ({ name, ...others }: ErrorProps) => {
   const { errors, touched }: FormikProps = useFormikContext();
   const error = errors[name];
@@ -71,5 +109,6 @@ const errorMessage = ({ name, ...others }: ErrorProps) => {
 
 AppFormFields.Input = textInput;
 AppFormFields.ErrorMessage = errorMessage;
+AppFormFields.SelectionInput = selectionInput;
 
 export default AppFormFields;

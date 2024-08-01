@@ -22,6 +22,17 @@ export const getUser = async ({ queryKey }) => {
   });
 }; //used
 
+export const getAssets = async ({ queryKey }) => {
+  const [_key, { token }] = queryKey;
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.get(`${import.meta.env.VITE_APP_API_URL}/assets`, {
+    headers,
+  });
+}; //used
+
 export const getBeneficiaries = async ({ queryKey }) => {
   const [_key, { token }] = queryKey;
   const headers = {
