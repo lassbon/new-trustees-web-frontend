@@ -5,8 +5,9 @@ type Props = {
   bgImage?: any;
   text?: string;
   header: string;
+  onclick?: () => void;
 };
-const CommonCard = ({ bgImage, text, header }: Props) => {
+const CommonCard = ({ bgImage, text, header, onclick }: Props) => {
   return (
     <Box
       display={"flex"}
@@ -38,6 +39,9 @@ const CommonCard = ({ bgImage, text, header }: Props) => {
         variant="ghost"
         rightIcon={<ArrowForwardIcon />}
         justifyContent={"flex-start"}
+        onClick={() => {
+          if (onclick) onclick();
+        }}
       >
         Get Started
       </Button>

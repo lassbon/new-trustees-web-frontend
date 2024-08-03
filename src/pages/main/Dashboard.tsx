@@ -23,6 +23,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 
 const Dashboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
@@ -125,6 +126,8 @@ const Dashboard = () => {
           <Outlet />
         </GridItem>
       </Grid>
+
+      <TawkMessengerReact propertyId="property_id" widgetId="default" />
     </Flex>
   );
 };

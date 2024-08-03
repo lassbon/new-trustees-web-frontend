@@ -1,8 +1,15 @@
 import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import CommonCard from "../../../components/commonCard";
 import { commonCardData, estatePlanningData } from "../../../config/data";
+import { useNavigate } from "react-router-dom";
 
 const AddEstatePlan = () => {
+  const navigate = useNavigate();
+
+  const handleToAddAsset = (data: any) => {
+    if (data?.path) navigate(data?.path, { state: { name: data?.header } });
+  };
+
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%">
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
@@ -35,7 +42,7 @@ const AddEstatePlan = () => {
         <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={3}>
           {estatePlanningData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
-              <CommonCard {...data} />
+              <CommonCard {...data} onclick={() => handleToAddAsset(data)} />
             </GridItem>
           ))}
         </Grid>

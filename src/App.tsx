@@ -10,6 +10,8 @@ import Home from "./pages/onboarding/Home";
 import Recommendation from "./pages/onboarding/Recommendation";
 import AuthRootLayout from "./components/layouts/AuthRootLayout";
 import AssetsLayout from "./components/layouts/AssetsLayout";
+import AddPlansLayout from "./components/layouts/AddPlansLayout";
+
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import VerifyOtp from "./pages/auth/VerifyOtp";
@@ -25,6 +27,11 @@ import MyEstatePlan from "./pages/main/EstatePlan/MyEstatePlan";
 import Beneficiaries from "./pages/main/EstatePlan/Beneficiaries";
 import AddEstatePlan from "./pages/main/EstatePlan/AddEstatePlan";
 import Settings from "./pages/main/Settings";
+
+import SimpleWill from "./pages/main/EstatePlan/Plans/SimpleWill";
+import ComprehensiveWill from "./pages/main/EstatePlan/Plans/ComprehensiveWill";
+import EducationTrust from "./pages/main/EstatePlan/Plans/EducationTrust";
+import NominatedFund from "./pages/main/EstatePlan/Plans/NominatedFund";
 
 function App() {
   const [cookie] = useCookies(["auth"]);
@@ -74,7 +81,17 @@ function App() {
           children: [
             { index: true, element: <MyEstatePlan /> },
             { path: "Beneficiaries", element: <Beneficiaries /> },
-            { path: "AddPlans", element: <AddEstatePlan /> },
+            {
+              path: "AddPlans",
+              element: <AddPlansLayout />,
+              children: [
+                { index: true, element: <AddEstatePlan /> },
+                { path: "educationTrust", element: <EducationTrust /> },
+                { path: "simplewill", element: <SimpleWill /> },
+                { path: "comprehensivewill", element: <ComprehensiveWill /> },
+                { path: "nominatedfund", element: <NominatedFund /> },
+              ],
+            },
           ],
         },
         { path: "settings", element: <Settings /> },

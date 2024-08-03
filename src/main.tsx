@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <App />
         </CookiesProvider>
       </ChakraProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   </React.StrictMode>
 );

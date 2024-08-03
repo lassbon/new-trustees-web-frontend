@@ -79,7 +79,7 @@ const SignIn = () => {
         setCookie(
           "auth",
           { token: token, rememberMe: check },
-          { maxAge: 3600 }
+          { maxAge: 3600, sameSite: false }
         );
 
         navigate("/Dashboard");

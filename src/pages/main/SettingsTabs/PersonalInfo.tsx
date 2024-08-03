@@ -47,9 +47,14 @@ const PersonalInfo = () => {
         gap={"2vh"}
         w={{ base: "full", lg: "40vw" }}
       >
-        <HStack display={"flex"} align={"baseline"}>
-          <Avatar size="xl" src={info?.picture_url} />
-          <IconButton
+        <HStack display={"flex"} align={"baseline"} justify={"center"}>
+          <Avatar
+            size="xl"
+            name={`${info?.surname} ${info?.othernames}`}
+            bgColor={"green"}
+            color={"white"}
+          />
+          {/* <IconButton
             position={"relative"}
             top={"1vh"}
             variant="unstyled"
@@ -57,7 +62,7 @@ const PersonalInfo = () => {
             aria-label="upload"
             fontSize={"20px"}
             icon={<IoCameraOutline />}
-          />
+          /> */}
         </HStack>
 
         <AppForm

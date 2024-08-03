@@ -1,5 +1,11 @@
 import { useFormikContext } from "formik";
-import { Input, FormErrorMessage, FormControl, Select } from "@chakra-ui/react";
+import {
+  Input,
+  FormErrorMessage,
+  FormControl,
+  Select,
+  Textarea,
+} from "@chakra-ui/react";
 
 type FormikProps = {
   errors: any;
@@ -65,6 +71,31 @@ const textInput = <T extends TextProps>({ name, ...others }: T) => {
   );
 };
 
+const textAreaInput = <T extends TextProps>({ name, ...others }: T) => {
+  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const { errors, values }: FormikProps = useFormikContext();
+  const inputValue = name ? values[name] : "";
+  const error = errors[name];
+
+  return (
+    <Textarea
+      onBlur={() => {
+        setFieldTouched(name);
+      }}
+      onChange={(e) => {
+        const text = e.target.value;
+        setFieldValue(name, text);
+      }}
+      {...others}
+      isInvalid={error}
+      variant="outline"
+      bgColor={"rgba(9, 9, 9, 0.02)"}
+      borderColor={"rgba(9, 9, 9, 0.1)"}
+      value={inputValue}
+    />
+  );
+};
+
 const selectionInput = <T extends SelectProps>({
   name,
   options,
@@ -73,8 +104,6 @@ const selectionInput = <T extends SelectProps>({
 }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
   const selection = (value: any) => {
-    console.log(value, "value here");
-
     setFieldValue(name, value);
   };
   return (
@@ -108,6 +137,7 @@ const errorMessage = ({ name, ...others }: ErrorProps) => {
 };
 
 AppFormFields.Input = textInput;
+AppFormFields.textAreaInput = textAreaInput;
 AppFormFields.ErrorMessage = errorMessage;
 AppFormFields.SelectionInput = selectionInput;
 

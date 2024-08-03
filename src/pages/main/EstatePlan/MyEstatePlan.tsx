@@ -128,16 +128,13 @@ const MyEstatePlan = () => {
                 <Th>Estate Plan</Th>
                 <Th>Status</Th>
                 <Th>Date Added</Th>
-                <Th textAlign={"center"}>Action</Th>
+                {/* <Th textAlign={"center"}>Action</Th> */}
               </Tr>
             </Thead>
             <Tbody>
               {error || isLoading
                 ? new Array(4).fill({}).map((item, i) => (
                     <Tr key={i}>
-                      <Td>
-                        <Skeleton height="20px" />
-                      </Td>
                       <Td>
                         <Skeleton height="20px" />
                       </Td>
@@ -167,7 +164,7 @@ const MyEstatePlan = () => {
                           {data?.status || "-"}
                         </Td>
                         <Td>{formattedDate || "-"}</Td>
-                        <Td textAlign={"center"}>
+                        {/* <Td textAlign={"center"}>
                           <Button
                             colorScheme="gray"
                             leftIcon={<BiEditAlt />}
@@ -177,7 +174,7 @@ const MyEstatePlan = () => {
                           >
                             Delete
                           </Button>
-                        </Td>
+                        </Td> */}
                       </Tr>
                     );
                   })

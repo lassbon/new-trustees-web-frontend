@@ -418,12 +418,6 @@ const Assets = () => {
                       <Td>
                         <Skeleton height="20px" />
                       </Td>
-                      <Td>
-                        <Skeleton height="20px" />
-                      </Td>
-                      <Td>
-                        <Skeleton height="20px" />
-                      </Td>
                     </Tr>
                   ))
                 : !assets?.isLoading && asset && asset.length > 0
@@ -439,19 +433,6 @@ const Assets = () => {
                         <Td>{data?.asset_name || "-"}</Td>
                         <Td isNumeric>&#8358; {amt || "-"}</Td>
                         <Td>{formattedDate || "-"}</Td>
-                        {/* <Td textAlign={"center"}>
-                  <Button
-                    bgColor={"rgba(255, 0, 0, 0.1)"}
-                    color={"red"}
-                    variant={"solid"}
-                    leftIcon={<DeleteIcon />}
-                    rounded={"full"}
-                    size={"xs"}
-                    fontSize={"10px"}
-                  >
-                    Delete
-                  </Button>
-                </Td> */}
                       </Tr>
                     );
                   })

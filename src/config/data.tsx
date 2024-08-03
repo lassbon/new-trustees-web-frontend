@@ -202,16 +202,19 @@ export const estatePlanningData = [
     bgImage: "/images/commonImg5.png",
     header: "Simple will",
     text: "Write a Will from the comfort of your home in few minutes. Include basic assets such as your cash, shares, and retirement savings.",
+    path: "simplewill",
   },
   {
     bgImage: "/images/commonImg6.png",
     header: "Comprehensive Will",
     text: "Do you want to include more assets in your Will such as Real estate, Jewellery, e.t.c then a comprehensive Will is more suitable for you.",
+    path: "comprehensivewill",
   },
   {
     bgImage: "/images/commonImg7.png",
     header: "Nominated Fund",
     text: "Nominate a Trustee to transfer your cash or  investments proceeds to your specified beneficiary in case of an eventuality.",
+    path: "nominatedfund",
   },
   {
     bgImage: "/images/commonImg8.png",
@@ -227,6 +230,7 @@ export const estatePlanningData = [
     bgImage: "/images/commonImg10.png",
     header: "Education Trust",
     text: "Set up an Education Trust fund to cater for your Children's Education and be guaranteed of their future in the event of your incapacitation.",
+    path: "educationTrust",
   },
 ];
 
