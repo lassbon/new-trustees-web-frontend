@@ -29,7 +29,7 @@ const Dashboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
   const { isLoading, error, data } = useUser();
   const info = data?.data?.data;
-  const loaded = !isLoading && !error ? true : false;
+  const loaded = !isLoading || error ? true : false;
   const location = useLocation();
   const path: any = location.pathname.split("/").pop();
   const paths = ["Dashboard", "Assets", "addassets", "EstatePlans", "settings"];
@@ -75,7 +75,7 @@ const Dashboard = () => {
                   textTransform={"capitalize"}
                 >
                   {paths.includes(path) && path === "Dashboard"
-                    ? `Welcome ${info?.surname} ${info?.othernames}`
+                    ? `Welcome ${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
                     : paths.includes(path) && path === "addassets"
                     ? "Add Assets"
                     : paths.includes(path) && path}
@@ -112,8 +112,13 @@ const Dashboard = () => {
                   _expanded={{ bg: "green.400" }}
                   _focus={{ boxShadow: "outline" }}
                   textTransform={"capitalize"}
+                  maxWidth={"fit-content"}
                 >
-                  {`${info?.surname} ${info?.othernames}` || "-  -"}{" "}
+                  {isLoading || error ? (
+                    <Skeleton height="2vh" w={"10vw"} />
+                  ) : (
+                    `${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
+                  )}
                   <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
@@ -127,7 +132,10 @@ const Dashboard = () => {
         </GridItem>
       </Grid>
 
-      <TawkMessengerReact propertyId="property_id" widgetId="default" />
+      <TawkMessengerReact
+        propertyId="5f7ee43c4704467e89f5b01f"
+        widgetId="default"
+      />
     </Flex>
   );
 };

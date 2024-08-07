@@ -59,6 +59,15 @@ export const patchNewPassword = async (data) => {
   );
 }; //used
 
+export const patchUser = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  return await axios.patch(`${import.meta.env.VITE_APP_API_URL}/user`, data, {
+    headers,
+  });
+}; //used
+
 export const getUser = async ({ queryKey }) => {
   const [_key, { token }] = queryKey;
   const headers = {
@@ -79,6 +88,20 @@ export const getAssets = async ({ queryKey }) => {
   return await axios.get(`${import.meta.env.VITE_APP_API_URL}/assets`, {
     headers,
   });
+}; //used
+
+export const getAssetsCurrencies = async ({ queryKey }) => {
+  const [_key, { token }] = queryKey;
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.get(
+    `${import.meta.env.VITE_APP_API_URL}/assets/currency`,
+    {
+      headers,
+    }
+  );
 }; //used
 
 export const getBeneficiaries = async ({ queryKey }) => {

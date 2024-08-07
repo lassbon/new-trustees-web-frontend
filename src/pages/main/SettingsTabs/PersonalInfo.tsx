@@ -4,23 +4,31 @@ import {
   FormLabel,
   Heading,
   HStack,
-  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { IoCameraOutline } from "react-icons/io5";
 import AppFormFields from "../../../components/form/AppFields";
 import AppForm from "../../../components/form/AppForm";
 import useUser from "../../../custom-hooks/http-services/use-GET/useUser";
+import AppFormSubmitBtn from "../../../components/form/AppFormSubmitBtn";
+import useUpdateUser from "../../../custom-hooks/http-services/use-PATCH/useUpdateUser";
 
 const PersonalInfo = () => {
-  const { data } = useUser();
+  const { data, refetch } = useUser();
   const info = data?.data?.data;
+  const patch = useUpdateUser();
+  const toast = useToast();
+
+  console.log(info, "info");
   //initial value of account info form schema
   const initialValues = {
     surname: info?.surname || "NIL",
     othernames: info?.othernames || "NIL",
     email: info?.email || "NIL",
     phone_number: info?.phone_number || "NIL",
+    dob: info?.dob || "NIL",
+    address: info?.address || "NIL",
+    gender: info?.gender || "NIL",
   };
   //Yup library used to handle account info form validation requirements
   const schema = Yup.object({
@@ -34,7 +42,52 @@ const PersonalInfo = () => {
       .max(11, "Enter Valid Phone Number")
       .matches(/^0[789][01]\d{8}$/, "Enter Valid Phone Number")
       .required("Required"),
+    dob: Yup.date(),
+    address: Yup.string(),
+    gender: Yup.string(),
   });
+
+  const handleUpdateProfile = (values: any) => {
+    //Make a POST request to update the profile
+    console.log(values, "next profile");
+    patch.mutateAsync(values, {
+      onSuccess: async (resData) => {
+        const { message } = resData?.data;
+        toast({
+          title: message,
+          position: "top-right",
+          isClosable: true,
+          status: "success",
+          variant: "top-accent",
+        });
+        refetch();
+      },
+      onError: (error: any) => {
+        if (error.response === undefined) {
+          toast({
+            title: "something went wrong check network or try again!",
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "top-accent",
+          });
+          return;
+        }
+        const { status, message } = error?.response.data;
+        if (!status) {
+          toast({
+            title: message,
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "left-accent",
+          });
+          return;
+        }
+      },
+    });
+  };
+
   return (
     <Flex direction={"column"} gap={"2vh"} w="100%">
       <Heading size={"sm"}>Personal Information</Heading>
@@ -67,7 +120,7 @@ const PersonalInfo = () => {
 
         <AppForm
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={handleUpdateProfile}
           validateSchema={schema}
         >
           {/*  First Name */}
@@ -79,6 +132,8 @@ const PersonalInfo = () => {
               type="text"
               name="othernames"
               placeholder="john"
+              readOnly={true}
+              disabled={patch?.isPending}
             />
             <AppFormFields.ErrorMessage name="othernames" />
           </AppFormFields>
@@ -89,7 +144,13 @@ const PersonalInfo = () => {
             <FormLabel htmlFor="surname" as="legend">
               last Name
             </FormLabel>
-            <AppFormFields.Input type="text" name="surname" placeholder="doe" />
+            <AppFormFields.Input
+              type="text"
+              name="surname"
+              placeholder="doe"
+              readOnly={true}
+              disabled={patch?.isPending}
+            />
             <AppFormFields.ErrorMessage name="surname" />
           </AppFormFields>
           {/*  surname */}
@@ -103,10 +164,27 @@ const PersonalInfo = () => {
               type="email"
               name="email"
               placeholder="johndoe@gmail.com"
+              readOnly={true}
+              disabled={patch?.isPending}
             />
             <AppFormFields.ErrorMessage name="email" />
           </AppFormFields>
           {/* email */}
+
+          {/*  gender */}
+          <AppFormFields name="gender">
+            <FormLabel htmlFor="gender" as="legend">
+              Gender
+            </FormLabel>
+            <AppFormFields.Input
+              type="text"
+              name="gender"
+              placeholder="doe"
+              disabled={patch?.isPending}
+            />
+            <AppFormFields.ErrorMessage name="gender" />
+          </AppFormFields>
+          {/*  gender */}
 
           {/* phone number */}
           <AppFormFields name="phone_number">
@@ -117,35 +195,51 @@ const PersonalInfo = () => {
               type="number"
               name="phone_number"
               placeholder="09060005112"
+              disabled={patch?.isPending}
             />
             <AppFormFields.ErrorMessage name="phone_number" />
           </AppFormFields>
           {/* phone number */}
 
-          {/* submit btn */}
-          {/* <ButtonGroup justifyContent={"space-between"} mt={"20px"}>
-        <Button
-          isDisabled={tab === 1 ? true : false}
-          colorScheme="green"
-          rounded={"full"}
-          variant={"outline"}
-          onClick={() => {
-            setTab((prevState) => prevState - 1);
-          }}
-        >
-          Back
-        </Button>
-        <AppFormSubmitBtn
-          colorScheme="green"
-          variant="solid"
-          textTransform={"capitalize"}
-          isLoading={false}
-          rounded={"full"}
-        >
-          Continue
-        </AppFormSubmitBtn>
-      </ButtonGroup> */}
+          {/* dob */}
+          <AppFormFields name="dob">
+            <FormLabel htmlFor="dob" as="legend">
+              Date of Birth
+            </FormLabel>
+            <AppFormFields.Input
+              type="date"
+              name="dob"
+              disabled={patch?.isPending}
+            />
+            <AppFormFields.ErrorMessage name="dob" />
+          </AppFormFields>
+          {/* dob */}
 
+          {/*  address */}
+          <AppFormFields name="address">
+            <FormLabel htmlFor="address" as="legend">
+              address
+            </FormLabel>
+            <AppFormFields.textAreaInput
+              type="text"
+              name="address"
+              placeholder="123, lekki road"
+              disabled={patch?.isPending}
+            />
+            <AppFormFields.ErrorMessage name="address" />
+          </AppFormFields>
+          {/*  address */}
+
+          {/* submit btn */}
+          <AppFormSubmitBtn
+            colorScheme="green"
+            variant="solid"
+            textTransform={"capitalize"}
+            isLoading={patch?.isPending ? true : false}
+            rounded={"full"}
+          >
+            Update
+          </AppFormSubmitBtn>
           {/* submit btn */}
         </AppForm>
       </Flex>

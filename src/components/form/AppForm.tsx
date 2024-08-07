@@ -5,6 +5,7 @@ type Props = {
   initialValues: Object;
   onSubmit: any;
   validateSchema: any;
+  enableReinitialize?: any;
 };
 
 const AppForm = ({
@@ -12,12 +13,14 @@ const AppForm = ({
   initialValues,
   onSubmit,
   validateSchema,
+  enableReinitialize,
 }: Props) => {
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validateSchema}
+      enableReinitialize={enableReinitialize}
     >
       {() => <>{children}</>}
     </Formik>

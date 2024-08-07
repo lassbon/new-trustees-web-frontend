@@ -5,7 +5,17 @@ import {
   FormControl,
   Select,
   Textarea,
+  Radio,
+  RadioGroup,
+  Stack,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Flex,
+  Badge,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 type FormikProps = {
   errors: any;
@@ -26,6 +36,20 @@ type SelectProps = {
   name: string;
   options: any[];
   handleSelectProduct?: () => void;
+};
+
+type RadioProps = {
+  name: string;
+  options: any[];
+  handleSelectProduct?: () => void;
+};
+
+type RangeProps = {
+  name: string;
+  min: number;
+  max: number;
+  step: number;
+  defaultValue: number;
 };
 
 type ErrorProps = {
@@ -49,7 +73,9 @@ const AppFormFields = <T extends FormControlProps>({
 const textInput = <T extends TextProps>({ name, ...others }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
   const { errors, values }: FormikProps = useFormikContext();
+
   const inputValue = name ? values[name] : "";
+
   const error = errors[name];
 
   return (
@@ -126,6 +152,77 @@ const selectionInput = <T extends SelectProps>({
   );
 };
 
+const radioInput = <T extends RadioProps>({
+  name,
+  options,
+  handleSelectProduct,
+  ...others
+}: T) => {
+  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const selection = (value: any) => {
+    setFieldValue(name, value);
+  };
+  return (
+    <RadioGroup
+      name={name}
+      {...others}
+      onChange={(e) => {
+        if (e !== "") selection(e);
+      }}
+      onBlur={() => setFieldTouched(name)}
+    >
+      <Stack spacing={5} direction={{ base: "column", lg: "row" }}>
+        {options?.map((opt: any, i: number) => (
+          <Radio key={i} value={opt} colorScheme="green">
+            {opt}
+          </Radio>
+        ))}
+      </Stack>
+    </RadioGroup>
+  );
+};
+
+const rangeInput = <T extends RangeProps>({
+  name,
+  max,
+  min,
+  step,
+  defaultValue,
+
+  ...others
+}: T) => {
+  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const [rangeValue, setRangeValue] = useState<number>(defaultValue);
+  const selection = (value: any) => {
+    setFieldValue(name, value);
+  };
+  return (
+    <Flex direction="column" justify={"center"} align={"end"}>
+      <RangeSlider
+        defaultValue={[min, defaultValue]}
+        min={min}
+        max={max}
+        step={step}
+        aria-label={["min", "max"]}
+        onChangeEnd={(val) => {
+          setFieldValue(name, val[1]);
+          setRangeValue(val[1]);
+        }}
+        onBlur={() => setFieldTouched(name)}
+        {...others}
+      >
+        <RangeSliderTrack bg="rgba(0, 129, 69, 0.05)">
+          <RangeSliderFilledTrack bg="#008145" />
+        </RangeSliderTrack>
+        <RangeSliderThumb boxSize={6} index={1} />
+      </RangeSlider>
+      <Badge colorScheme="green" width={"fit-content"} p={"3px"}>
+        {rangeValue} %
+      </Badge>
+    </Flex>
+  );
+};
+
 const errorMessage = ({ name, ...others }: ErrorProps) => {
   const { errors, touched }: FormikProps = useFormikContext();
   const error = errors[name];
@@ -140,5 +237,7 @@ AppFormFields.Input = textInput;
 AppFormFields.textAreaInput = textAreaInput;
 AppFormFields.ErrorMessage = errorMessage;
 AppFormFields.SelectionInput = selectionInput;
+AppFormFields.RangeInput = rangeInput;
+AppFormFields.RadioInput = radioInput;
 
 export default AppFormFields;

@@ -39,6 +39,7 @@ import EmptyDataImg from "../../assets/images/emptyData.png";
 
 import useAssetsCategory from "../../custom-hooks/http-services/use-GET/useAssetsCategory";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
+import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 // import useAssetsInfo from "../../custom-hooks/http-services/use-GET/useAssetsInfo.";
 
 const Assets = () => {
@@ -53,6 +54,9 @@ const Assets = () => {
   } = useAssetsCategory();
 
   const assets = useAssets();
+  const currency = useAssetsCurrencies();
+  const info = currency.data?.data;
+  const currencies = info?.data;
 
   const toast = useToast();
 
@@ -61,11 +65,8 @@ const Assets = () => {
   const [asset, setAsset] = useState<any>(null);
   // const [asset_id, setAsset_id] = useState<any>(null);
   const [selected, setSelected] = useState<any>("All Assets");
-  const [currencies, setCurrencies] = useState<any>(null);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
-
-  // const assets = useAssetsInfo({ asset_id });
 
   useEffect(() => {
     if ((isLoadingError && !isLoading) || (isRefetchError && !isRefetching)) {
@@ -102,56 +103,6 @@ const Assets = () => {
       } else setCategory(null);
     }
   }, [data, isLoadingError, isLoading, isRefetchError, isRefetching, error]);
-
-  // useEffect(() => {
-  //   if (
-  //     (assets?.isLoadingError && !assets?.isLoading) ||
-  //     (assets?.isRefetchError && !assets?.isRefetching)
-  //   ) {
-  //     if (
-  //       assets?.error &&
-  //       (assets?.error as { response?: unknown })?.response === undefined
-  //     ) {
-  //       toast({
-  //         title: "something !",
-  //         position: "top-right",
-  //         isClosable: true,
-  //         status: "error",
-  //         variant: "top-accent",
-  //       });
-  //       return;
-  //     }
-
-  //     if (assets?.error) {
-  //       const res = (assets?.error as { response?: any })?.response;
-  //       const { message } = res?.data;
-
-  //       toast({
-  //         title: message,
-  //         position: "top-right",
-  //         isClosable: true,
-  //         status: "error",
-  //         variant: "top-accent",
-  //       });
-  //     }
-  //     return;
-  //   }
-
-  //   if (assets?.data && (!assets?.isRefetching || !assets?.isLoading)) {
-  //     const resData = assets?.data?.data;
-  //     console.log(resData, "category");
-  //     if (resData) {
-  //       setCategory(resData?.data);
-  //     } else setCategory(null);
-  //   }
-  // }, [
-  //   assets?.data,
-  //   assets?.isLoadingError,
-  //   assets?.isLoading,
-  //   assets?.isRefetchError,
-  //   assets?.isRefetching,
-  //   assets?.error,
-  // ]);
 
   useEffect(() => {
     if (
@@ -210,8 +161,8 @@ const Assets = () => {
         const totalAmountByCurrency: any = {};
         for (const currency in groupedByCurrency) {
           // Get all available currencies from data response
-          const currencies = Object.keys(groupedByCurrency);
-          setCurrencies(currencies);
+          // const currencies = Object.keys(groupedByCurrency);
+          // setCurrencies(currencies);
 
           // Check if currency exists in totalAmountByCurrency object
           if (groupedByCurrency.hasOwnProperty(currency)) {
@@ -227,7 +178,6 @@ const Assets = () => {
         }
         setCurrencyTotalAmount(totalAmountByCurrency);
       } else {
-        setCurrencies(null);
         setCurrencyTotalAmount(null);
       }
     }
@@ -263,14 +213,16 @@ const Assets = () => {
                     setSelectedCurrency(e.target.value);
                 }}
                 disabled={
-                  assets?.error || assets?.isLoading || assets?.isRefetching
+                  currency?.error ||
+                  currency?.isLoading ||
+                  currency?.isRefetching
                     ? true
                     : false
                 }
               >
-                {currencies?.map((currency: string) => (
-                  <option key={currency} value={currency}>
-                    {currency}
+                {currencies?.map((currency: any) => (
+                  <option key={currency?.currency} value={currency?.currency}>
+                    {currency?.currency}
                   </option>
                 ))}
               </Select>
@@ -278,7 +230,9 @@ const Assets = () => {
             <Flex align={"center"} py={"2px"}>
               <Icon as={TbCurrencyNaira} w={10} h={10} />
               <Heading size={"lg"}>
-                {show ? currencyTotalAmount[selectedCurrency] : "* * * * * * "}
+                {show
+                  ? currencyTotalAmount[selectedCurrency] || "0.00"
+                  : "* * * * * * "}
               </Heading>
               <IconButton
                 variant={"unstyled"}

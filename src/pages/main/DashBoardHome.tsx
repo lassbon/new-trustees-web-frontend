@@ -35,10 +35,11 @@ import { DownloadIcon } from "@chakra-ui/icons";
 import { chartData, commonCardData } from "../../config/data";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
+import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 
 const DashBoardHome = () => {
   const [show, setShow] = useState<boolean>(false);
-  const [currencies, setCurrencies] = useState<any>(null);
+  // const [currencies, setCurrencies] = useState<any>(null);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
 
@@ -50,8 +51,10 @@ const DashBoardHome = () => {
     isRefetching,
     isRefetchError,
   } = useUser();
-
   const assets = useAssets();
+  const currency = useAssetsCurrencies();
+  const info = currency.data?.data;
+  const currencies = info?.data;
 
   const toast = useToast();
 
@@ -144,8 +147,8 @@ const DashBoardHome = () => {
         const totalAmountByCurrency: any = {};
         for (const currency in groupedByCurrency) {
           // Get all available currencies from data response
-          const currencies = Object.keys(groupedByCurrency);
-          setCurrencies(currencies);
+          // const currencies = Object.keys(groupedByCurrency);
+          // setCurrencies(currencies);
 
           // Check if currency exists in totalAmountByCurrency object
           if (groupedByCurrency.hasOwnProperty(currency)) {
@@ -162,7 +165,7 @@ const DashBoardHome = () => {
         console.log(assetGrouped, "assetGrouped");
         setCurrencyTotalAmount(totalAmountByCurrency);
       } else {
-        setCurrencies(null);
+        // setCurrencies(null);
         setCurrencyTotalAmount(null);
       }
     }
@@ -195,14 +198,20 @@ const DashBoardHome = () => {
                       setSelectedCurrency(e.target.value);
                   }}
                   disabled={
-                    assets?.error || assets?.isLoading || assets?.isRefetching
+                    currency?.error ||
+                    currency?.isLoading ||
+                    currency?.isRefetching
                       ? true
                       : false
                   }
                 >
-                  {currencies?.map((currency: string) => (
-                    <option key={currency} value={currency}>
-                      {currency}
+                  {currencies?.map((currency: any) => (
+                    <option
+                      key={currency?.currency}
+                      value={currency?.currency}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {currency?.currency.toLowerCase()}
                     </option>
                   ))}
                 </Select>
@@ -211,7 +220,7 @@ const DashBoardHome = () => {
                 <Icon as={TbCurrencyNaira} w={10} h={10} />
                 <Heading size={"lg"}>
                   {show
-                    ? currencyTotalAmount[selectedCurrency]
+                    ? currencyTotalAmount[selectedCurrency] || "0.00"
                     : "* * * * * * "}
                 </Heading>
                 <IconButton

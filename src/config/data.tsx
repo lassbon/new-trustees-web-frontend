@@ -336,3 +336,63 @@ export const beneficiaries = [
     phoneNumber: "09087654322",
   },
 ];
+
+export const eduFormFields = [
+  {
+    label: "name",
+    name: "settlors_name",
+    explainerText: "name of the settlor respo For this trust",
+    placeholder: "john doe",
+    datatype: "string",
+    required: true,
+  },
+  {
+    label: "address",
+    name: "settlors_address",
+    placeholder: "5 lekki road",
+    datatype: "textarea",
+    required: true,
+  },
+  {
+    label: "Occupation/Profession",
+    name: "settlors_occupation",
+    placeholder: "",
+    datatype: "select",
+    options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
+    required: true,
+  },
+];
+
+export const nominieFormFields = [
+  {
+    label: "name",
+    name: "nominators_name",
+    explainerText: "name of the settlor respo For this trust",
+    placeholder: "john doe",
+    datatype: "string",
+    required: true,
+  },
+  {
+    label: "Telephone number",
+    name: "nominators_phone",
+    placeholder: "09087777712",
+    datatype: "phone",
+    required: true,
+  },
+  {
+    label: "address",
+    name: "nominators_address",
+    placeholder: "5 lekki road",
+    datatype: "textarea",
+    required: true,
+  },
+
+  {
+    label: "Occupation/Profession",
+    name: "nominators_occupation",
+    placeholder: "",
+    datatype: "select",
+    options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
+    required: true,
+  },
+];

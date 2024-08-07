@@ -19,11 +19,16 @@ import AppFormFields from "../../components/form/AppFields";
 import AppForm from "../../components/form/AppForm";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useAddAssets from "../../custom-hooks/http-services/use-POST/useAddAssets";
+import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 
 const AddAsset = () => {
   const { isLoading, data, isRefetching } = useAssetsCategory();
   const assetCategories = data?.data?.data;
   const add = useAddAssets();
+  const currency = useAssetsCurrencies();
+  const info = currency.data?.data;
+  const currenciesArray = info?.data;
+  const currencies = currenciesArray.map((c: any) => c?.currency);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -31,7 +36,6 @@ const AddAsset = () => {
   const [formFields, setFormFields] = useState<any>(null);
   const [asset_category_id, setAsset_category_id] = useState<any>(null);
 
-  console.log(formFields, "form");
   const initialValues = formFields
     ? Object.fromEntries(
         Object.keys({
@@ -39,7 +43,7 @@ const AddAsset = () => {
           currency: {
             label: "Currency",
             datatype: "select",
-            options: ["naira", "euro", "pounds"],
+            options: currencies,
           },
         }).map((field) => [field, ""])
       )
@@ -53,7 +57,7 @@ const AddAsset = () => {
         currency: {
           label: "Currency",
           datatype: "select",
-          options: ["naira", "euro", "pounds"],
+          options: currencies,
         },
       } || {}
     ).reduce((schemaObj, fieldName) => {
@@ -111,7 +115,7 @@ const AddAsset = () => {
       currency: {
         label: "Currency",
         datatype: "select",
-        options: ["naira", "euro", "pounds"],
+        options: currencies,
       },
     }[key];
     switch (field.datatype) {
@@ -211,7 +215,6 @@ const AddAsset = () => {
     const finalData: any = { ...mainData, others: { ...values } };
     add.mutateAsync(finalData, {
       onSuccess: async (resData) => {
-        console.log("Login success", resData);
         const { message } = resData?.data;
         toast({
           title: message,
