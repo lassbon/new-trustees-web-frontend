@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronDownIcon, AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, AddIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -11,7 +11,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   Stack,
   Text,
@@ -139,7 +138,7 @@ const Assets = () => {
     }
 
     if (assets.data && (!assets.isRefetching || !assets.isLoading)) {
-      const { data, assetGrouped } = assets.data?.data;
+      const { data } = assets.data?.data;
       //i Grouped the data response by Currency
       if (assets.data?.data) {
         setAsset(data);
@@ -160,10 +159,6 @@ const Assets = () => {
         //then sum Amounts for each Currency
         const totalAmountByCurrency: any = {};
         for (const currency in groupedByCurrency) {
-          // Get all available currencies from data response
-          // const currencies = Object.keys(groupedByCurrency);
-          // setCurrencies(currencies);
-
           // Check if currency exists in totalAmountByCurrency object
           if (groupedByCurrency.hasOwnProperty(currency)) {
             const amounts = groupedByCurrency[currency];
@@ -322,24 +317,12 @@ const Assets = () => {
                       setSelected(value);
                     }}
                   >
-                    <MenuItemOption
-                      // onClick={async () => {
-                      //   await setAsset_id(item?._id);
-                      //   assets?.refetch();
-                      // }}
-                      value={"All Assets"}
-                    >
+                    <MenuItemOption value={"All Assets"}>
                       All Assets
                     </MenuItemOption>
                     {category &&
                       category?.map((item: any) => (
-                        <MenuItemOption
-                          // onClick={async () => {
-                          //   await setAsset_id(item?._id);
-                          //   assets?.refetch();
-                          // }}
-                          value={item?.name}
-                        >
+                        <MenuItemOption value={item?.name}>
                           {item.name}
                         </MenuItemOption>
                       ))}
@@ -353,12 +336,11 @@ const Assets = () => {
                 <Th>Assest</Th>
                 <Th isNumeric>Value</Th>
                 <Th>Date Added</Th>
-                {/* <Th textAlign={"center"}>Action</Th> */}
               </Tr>
             </Thead>
             <Tbody>
               {assets?.error || assets?.isLoading
-                ? new Array(4).fill({}).map((item, i) => (
+                ? new Array(4).fill({}).map((_item, i) => (
                     <Tr key={i}>
                       <Td>
                         <Skeleton height="20px" w={"30px"} />
@@ -378,7 +360,6 @@ const Assets = () => {
                 ? filteredAssets.map((data: any, i: number) => {
                     const date = data?.created_at;
                     const amt = parseInt(data?.amount).toLocaleString();
-
                     const formattedDate = new Date(date).toLocaleDateString();
 
                     return (

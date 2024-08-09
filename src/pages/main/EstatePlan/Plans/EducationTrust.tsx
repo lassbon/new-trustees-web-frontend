@@ -8,19 +8,27 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { IoIosAddCircle } from "react-icons/io";
 import * as Yup from "yup";
 import AppForm from "../../../../components/form/AppForm";
 
-import { eduFormFields } from "../../../../config/data";
+// import { eduFormFields } from "../../../../config/data";
 import AppFormFields from "../../../../components/form/AppFields";
 import useBeneficiaries from "../../../../custom-hooks/http-services/use-GET/useBeneficiaries";
 import useAssetsCurrencies from "../../../../custom-hooks/http-services/use-GET/useCurrencies";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { formSliceAction } from "../../../../store/formSlice";
 
+type stateProps = {
+  state: any;
+  form: any;
+};
 const EducationTrust = () => {
+  const formRef = useRef<any>(null);
+  const dispatch = useDispatch();
   const { isLoading, data, error, isRefetching } = useBeneficiaries();
   const info = data?.data?.data;
   const currency = useAssetsCurrencies();
@@ -28,6 +36,38 @@ const EducationTrust = () => {
   const currencies = cn?.data?.map((currency: any) => currency?.currency);
 
   const [addedBene, setaddedBene] = useState<any>([]);
+  const [eduFormFields, setEduFormFields] = useState<any>([
+    {
+      label: "name",
+      name: "trust_settlor_name",
+      explainerText: "name of the settlor respo For this trust",
+      placeholder: "john doe",
+      datatype: "string",
+      required: true,
+    },
+    {
+      label: "address",
+      name: "trust_settlor_address",
+      placeholder: "5 lekki road",
+      datatype: "textarea",
+      required: true,
+    },
+    {
+      label: "Occupation/Profession",
+      name: "trust_settlor_occupation",
+      placeholder: "",
+      datatype: "select",
+      options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
+      required: true,
+    },
+  ]);
+  const [enable, setEnable] = useState<boolean>(true);
+  const [addEnable, setAddEnable] = useState<boolean>(false);
+
+  const { formPersistedValues } = useSelector(
+    (state: stateProps) => state.form,
+    () => enable
+  );
 
   const handleExtractObjPropertiesInArray = (fields: any[]) =>
     fields.reduce((acc, field) => {
@@ -86,7 +126,7 @@ const EducationTrust = () => {
     const newBene = {
       [`name_${newId}`]: {
         label: `Beneficiary Name ${newId}`,
-        name: `Beneficiary_Name_${newId}`,
+        name: `name_of_beneficiary_${newId}`,
         placeholder: "john doe",
         datatype: "string",
         required: true,
@@ -94,7 +134,7 @@ const EducationTrust = () => {
       },
       [`relationship_${newId}`]: {
         label: `Relationship with Beneficiary ${newId}`,
-        name: `Relationship_with_beneficiary_${newId}`,
+        name: `relationship_of_beneficiary_${newId}`,
         placeholder: "husband",
         datatype: "string",
         required: true,
@@ -102,7 +142,7 @@ const EducationTrust = () => {
       },
       [`address_${newId}`]: {
         label: `Address of Beneficiary ${newId}`,
-        name: `Address_of_beneficiary_${newId}`,
+        name: `address_of_beneficiary_${newId}`,
         placeholder: "123 Main St",
         datatype: "textarea",
         required: true,
@@ -110,14 +150,14 @@ const EducationTrust = () => {
       },
       [`dob_${newId}`]: {
         label: `Beneficiary's date of birth ${newId}`,
-        name: `beneficiary_dob_${newId}`,
+        name: `dob_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "date",
         required: true,
       },
       [`level_of_education_${newId}`]: {
         label: `what level of education do you intend the truist to cover for beneficiary ${newId}`,
-        name: `beneficiary_level_of_education_${newId}`,
+        name: `education_level_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "radio",
         options: ["Secondary Education", "Higher education"],
@@ -126,7 +166,7 @@ const EducationTrust = () => {
       [`trustee_advise_option_${newId}`]: {
         label: `Do you want the Trustee to advise on the cost of education up till graduation of
       beneficiary? for beneficiary ${newId}`,
-        name: `beneficiary_trustee_advise_option_${newId}`,
+        name: `trust_trustees_advise_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "radio",
         options: ["Yes", "No"],
@@ -134,14 +174,14 @@ const EducationTrust = () => {
       },
       [`initial_contribution_${newId}`]: {
         label: `Initial contribution into the Trust (State Asset Type & Value) for beneficiary ${newId}`,
-        name: `beneficiary_initial_contribution_${newId}`,
+        name: `initial_contribution_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "string",
         required: true,
       },
       [`currency_${newId}`]: {
         label: `Currency type for beneficiary ${newId}`,
-        name: `beneficiary_currency_type_${newId}`,
+        name: `currency_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "select",
         options: currencies,
@@ -149,15 +189,42 @@ const EducationTrust = () => {
       },
       [`contribution_interval_${newId}`]: {
         label: `How often do you intend to contribute into the fund for beneficiary ${newId}`,
-        name: `beneficiary_contribution_interval_${newId}`,
+        name: `how_often_is_contribution_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "select",
         options: ["daily", "weekly", "monthly", "anually"],
         required: true,
       },
     };
-    setaddedBene((prevstate: any) => {
-      return [...prevstate, newBene];
+
+    // Extract current form values before adding a new beneficiary
+
+    const updatedEduFormFields = eduFormFields.map((field: any) => ({
+      ...field,
+      value: formPersistedValues[field.name]
+        ? formPersistedValues[field?.name]
+        : "",
+    }));
+
+    const updatedAddedBeneficiaries = addedBene.map((beneficiary: any) =>
+      Object.keys(beneficiary).reduce((acc: any, key) => {
+        acc[key] = {
+          ...beneficiary[key],
+          value: formPersistedValues[beneficiary[key].name]
+            ? formPersistedValues[beneficiary[key].name]
+            : "",
+        };
+        return acc;
+      }, {})
+    );
+    // setaddedBene((prevstate: any) => {
+    //   return [...prevstate, newBene];
+    // });
+
+    setEduFormFields(updatedEduFormFields);
+
+    setaddedBene((_prevstate: any) => {
+      return [...updatedAddedBeneficiaries, newBene];
     });
   };
 
@@ -253,10 +320,6 @@ const EducationTrust = () => {
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
         );
-      case "textarea":
-        return (
-          <textarea key={field?.label} defaultValue={field.defaultValue} />
-        );
       default:
         return null;
     }
@@ -265,22 +328,36 @@ const EducationTrust = () => {
   // Function to handle beneficiary selection
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
     // Update the corresponding beneficiary object in addedBene
-    const updatedBeneficiary = { ...addedBene[index] };
-
-    // extract and assigning the properties of 'selectedBeneficiary'
-    updatedBeneficiary[
-      `name_${index + 1}`
-    ].value = `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`;
-    updatedBeneficiary[`relationship_${index + 1}`].value =
-      selectedBeneficiary?.beneficiary_relationship;
-    updatedBeneficiary[`address_${index + 1}`].value =
-      selectedBeneficiary?.address;
-
-    // Update addedBene state with the modified beneficiary object
-    const updatedAddedBene = [...addedBene];
-    updatedAddedBene[index] = updatedBeneficiary;
-
-    setaddedBene(updatedAddedBene);
+    formRef.current.setFieldValue(
+      `name_of_beneficiary_${index + 1}`,
+      `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `name_of_beneficiary_${index + 1}`,
+        value: `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`,
+      })
+    );
+    formRef.current.setFieldValue(
+      `relationship_of_beneficiary_${index + 1}`,
+      `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `relationship_of_beneficiary_${index + 1}`,
+        value: `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`,
+      })
+    );
+    formRef.current.setFieldValue(
+      `address_of_beneficiary_${index + 1}`,
+      selectedBeneficiary?.address
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `address_of_beneficiary_${index + 1}`,
+        value: selectedBeneficiary?.address,
+      })
+    );
   };
 
   const renderBeneficiaryFieldsData = () => {
@@ -322,10 +399,8 @@ const EducationTrust = () => {
           <Select
             placeholder="beneficiaries"
             variant="filled"
-            // value={selectedCurrency}
             onChange={(e) => {
               if (e.target.value !== "")
-                // setSelectedCurrency(e.target.value);
                 handleBeneficiarySelect(info[e.target.value], index);
             }}
             disabled={error || isLoading || isRefetching ? true : false}
@@ -381,16 +456,18 @@ const EducationTrust = () => {
   };
 
   const handleSubmitForm = (values: any) => {
-    console.log(values, "values");
     const groupedData = addedBene.reduce(
-      (acc: any, beneficiary: any, index: number) => {
+      (acc: any, _beneficiary: any, index: number) => {
         // Create a new object for each beneficiary
         const beneficiaryData: any = {};
 
         // Loop through fields associated with this beneficiary
         Object.keys(values).forEach((fieldName) => {
           if (fieldName.includes(`_${index + 1}`)) {
-            const cleanFieldName = fieldName.replace(`_${index + 1}`, "");
+            const cleanFieldName = fieldName.replace(
+              `_of_beneficiary_${index + 1}`,
+              ""
+            );
             beneficiaryData[cleanFieldName] = values[fieldName];
           }
         });
@@ -406,16 +483,27 @@ const EducationTrust = () => {
     const beneficiariesData = Object.values(groupedData);
 
     const settlorData = {
-      settlor_name: values.settlors_name,
-      settlor_address: values.settlors_address,
-      settlor_occupation: values.settlors_occupation,
+      trust_settlor_name: values.trust_settlor_name,
+      trust_settlor_address: values.trust_settlor_address,
+      trust_settlor_occupation: values.trust_settlor_occupation,
     };
     const formData = {
+      type: "education-trust",
       ...settlorData,
-      beneficiariesData,
+      trust_beneficiary: beneficiariesData,
     };
     console.log(formData, "formData");
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!enable && addEnable) {
+        handleAddBeneficiary();
+        setAddEnable(false);
+        setEnable(true);
+      }
+    }, 300);
+  }, [formPersistedValues, enable, addEnable]);
 
   return (
     <Flex px={"3vw"} direction={"column"}>
@@ -434,6 +522,7 @@ const EducationTrust = () => {
           onSubmit={handleSubmitForm}
           validateSchema={schema}
           enableReinitialize={true}
+          ref={formRef}
         >
           {/* Render the divs dynamically */}
           {eduFormFields && renderFieldsData(eduFormFields)}
@@ -450,7 +539,10 @@ const EducationTrust = () => {
               variant="unstyled"
               color={"green"}
               fontSize={"30px"}
-              onClick={() => handleAddBeneficiary()}
+              onClick={async () => {
+                await setEnable(false);
+                setAddEnable(true);
+              }}
             />
           </HStack>
 

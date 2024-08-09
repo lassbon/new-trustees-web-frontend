@@ -16,6 +16,8 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { formSliceAction } from "../../store/formSlice";
 
 type FormikProps = {
   errors: any;
@@ -73,20 +75,23 @@ const AppFormFields = <T extends FormControlProps>({
 const textInput = <T extends TextProps>({ name, ...others }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
   const { errors, values }: FormikProps = useFormikContext();
+  const dispatch = useDispatch();
 
   const inputValue = name ? values[name] : "";
 
   const error = errors[name];
+  const handleOnChange = (e: any) => {
+    const text = e.target.value;
+    setFieldValue(name, text);
+    dispatch(formSliceAction.updateFormField({ name: name, value: text }));
+  };
 
   return (
     <Input
       onBlur={() => {
         setFieldTouched(name);
       }}
-      onChange={(e) => {
-        const text = e.target.value;
-        setFieldValue(name, text);
-      }}
+      onChange={(e) => handleOnChange(e)}
       {...others}
       isInvalid={error}
       variant="outline"
@@ -100,6 +105,7 @@ const textInput = <T extends TextProps>({ name, ...others }: T) => {
 const textAreaInput = <T extends TextProps>({ name, ...others }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
   const { errors, values }: FormikProps = useFormikContext();
+  const dispatch = useDispatch();
   const inputValue = name ? values[name] : "";
   const error = errors[name];
 
@@ -111,6 +117,7 @@ const textAreaInput = <T extends TextProps>({ name, ...others }: T) => {
       onChange={(e) => {
         const text = e.target.value;
         setFieldValue(name, text);
+        dispatch(formSliceAction.updateFormField({ name: name, value: text }));
       }}
       {...others}
       isInvalid={error}
@@ -129,8 +136,13 @@ const selectionInput = <T extends SelectProps>({
   ...others
 }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
+  const { errors, values }: FormikProps = useFormikContext();
+  const dispatch = useDispatch();
+  const inputValue = name ? values[name] : "";
+  const error = errors[name];
   const selection = (value: any) => {
     setFieldValue(name, value);
+    dispatch(formSliceAction.updateFormField({ name: name, value: value }));
   };
   return (
     <Select
@@ -142,6 +154,8 @@ const selectionInput = <T extends SelectProps>({
       }}
       onBlur={() => setFieldTouched(name)}
       {...others}
+      value={inputValue}
+      isInvalid={error}
     >
       {options?.map((opt: any, i: number) => (
         <option key={i} value={opt}>
@@ -159,8 +173,13 @@ const radioInput = <T extends RadioProps>({
   ...others
 }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
+  const { values }: FormikProps = useFormikContext();
+  const dispatch = useDispatch();
+  const inputValue = name ? values[name] : "";
+
   const selection = (value: any) => {
     setFieldValue(name, value);
+    dispatch(formSliceAction.updateFormField({ name: name, value: value }));
   };
   return (
     <RadioGroup
@@ -170,6 +189,7 @@ const radioInput = <T extends RadioProps>({
         if (e !== "") selection(e);
       }}
       onBlur={() => setFieldTouched(name)}
+      value={inputValue}
     >
       <Stack spacing={5} direction={{ base: "column", lg: "row" }}>
         {options?.map((opt: any, i: number) => (
@@ -192,10 +212,11 @@ const rangeInput = <T extends RangeProps>({
   ...others
 }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
+  const { values }: FormikProps = useFormikContext();
+  const dispatch = useDispatch();
+  const inputValue = name ? values[name] : "";
   const [rangeValue, setRangeValue] = useState<number>(defaultValue);
-  const selection = (value: any) => {
-    setFieldValue(name, value);
-  };
+
   return (
     <Flex direction="column" justify={"center"} align={"end"}>
       <RangeSlider
@@ -206,10 +227,15 @@ const rangeInput = <T extends RangeProps>({
         aria-label={["min", "max"]}
         onChangeEnd={(val) => {
           setFieldValue(name, val[1]);
+          dispatch(
+            formSliceAction.updateFormField({ name: name, value: val[1] })
+          );
+
           setRangeValue(val[1]);
         }}
         onBlur={() => setFieldTouched(name)}
         {...others}
+        value={inputValue}
       >
         <RangeSliderTrack bg="rgba(0, 129, 69, 0.05)">
           <RangeSliderFilledTrack bg="#008145" />

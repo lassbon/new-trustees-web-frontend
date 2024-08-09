@@ -1,6 +1,5 @@
 import { Flex, Heading, FormLabel, useToast } from "@chakra-ui/react";
 import * as Yup from "yup";
-import React from "react";
 import AppFormFields from "../../../components/form/AppFields";
 import AppForm from "../../../components/form/AppForm";
 import AppFormSubmitBtn from "../../../components/form/AppFormSubmitBtn";
@@ -97,7 +96,7 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_fullname"
-              placeholder="john"
+              placeholder="NOK fullname"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -113,7 +112,7 @@ const NextOfKin = () => {
             <AppFormFields.textAreaInput
               type="text"
               name="next_of_kin_address"
-              placeholder="5 lekki road"
+              placeholder="NOK address"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -129,7 +128,7 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_phone"
-              placeholder="09060005112"
+              placeholder="NOK phone number"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -145,13 +144,13 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_relationship"
-              placeholder="cousin"
+              placeholder="NOK relationship"
               size="lg"
               disabled={patch?.isPending}
             />
             <AppFormFields.ErrorMessage name="next_of_kin_relationship" />
           </AppFormFields>
-          {/* email */}
+          {/* next_of_kin_relationship */}
 
           {/* submit btn */}
           <AppFormSubmitBtn

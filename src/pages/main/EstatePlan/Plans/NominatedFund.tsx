@@ -9,14 +9,17 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 
 import AppForm from "../../../../components/form/AppForm";
-import { nominieFormFields } from "../../../../config/data";
+// import { nominieFormFields } from "../../../../config/data";
 import AppFormFields from "../../../../components/form/AppFields";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import { IoIosAddCircle } from "react-icons/io";
 import useBeneficiaries from "../../../../custom-hooks/http-services/use-GET/useBeneficiaries";
+import { useDispatch } from "react-redux";
+import { formSliceAction } from "../../../../store/formSlice";
 
 type field = {
   label: string;
@@ -31,10 +34,64 @@ type field = {
   options?: any;
 };
 
+type stateProps = {
+  state: any;
+  form: any;
+};
+
 const NominatedFund = () => {
+  const formRef = useRef<any>(null);
+  const dispatch = useDispatch();
   const { isLoading, data, error, isRefetching } = useBeneficiaries();
   const info = data?.data?.data;
   const [addedBeneficiaries, setAddedBeneficiaries] = useState<any>([]);
+  const [nominieFormFields, setNominieFormFields] = useState<any>([
+    {
+      label: "name",
+      name: "nominatedfund_nominator_name",
+      explainerText: "name of the settlor respo For this trust",
+      placeholder: "john doe",
+      datatype: "string",
+      required: true,
+    },
+    {
+      label: "Telephone number",
+      name: "nominatedfund_nominator_phone",
+      placeholder: "09087777712",
+      datatype: "phone",
+      required: true,
+    },
+    {
+      label: "email",
+      name: "nominatedfund_nominator_email",
+      placeholder: "johndoe@gmail.com",
+      datatype: "email",
+      required: true,
+    },
+    {
+      label: "Occupation/Profession",
+      name: "nominatedfund_nominator_occupation",
+      placeholder: "",
+      datatype: "select",
+      options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
+      required: true,
+    },
+    {
+      label: "address",
+      name: "nominatedfund_nominator_address",
+      placeholder: "5 lekki road",
+      datatype: "textarea",
+      required: true,
+    },
+  ]);
+
+  const [enable, setEnable] = useState<boolean>(true);
+  const [addEnable, setAddEnable] = useState<boolean>(false);
+
+  const { formPersistedValues } = useSelector(
+    (state: stateProps) => state.form,
+    () => enable
+  );
 
   const handleExtractObjPropertiesInArray = (fields: any[]) =>
     fields.reduce((acc, field) => {
@@ -107,12 +164,12 @@ const NominatedFund = () => {
     )
   );
 
-  const handleAddBeneficiary = () => {
+  const handleAddBeneficiary = async () => {
     const newId = addedBeneficiaries.length + 1;
     const newBene = {
       [`name_${newId}`]: {
         label: `Beneficiary Name ${newId}`,
-        name: `Beneficiary_Name_${newId}`,
+        name: `name_of_beneficiary_${newId}`,
         placeholder: "john doe",
         datatype: "string",
         required: true,
@@ -120,7 +177,7 @@ const NominatedFund = () => {
       },
       [`address_${newId}`]: {
         label: `Address of Beneficiary ${newId}`,
-        name: `Address_of_beneficiary_${newId}`,
+        name: `address_of_beneficiary_${newId}`,
         placeholder: "123 Main St",
         datatype: "textarea",
         required: true,
@@ -128,14 +185,14 @@ const NominatedFund = () => {
       },
       [`dob_${newId}`]: {
         label: `Beneficiary's date of birth ${newId}`,
-        name: `beneficiary_dob_${newId}`,
+        name: `dob_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "date",
         required: true,
       },
       [`benefit_fund_percentage_${newId}`]: {
         label: `Percentage of Fund for their Benefit ${newId}`,
-        name: `beneficiary_fund_percentage_${newId}`,
+        name: `percent_of_fund_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "range",
         min: 0,
@@ -146,7 +203,7 @@ const NominatedFund = () => {
       },
       [`email_${newId}`]: {
         label: `Email Address ofbeneficiary ${newId}`,
-        name: `beneficiary_email_address_${newId}`,
+        name: `email_of_beneficiary_${newId}`,
         placeholder: "johndoe@gmail.com",
         datatype: "email",
         required: true,
@@ -154,7 +211,7 @@ const NominatedFund = () => {
       },
       [`phone_${newId}`]: {
         label: `Telephone Number of beneficiary ${newId}`,
-        name: `beneficiary_phone_${newId}`,
+        name: `phone_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "phone",
         required: true,
@@ -162,7 +219,7 @@ const NominatedFund = () => {
       },
       [`occupation_${newId}`]: {
         label: `Occupation/Profession of beneficiary ${newId}`,
-        name: `beneficiary_occupation_${newId}`,
+        name: `occupation_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "select",
         options: [
@@ -176,32 +233,100 @@ const NominatedFund = () => {
         required: true,
       },
     };
-    setAddedBeneficiaries((prevstate: any) => {
-      return [...prevstate, newBene];
+    await formPersistedValues;
+
+    // Extract current form values before adding a new beneficiary
+
+    const updatedNomineeFormFields = nominieFormFields.map((field: any) => ({
+      ...field,
+      value: formPersistedValues[field.name]
+        ? formPersistedValues[field?.name]
+        : "",
+    }));
+
+    const updatedAddedBeneficiaries = addedBeneficiaries.map(
+      (beneficiary: any) =>
+        Object.keys(beneficiary).reduce((acc: any, key) => {
+          acc[key] = {
+            ...beneficiary[key],
+            value: formPersistedValues[beneficiary[key].name]
+              ? formPersistedValues[beneficiary[key].name]
+              : "",
+          };
+          return acc;
+        }, {})
+    );
+
+    setNominieFormFields(updatedNomineeFormFields);
+
+    setAddedBeneficiaries((_prevstate: any) => {
+      return [...updatedAddedBeneficiaries, newBene];
     });
   };
 
   // Function to handle beneficiary selection
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
-    // Update the corresponding beneficiary object in addedBene
-    const updatedBeneficiary = { ...addedBeneficiaries[index] };
+    // // Update the corresponding beneficiary object in addedBene
+    // const updatedBeneficiary = { ...addedBeneficiaries[index] };
+    // // extract and assigning the properties of 'selectedBeneficiary'
+    // updatedBeneficiary[
+    //   `name_${index + 1}`
+    // ].value = `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`;
+    // updatedBeneficiary[`address_${index + 1}`].value =
+    //   selectedBeneficiary?.address;
+    // updatedBeneficiary[`phone_${index + 1}`].value = parseInt(
+    //   selectedBeneficiary?.phone
+    // );
+    // updatedBeneficiary[`email_${index + 1}`].value = selectedBeneficiary?.email;
+    // // Update addedBene state with the modified beneficiary object
+    // const updatedAddedBene = [...addedBeneficiaries];
+    // updatedAddedBene[index] = updatedBeneficiary;
+    // setAddedBeneficiaries(updatedAddedBene);
+    // setFieldValue(
+    //   `Beneficiary_Name_${index + 1}`,
+    //   `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`
+    // );
 
-    // extract and assigning the properties of 'selectedBeneficiary'
-    updatedBeneficiary[
-      `name_${index + 1}`
-    ].value = `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`;
-    updatedBeneficiary[`address_${index + 1}`].value =
-      selectedBeneficiary?.address;
-    updatedBeneficiary[`phone_${index + 1}`].value = parseInt(
-      selectedBeneficiary?.phone
+    formRef.current.setFieldValue(
+      `name_of_beneficiary_${index + 1}`,
+      `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`
     );
-    updatedBeneficiary[`email_${index + 1}`].value = selectedBeneficiary?.email;
-
-    // Update addedBene state with the modified beneficiary object
-    const updatedAddedBene = [...addedBeneficiaries];
-    updatedAddedBene[index] = updatedBeneficiary;
-
-    setAddedBeneficiaries(updatedAddedBene);
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `name_of_beneficiary_${index + 1}`,
+        value: `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`,
+      })
+    );
+    formRef.current.setFieldValue(
+      `address_of_beneficiary_${index + 1}`,
+      selectedBeneficiary?.address
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `address_of_beneficiary_${index + 1}`,
+        value: selectedBeneficiary?.address,
+      })
+    );
+    formRef.current.setFieldValue(
+      `email_of_beneficiary_${index + 1}`,
+      selectedBeneficiary?.email
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `email_of_beneficiary_${index + 1}`,
+        value: selectedBeneficiary?.email,
+      })
+    );
+    formRef.current.setFieldValue(
+      `phone_of_beneficiary_${index + 1}`,
+      parseInt(selectedBeneficiary?.phone)
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `phone_of_beneficiary_${index + 1}`,
+        value: parseInt(selectedBeneficiary?.phone),
+      })
+    );
   };
 
   const renderAppFormComponent = (field: any) => {
@@ -387,9 +512,7 @@ const NominatedFund = () => {
             variant="filled"
             onChange={(e) => {
               if (e.target.value !== "")
-                console.log(info[e.target.value], "setSelectedbenef");
-              console.log(typeof info[e.target.value]?.phone);
-              handleBeneficiarySelect(info[e.target.value], index);
+                handleBeneficiarySelect(info[e.target.value], index);
             }}
             disabled={error || isLoading || isRefetching ? true : false}
           >
@@ -444,16 +567,18 @@ const NominatedFund = () => {
   };
 
   const handleSubmitForm = (values: any) => {
-    console.log(values, "values");
     const groupedData = addedBeneficiaries.reduce(
-      (acc: any, beneficiary: any, index: number) => {
+      (acc: any, _beneficiary: any, index: number) => {
         // Create a new object for each beneficiary
         const beneficiaryData: any = {};
 
         // Loop through fields associated with this beneficiary
         Object.keys(values).forEach((fieldName) => {
           if (fieldName.includes(`_${index + 1}`)) {
-            const cleanFieldName = fieldName.replace(`_${index + 1}`, "");
+            const cleanFieldName = fieldName.replace(
+              `_of_beneficiary_${index + 1}`,
+              ""
+            );
             beneficiaryData[cleanFieldName] = values[fieldName];
           }
         });
@@ -469,17 +594,29 @@ const NominatedFund = () => {
     const beneficiariesData = Object.values(groupedData);
 
     const nominatorsData = {
-      nominators_name: values.nominators_name,
-      nominators_address: values.nominators_address,
-      nominators_occupation: values.nominators_occupation,
-      nominators_phone: values.nominators_phone,
+      nominatedfund_nominator_name: values.nominatedfund_nominator_name,
+      nominatedfund_nominator_address: values.nominatedfund_nominator_address,
+      nominatedfund_nominator_occupation:
+        values.nominatedfund_nominator_occupation,
+      nominatedfund_nominator_phone: values.nominatedfund_nominator_phone,
+      nominatedfund_nominator_email: values.nominatedfund_nominator_email,
     };
     const formData = {
       ...nominatorsData,
-      beneficiariesData,
+      nominatedfund_beneficiary: beneficiariesData,
     };
     console.log(formData, "formData");
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!enable && addEnable) {
+        handleAddBeneficiary();
+        setAddEnable(false);
+        setEnable(true);
+      }
+    }, 300);
+  }, [formPersistedValues, enable, addEnable]);
   return (
     <Flex px={"3vw"} direction={"column"}>
       <Flex
@@ -497,6 +634,7 @@ const NominatedFund = () => {
           onSubmit={handleSubmitForm}
           validateSchema={schema}
           enableReinitialize={true}
+          ref={formRef}
         >
           {/* Render the divs dynamically */}
           {nominieFormFields && renderFieldsData(nominieFormFields)}
@@ -513,7 +651,10 @@ const NominatedFund = () => {
               variant="unstyled"
               color={"green"}
               fontSize={"30px"}
-              onClick={() => handleAddBeneficiary()}
+              onClick={async () => {
+                await setEnable(false);
+                setAddEnable(true);
+              }}
             />
           </HStack>
 

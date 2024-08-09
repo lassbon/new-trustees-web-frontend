@@ -26,7 +26,7 @@ import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 
 const Dashboard = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
+  const [_cookies, _setCookie, removeCookie] = useCookies(["auth"]);
   const { isLoading, error, data } = useUser();
   const info = data?.data?.data;
   const loaded = !isLoading || error ? true : false;
@@ -132,10 +132,10 @@ const Dashboard = () => {
         </GridItem>
       </Grid>
 
-      <TawkMessengerReact
+      {/* <TawkMessengerReact
         propertyId="5f7ee43c4704467e89f5b01f"
         widgetId="default"
-      />
+      /> */}
     </Flex>
   );
 };
