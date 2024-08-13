@@ -7,19 +7,21 @@ import {
   Select,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import AppForm from "../../../../components/form/AppForm";
-// import { nominieFormFields } from "../../../../config/data";
 import AppFormFields from "../../../../components/form/AppFields";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import { IoIosAddCircle } from "react-icons/io";
 import useBeneficiaries from "../../../../custom-hooks/http-services/use-GET/useBeneficiaries";
 import { useDispatch } from "react-redux";
 import { formSliceAction } from "../../../../store/formSlice";
+import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
+import { useNavigate } from "react-router-dom";
 
 type field = {
   label: string;
@@ -42,6 +44,10 @@ type stateProps = {
 const NominatedFund = () => {
   const formRef = useRef<any>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const add = useAddEstatePlan();
   const { isLoading, data, error, isRefetching } = useBeneficiaries();
   const info = data?.data?.data;
   const [addedBeneficiaries, setAddedBeneficiaries] = useState<any>([]);
@@ -198,7 +204,7 @@ const NominatedFund = () => {
         min: 0,
         max: 100,
         step: 5,
-        value: 5,
+        value: 0,
         required: true,
       },
       [`email_${newId}`]: {
@@ -266,26 +272,8 @@ const NominatedFund = () => {
 
   // Function to handle beneficiary selection
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
-    // // Update the corresponding beneficiary object in addedBene
-    // const updatedBeneficiary = { ...addedBeneficiaries[index] };
-    // // extract and assigning the properties of 'selectedBeneficiary'
-    // updatedBeneficiary[
-    //   `name_${index + 1}`
-    // ].value = `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`;
-    // updatedBeneficiary[`address_${index + 1}`].value =
-    //   selectedBeneficiary?.address;
-    // updatedBeneficiary[`phone_${index + 1}`].value = parseInt(
-    //   selectedBeneficiary?.phone
-    // );
-    // updatedBeneficiary[`email_${index + 1}`].value = selectedBeneficiary?.email;
-    // // Update addedBene state with the modified beneficiary object
-    // const updatedAddedBene = [...addedBeneficiaries];
-    // updatedAddedBene[index] = updatedBeneficiary;
-    // setAddedBeneficiaries(updatedAddedBene);
-    // setFieldValue(
-    //   `Beneficiary_Name_${index + 1}`,
-    //   `${selectedBeneficiary?.surname} ${selectedBeneficiary?.firstname}`
-    // );
+    const date = selectedBeneficiary?.dob;
+    const formattedDate = new Date(date).toISOString().split("T")[0];
 
     formRef.current.setFieldValue(
       `name_of_beneficiary_${index + 1}`,
@@ -327,6 +315,16 @@ const NominatedFund = () => {
         value: parseInt(selectedBeneficiary?.phone),
       })
     );
+    formRef.current.setFieldValue(
+      `dob_of_beneficiary_${index + 1}`,
+      formattedDate
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `dob_of_beneficiary_${index + 1}`,
+        value: formattedDate,
+      })
+    );
   };
 
   const renderAppFormComponent = (field: any) => {
@@ -341,7 +339,7 @@ const NominatedFund = () => {
               type="text"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -356,7 +354,7 @@ const NominatedFund = () => {
               type="text"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -371,7 +369,7 @@ const NominatedFund = () => {
               type="email"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -386,7 +384,7 @@ const NominatedFund = () => {
               options={field?.options}
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -403,7 +401,7 @@ const NominatedFund = () => {
               step={field?.step}
               defaultValue={field?.value}
               name={field?.name}
-              isDisabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -418,7 +416,7 @@ const NominatedFund = () => {
               type="number"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -433,7 +431,7 @@ const NominatedFund = () => {
               type="number"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -448,7 +446,7 @@ const NominatedFund = () => {
               name={field?.name}
               options={field?.options}
               placeholder={field?.explainer_text || "select option"}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -462,7 +460,7 @@ const NominatedFund = () => {
             <AppFormFields.Input
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
               type="date"
             />
             <AppFormFields.ErrorMessage name={field?.name} />
@@ -601,11 +599,52 @@ const NominatedFund = () => {
       nominatedfund_nominator_phone: values.nominatedfund_nominator_phone,
       nominatedfund_nominator_email: values.nominatedfund_nominator_email,
     };
-    const formData = {
+    const formData: any = {
+      type: "nominated-fund",
       ...nominatorsData,
       nominatedfund_beneficiary: beneficiariesData,
     };
     console.log(formData, "formData");
+
+    add.mutateAsync(formData, {
+      onSuccess: async (resData) => {
+        const { message } = resData?.data;
+        console.log(resData?.data, "success");
+        toast({
+          title: message,
+          position: "top-right",
+          isClosable: true,
+          status: "success",
+          variant: "top-accent",
+        });
+        navigate(-1);
+      },
+      onError: (error: any) => {
+        if (error.response === undefined) {
+          toast({
+            title: "something went wrong check network or try again!",
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "top-accent",
+          });
+          return;
+        }
+        const { status, message } = error?.response.data;
+        console.log(message, "error");
+
+        if (!status) {
+          toast({
+            title: message,
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "left-accent",
+          });
+          return;
+        }
+      },
+    });
   };
 
   useEffect(() => {
@@ -663,7 +702,7 @@ const NominatedFund = () => {
               colorScheme="green"
               variant="solid"
               textTransform={"capitalize"}
-              isLoading={false}
+              isLoading={add?.isPending ? true : false}
               rounded={"full"}
               w={"full"}
             >

@@ -7,6 +7,7 @@ import {
   Select,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useRef, useState, useEffect } from "react";
 
@@ -14,21 +15,23 @@ import { IoIosAddCircle } from "react-icons/io";
 import * as Yup from "yup";
 import AppForm from "../../../../components/form/AppForm";
 
-// import { eduFormFields } from "../../../../config/data";
 import AppFormFields from "../../../../components/form/AppFields";
 import useBeneficiaries from "../../../../custom-hooks/http-services/use-GET/useBeneficiaries";
 import useAssetsCurrencies from "../../../../custom-hooks/http-services/use-GET/useCurrencies";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { formSliceAction } from "../../../../store/formSlice";
+import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
 
 type stateProps = {
   state: any;
   form: any;
 };
 const EducationTrust = () => {
+  const toast = useToast();
   const formRef = useRef<any>(null);
   const dispatch = useDispatch();
+  const add = useAddEstatePlan();
   const { isLoading, data, error, isRefetching } = useBeneficiaries();
   const info = data?.data?.data;
   const currency = useAssetsCurrencies();
@@ -111,7 +114,7 @@ const EducationTrust = () => {
             .label(field.label);
           break;
         default:
-          fieldSchema = Yup.string()
+          fieldSchema = (Yup.string() || Yup.boolean())
             .required(`${field.label} is required`)
             .label(field.label);
           break;
@@ -169,7 +172,7 @@ const EducationTrust = () => {
         name: `trust_trustees_advise_of_beneficiary_${newId}`,
         placeholder: "",
         datatype: "radio",
-        options: ["Yes", "No"],
+        options: [true, false],
         required: true,
       },
       [`initial_contribution_${newId}`]: {
@@ -240,7 +243,7 @@ const EducationTrust = () => {
               type="text"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -255,7 +258,7 @@ const EducationTrust = () => {
               type="text"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -270,7 +273,7 @@ const EducationTrust = () => {
               options={field?.options}
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -285,7 +288,7 @@ const EducationTrust = () => {
               type="number"
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -300,7 +303,7 @@ const EducationTrust = () => {
               name={field?.name}
               options={field?.options}
               placeholder={field?.explainer_text || "select option"}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
             />
             <AppFormFields.ErrorMessage name={field?.name} />
           </AppFormFields>
@@ -314,7 +317,7 @@ const EducationTrust = () => {
             <AppFormFields.Input
               name={field?.name}
               placeholder={field?.explainer_text}
-              disabled={false}
+              disabled={add?.isPending ? true : false}
               type="date"
             />
             <AppFormFields.ErrorMessage name={field?.name} />
@@ -327,6 +330,9 @@ const EducationTrust = () => {
 
   // Function to handle beneficiary selection
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
+    const date = selectedBeneficiary?.dob;
+    const formattedDate = new Date(date).toISOString().split("T")[0];
+
     // Update the corresponding beneficiary object in addedBene
     formRef.current.setFieldValue(
       `name_of_beneficiary_${index + 1}`,
@@ -356,6 +362,16 @@ const EducationTrust = () => {
       formSliceAction.updateFormField({
         name: `address_of_beneficiary_${index + 1}`,
         value: selectedBeneficiary?.address,
+      })
+    );
+    formRef.current.setFieldValue(
+      `dob_of_beneficiary_${index + 1}`,
+      formattedDate
+    );
+    dispatch(
+      formSliceAction.updateFormField({
+        name: `dob_of_beneficiary_${index + 1}`,
+        value: formattedDate,
       })
     );
   };
@@ -391,7 +407,7 @@ const EducationTrust = () => {
       }
 
       return (
-        <Flex direction={"column"} gap={"2vh"}>
+        <Flex direction={"column"} gap={"2vh"} key={Math.random()}>
           <Heading size={"md"}>{`Personal Details of the Beneficiary ${
             index + 1
           }`}</Heading>
@@ -402,6 +418,8 @@ const EducationTrust = () => {
             onChange={(e) => {
               if (e.target.value !== "")
                 handleBeneficiarySelect(info[e.target.value], index);
+
+              console.log(info[e.target.value], "inof");
             }}
             disabled={error || isLoading || isRefetching ? true : false}
           >
@@ -487,12 +505,53 @@ const EducationTrust = () => {
       trust_settlor_address: values.trust_settlor_address,
       trust_settlor_occupation: values.trust_settlor_occupation,
     };
-    const formData = {
+
+    const formData: any = {
       type: "education-trust",
       ...settlorData,
       trust_beneficiary: beneficiariesData,
     };
+
     console.log(formData, "formData");
+
+    add.mutateAsync(formData, {
+      onSuccess: async (resData) => {
+        const { message } = resData?.data;
+        console.log(resData?.data, "success");
+        toast({
+          title: message,
+          position: "top-right",
+          isClosable: true,
+          status: "success",
+          variant: "top-accent",
+        });
+      },
+      onError: (error: any) => {
+        if (error.response === undefined) {
+          toast({
+            title: "something went wrong check network or try again!",
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "top-accent",
+          });
+          return;
+        }
+        const { status, message } = error?.response.data;
+        console.log(message, "error");
+
+        if (!status) {
+          toast({
+            title: message,
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "left-accent",
+          });
+          return;
+        }
+      },
+    });
   };
 
   useEffect(() => {
@@ -551,7 +610,7 @@ const EducationTrust = () => {
               colorScheme="green"
               variant="solid"
               textTransform={"capitalize"}
-              isLoading={false}
+              isLoading={add?.isPending ? true : false}
               rounded={"full"}
               w={"full"}
             >

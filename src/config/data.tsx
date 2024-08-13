@@ -40,6 +40,10 @@ export const navMenuData = [
     label: "Recommendations",
     link: "Recommendation",
   },
+  {
+    label: "SignIn",
+    link: "/auth/SignIn",
+  },
 ];
 
 export const featuresData = [
@@ -337,62 +341,216 @@ export const beneficiaries = [
   },
 ];
 
-export const eduFormFields = [
+export const banks = [
+  "Access Bank Plc",
+
+  "Accion Microfinance Bank",
+
+  "Citibank Nigeria Limited",
+
+  "Coronation Merchant Bank",
+
+  "Covenant Microfinance Bank Ltd",
+
+  "Ecobank Nigeria",
+
+  "Empire Trust Microfinance Bank",
+
+  "Fidelity Bank Plc",
+
+  "Fina Trust Microfinance Bank",
+
+  "Finca Microfinance Bank Limited",
+
+  "First Bank of Nigeria Limited",
+
+  "First City Monument Bank Limited(FCMB)",
+
+  "Globus Bank Limited",
+
+  "Guaranty Trust Holding Company Plc",
+
+  "Heritage Bank Plc",
+
+  "Infinity Microfinance Bank",
+
+  "Jaiz Bank Plc",
+
+  "Keystone Bank Limited",
+
+  "Kuda Bank",
+
+  "LOTUS BANK",
+
+  "Mint Finex MFB",
+
+  "Mkobo MFB",
+
+  "Moniepoint Microfinance Bank",
+
+  "Mutual Trust Microfinance Bank",
+
+  "Nova Merchant Bank",
+
+  "Opay",
+
+  "Palmpay",
+  "Parallex Bank Limited",
+
+  "Sparkle Bank",
+
+  "Peace Microfinance Bank",
+
+  "Pearl Microfinance Bank Limited",
+
+  "Polaris Bank Limited. The successor to Skye Bank Plc.",
+
+  "PremiumTrust Bank Limited",
+
+  "Providus Bank Limited",
+
+  "Rand Merchant Bank",
+
+  "Rephidim Microfinance Bank",
+
+  "Rubies Bank",
+
+  "Shepherd Trust Microfinance Bank",
+
+  "Stanbic IBTC Bank Plc",
+
+  "Standard Chartered",
+
+  "Sterling Bank Plc",
+
+  "SunTrust Bank Nigeria Limited",
+
+  "TAJBank Limited",
+
+  "Titan Trust Bank Limited",
+
+  "Union Bank of Nigeria Plc",
+
+  "United Bank for Africa Plc",
+
+  "Unity Bank Plc",
+
+  "VFD Microfinance Bank",
+
+  "Wema Bank Plc",
+
+  "Zenith Bank Plc",
+
+  "OTHERS",
+];
+
+const comprehensive = [
   {
-    label: "name",
-    name: "settlors_name",
-    explainerText: "name of the settlor respo For this trust",
-    placeholder: "john doe",
+    label: "Do you have any of the documents listed below executed or filed?",
+    name: "comprehensivewill_document_owned",
+    explainerText: "",
+    placeholder: "",
+    options: [
+      "A will",
+      "A living Trust",
+      "Deed Of Gift",
+      "Joint Ownership",
+      "Power Of Attorney",
+      "Others",
+    ],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "Full name",
+    name: "comprehensivewill_settlor_name",
+    explainerText: "",
+    placeholder: "doe",
     datatype: "string",
     required: true,
   },
   {
-    label: "address",
-    name: "settlors_address",
+    label: "Religion",
+    name: "comprehensivewill_religion",
+    explainerText: "",
+    placeholder: "",
+    options: ["Christianity", "Islam", "Traditional", "Others"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "Marital Status",
+    name: "comprehensivewill_marital_status",
+    explainerText: "",
+    placeholder: "",
+    options: ["Single", "Married", "Widowed", "Divorced"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "If married, what type of marriage?",
+    name: "comprehensivewill_marriage_type",
+    explainerText: "",
+    placeholder: "",
+    options: ["Marriage by the Act", "Customary Marriage", "Islamic Marriage"],
+    datatype: "radio",
+    required: false,
+  },
+  {
+    label:
+      "Are there any customary traditions common to people from your region?",
+    name: "comprehensivewill_customary_tradition",
+    explainerText: "",
+    placeholder: "",
+    options: ["True", "False"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "If yes kindly give details",
+    name: "comprehensivewill_customary_tradition_details",
+    explainerText: "",
+    placeholder: "",
+    datatype: "textarea",
+    required: false,
+  },
+  {
+    label: "Home address",
+    name: "comprehensivewill_address",
+    explainerText: "",
     placeholder: "5 lekki road",
     datatype: "textarea",
     required: true,
   },
   {
-    label: "Occupation/Profession",
-    name: "settlors_occupation",
-    placeholder: "",
-    datatype: "select",
-    options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
-    required: true,
-  },
-];
-
-export const nominieFormFields = [
-  {
-    label: "name",
-    name: "nominators_name",
-    explainerText: "name of the settlor respo For this trust",
-    placeholder: "john doe",
-    datatype: "string",
+    label: "email",
+    name: "comprehensivewill_email",
+    placeholder: "johndoe@gmail.com",
+    datatype: "email",
     required: true,
   },
   {
     label: "Telephone number",
-    name: "nominators_phone",
+    name: "comprehensivewill_phone",
     placeholder: "09087777712",
     datatype: "phone",
     required: true,
   },
   {
-    label: "address",
-    name: "nominators_address",
-    placeholder: "5 lekki road",
-    datatype: "textarea",
-    required: true,
-  },
-
-  {
     label: "Occupation/Profession",
-    name: "nominators_occupation",
+    name: "comprehensivewill_occupation",
     placeholder: "",
     datatype: "select",
     options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
     required: true,
+  },
+  {
+    label: "Other Matters",
+    name: "comprehensivewill_others",
+    explainerText:
+      "(Describe or list here any facts or matters that do not seem to be covered by this questionnaire and that you believe may be important for us to know.)",
+    placeholder: "5 lekki road",
+    datatype: "textarea",
+    required: false,
   },
 ];

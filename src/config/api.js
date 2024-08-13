@@ -16,7 +16,6 @@ export const postAddAssets = async (data, token) => {
     authorization: `Bearer ${token}`,
   };
 
-  console.log(token, "token");
   return await axios.post(
     `${import.meta.env.VITE_APP_API_URL}/assets/add`,
     data,
@@ -31,6 +30,18 @@ export const postBeneficiary = async (data, token) => {
 
   return await axios.post(
     `${import.meta.env.VITE_APP_API_URL}/beneficiary/add`,
+    data,
+    { headers }
+  );
+}; //used
+
+export const postEstatePlan = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/estate-plan/add`,
     data,
     { headers }
   );
@@ -66,6 +77,20 @@ export const patchUser = async (data, token) => {
   return await axios.patch(`${import.meta.env.VITE_APP_API_URL}/user`, data, {
     headers,
   });
+}; //used
+
+export const patchNin = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  const { nin } = data;
+  return await axios.patch(
+    `${import.meta.env.VITE_APP_API_URL}/user/submit-nin/${nin}`,
+    null,
+    {
+      headers,
+    }
+  );
 }; //used
 
 export const getUser = async ({ queryKey }) => {
@@ -134,7 +159,6 @@ export const getAssetsCategory = async ({ queryKey }) => {
 
 export const getAssetInfo = async ({ queryKey }) => {
   const [_key, { token, asset_id }] = queryKey;
-  console.log(asset_id);
   const headers = {
     authorization: `Bearer ${token}`,
   };

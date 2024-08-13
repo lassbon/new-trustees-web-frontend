@@ -178,8 +178,16 @@ const radioInput = <T extends RadioProps>({
   const inputValue = name ? values[name] : "";
 
   const selection = (value: any) => {
-    setFieldValue(name, value);
-    dispatch(formSliceAction.updateFormField({ name: name, value: value }));
+    if (value === "true") {
+      setFieldValue(name, true);
+      dispatch(formSliceAction.updateFormField({ name: name, value: true }));
+    } else if (value === "false") {
+      setFieldValue(name, false);
+      dispatch(formSliceAction.updateFormField({ name: name, value: false }));
+    } else {
+      setFieldValue(name, value);
+      dispatch(formSliceAction.updateFormField({ name: name, value: value }));
+    }
   };
   return (
     <RadioGroup
@@ -189,12 +197,12 @@ const radioInput = <T extends RadioProps>({
         if (e !== "") selection(e);
       }}
       onBlur={() => setFieldTouched(name)}
-      value={inputValue}
+      value={`${inputValue}`}
     >
       <Stack spacing={5} direction={{ base: "column", lg: "row" }}>
         {options?.map((opt: any, i: number) => (
-          <Radio key={i} value={opt} colorScheme="green">
-            {opt}
+          <Radio key={i} value={`${opt}`} colorScheme="green" size={"sm"}>
+            {`${opt}`}
           </Radio>
         ))}
       </Stack>
@@ -208,34 +216,32 @@ const rangeInput = <T extends RangeProps>({
   min,
   step,
   defaultValue,
-
   ...others
 }: T) => {
   const { setFieldTouched, setFieldValue } = useFormikContext();
   const { values }: FormikProps = useFormikContext();
   const dispatch = useDispatch();
   const inputValue = name ? values[name] : "";
-  const [rangeValue, setRangeValue] = useState<number>(defaultValue);
+  const [rangeValue, setRangeValue] = useState<number>(defaultValue || 0);
 
   return (
     <Flex direction="column" justify={"center"} align={"end"}>
       <RangeSlider
-        defaultValue={[min, defaultValue]}
+        defaultValue={[min, inputValue || defaultValue]}
         min={min}
         max={max}
         step={step}
         aria-label={["min", "max"]}
         onChangeEnd={(val) => {
-          setFieldValue(name, val[1]);
+          setFieldValue(name, `${val[1]}`);
           dispatch(
-            formSliceAction.updateFormField({ name: name, value: val[1] })
+            formSliceAction.updateFormField({ name: name, value: `${val[1]}` })
           );
 
           setRangeValue(val[1]);
         }}
         onBlur={() => setFieldTouched(name)}
         {...others}
-        value={inputValue}
       >
         <RangeSliderTrack bg="rgba(0, 129, 69, 0.05)">
           <RangeSliderFilledTrack bg="#008145" />

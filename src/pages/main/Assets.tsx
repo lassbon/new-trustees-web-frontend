@@ -33,6 +33,8 @@ import { useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 // import { LiaFlagUsaSolid } from "react-icons/lia";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { BsCurrencyDollar } from "react-icons/bs";
+import { LuEuro } from "react-icons/lu";
 // import { tableData } from "../../config/data";
 import EmptyDataImg from "../../assets/images/emptyData.png";
 
@@ -223,7 +225,15 @@ const Assets = () => {
               </Select>
             </HStack>
             <Flex align={"center"} py={"2px"}>
-              <Icon as={TbCurrencyNaira} w={10} h={10} />
+              {selectedCurrency === "Naira" && (
+                <Icon as={TbCurrencyNaira} w={10} h={10} />
+              )}
+              {selectedCurrency === "Dollar" && (
+                <Icon as={BsCurrencyDollar} w={10} h={10} />
+              )}
+              {selectedCurrency === "Euro" && (
+                <Icon as={LuEuro} w={10} h={10} />
+              )}
               <Heading size={"lg"}>
                 {show
                   ? currencyTotalAmount[selectedCurrency] || "0.00"
@@ -361,12 +371,21 @@ const Assets = () => {
                     const date = data?.created_at;
                     const amt = parseInt(data?.amount).toLocaleString();
                     const formattedDate = new Date(date).toLocaleDateString();
+                    const sign =
+                      data?.currency === "Naira"
+                        ? "₦"
+                        : data?.currency === "Dollar"
+                        ? "$"
+                        : "€";
 
                     return (
                       <Tr key={i}>
                         <Td>{i + 1}</Td>
                         <Td>{data?.asset_name || "-"}</Td>
-                        <Td isNumeric>&#8358; {amt || "-"}</Td>
+                        <Td isNumeric>
+                          {" "}
+                          {sign} {amt || "-"}
+                        </Td>
                         <Td>{formattedDate || "-"}</Td>
                       </Tr>
                     );

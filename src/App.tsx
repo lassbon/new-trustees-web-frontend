@@ -38,7 +38,12 @@ function App() {
 
   const ProtectedRoutes = () => {
     const auth = cookie.auth;
-    return auth?.token ? <Dashboard /> : <Navigate to="/auth/SignIn" replace />;
+    console.log(auth, "auth");
+    return auth?.token || (auth?.token && auth?.rememberMe) ? (
+      <Dashboard />
+    ) : (
+      <Navigate to="/auth/SignIn" replace />
+    );
   };
 
   const router = createBrowserRouter([

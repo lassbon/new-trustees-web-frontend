@@ -50,6 +50,7 @@ const Beneficiaries = () => {
     isRefetchError,
     refetch,
   } = useBeneficiaries();
+  console.log(isLoading, isRefetching, "load", data);
   const del = useDeleteBeneficiary();
   const upd = useUpdateBeneficiary();
   const add = useAddBeneficiary();
@@ -102,6 +103,8 @@ const Beneficiaries = () => {
     account_number: Yup.string().required("Required").label("account number"),
   });
 
+  const date = selectedBeneficiary?.dob;
+  const formattedEditDate = date && new Date(date).toISOString().split("T")[0];
   //initial value of beneficiary info form schema
   const editValues = {
     surname: selectedBeneficiary?.surname || "",
@@ -110,7 +113,7 @@ const Beneficiaries = () => {
     phone: selectedBeneficiary?.phone || "",
     beneficiary_relationship:
       selectedBeneficiary?.beneficiary_relationship || "",
-    dob: selectedBeneficiary?.dob || "",
+    dob: (selectedBeneficiary?.dob && formattedEditDate) || "",
     gender: selectedBeneficiary?.gender || "",
     address: selectedBeneficiary?.address || "",
     marital_status: selectedBeneficiary?.marital_status || "",
@@ -141,15 +144,12 @@ const Beneficiaries = () => {
   });
 
   const handleEditBeneficiary = (values: any) => {
-    console.log(values, "edited values");
     const data: any = { ...values, id: selectedBeneficiary?.user_id };
     if (selectedBeneficiary) {
       upd.mutateAsync(data, {
         onSuccess: async (resData) => {
           editBene.onClose();
-          console.log("edit", resData);
-          const { message, data } = resData?.data;
-          console.log(resData?.data, "edit 2");
+          const { message } = resData?.data;
           toast({
             title: message,
             position: "top-right",
@@ -157,6 +157,7 @@ const Beneficiaries = () => {
             status: "success",
             variant: "top-accent",
           });
+          refetch();
         },
         onError: (error: any) => {
           if (error.response === undefined) {
@@ -197,7 +198,7 @@ const Beneficiaries = () => {
         onSuccess: async (resData) => {
           onClose();
           console.log("Login success", resData);
-          const { message, data } = resData?.data;
+          const { message } = resData?.data;
           console.log(resData?.data, "delete");
           toast({
             title: message,
@@ -245,7 +246,7 @@ const Beneficiaries = () => {
       onSuccess: async (resData) => {
         addBene.onClose();
         refetch();
-        const { message, data } = resData?.data;
+        const { message } = resData?.data;
         toast({
           title: message,
           position: "top-right",
@@ -379,7 +380,7 @@ const Beneficiaries = () => {
             </Thead>
             <Tbody>
               {error || isLoading
-                ? new Array(4).fill({}).map((item, i) => (
+                ? new Array(4).fill({}).map((_item, i) => (
                     <Tr key={i}>
                       <Td>
                         <Skeleton height="20px" w={"30px"} />

@@ -19,14 +19,16 @@ const PersonalInfo = () => {
   const patch = useUpdateUser();
   const toast = useToast();
 
-  console.log(info, "info");
+  const date = info?.dob;
+  const formattedDate = new Date(date).toISOString().split("T")[0];
+
   //initial value of account info form schema
   const initialValues = {
     surname: info?.surname || "NIL",
     othernames: info?.othernames || "NIL",
     email: info?.email || "NIL",
     phone_number: info?.phone_number || "NIL",
-    dob: info?.dob || "NIL",
+    dob: (date && formattedDate) || "NIL",
     address: info?.address || "NIL",
     gender: info?.gender || "NIL",
   };
@@ -49,7 +51,6 @@ const PersonalInfo = () => {
 
   const handleUpdateProfile = (values: any) => {
     //Make a POST request to update the profile
-    console.log(values, "next profile");
     patch.mutateAsync(values, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
@@ -107,15 +108,6 @@ const PersonalInfo = () => {
             bgColor={"green"}
             color={"white"}
           />
-          {/* <IconButton
-            position={"relative"}
-            top={"1vh"}
-            variant="unstyled"
-            colorScheme="teal"
-            aria-label="upload"
-            fontSize={"20px"}
-            icon={<IoCameraOutline />}
-          /> */}
         </HStack>
 
         <AppForm

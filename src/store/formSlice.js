@@ -10,9 +10,6 @@ const formSlice = createSlice({
   reducers: {
     updateFormField(currentState, actions) {
       const { name, value } = actions.payload;
-
-      console.log(actions.payload, "stoe");
-
       // Check if the key (field name) exists in formPersistedValues
       if (currentState.formPersistedValues.hasOwnProperty(name)) {
         // Update the value if the key exists

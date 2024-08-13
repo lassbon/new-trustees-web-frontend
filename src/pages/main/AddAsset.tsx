@@ -208,10 +208,11 @@ const AddAsset = () => {
     const mainData = {
       asset_category_id,
       asset_name: selectedCategory,
-      amount: values?.amount,
+      amount: values?.value || values?.amount,
       currency: values?.currency,
     };
-    delete values?.amount, values?.currency;
+
+    delete values?.value, values?.currency, values?.amount;
     const finalData: any = { ...mainData, others: { ...values } };
     add.mutateAsync(finalData, {
       onSuccess: async (resData) => {

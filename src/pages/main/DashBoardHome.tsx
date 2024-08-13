@@ -29,8 +29,8 @@ import {
 import CommonCard from "../../components/commonCard";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import { TbCurrencyNaira } from "react-icons/tb";
-// import { BsCurrencyDollar } from "react-icons/bs";
-// import { LuEuro } from "react-icons/lu";
+import { BsCurrencyDollar } from "react-icons/bs";
+import { LuEuro } from "react-icons/lu";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { chartData, commonCardData } from "../../config/data";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
@@ -39,7 +39,6 @@ import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCur
 
 const DashBoardHome = () => {
   const [show, setShow] = useState<boolean>(false);
-  // const [currencies, setCurrencies] = useState<any>(null);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
 
@@ -87,7 +86,7 @@ const DashBoardHome = () => {
     }
 
     if (data && (!isLoading || !isRefetching)) {
-      // console.log(data?.data);
+      console.log(data?.data, "user");
     }
   }, [data, isLoadingError, isLoading, isRefetchError, isRefetching, error]);
 
@@ -217,7 +216,15 @@ const DashBoardHome = () => {
                 </Select>
               </HStack>
               <Flex align={"center"} py={"2px"}>
-                <Icon as={TbCurrencyNaira} w={10} h={10} />
+                {selectedCurrency === "Naira" && (
+                  <Icon as={TbCurrencyNaira} w={10} h={10} />
+                )}
+                {selectedCurrency === "Dollar" && (
+                  <Icon as={BsCurrencyDollar} w={10} h={10} />
+                )}
+                {selectedCurrency === "Euro" && (
+                  <Icon as={LuEuro} w={10} h={10} />
+                )}
                 <Heading size={"lg"}>
                   {show
                     ? currencyTotalAmount[selectedCurrency] || "0.00"
