@@ -194,8 +194,8 @@ const Assets = () => {
   );
 
   return (
-    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw">
-      <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={5}>
+    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" my="4vh">
+      <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={5}>
         <GridItem colSpan={{ base: 6, md: 5 }} alignContent={"center"}>
           <Stack direction={"column"} justify={"center"}>
             <HStack gap={"2vw"}>

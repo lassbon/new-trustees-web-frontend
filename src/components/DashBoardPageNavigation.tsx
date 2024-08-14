@@ -49,6 +49,8 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
       zIndex={5}
       bgColor={"white"}
       h={"7vh"}
+      w={"100%"}
+      position={"fixed"}
     >
       <IconButton
         variant={"unstyled"}

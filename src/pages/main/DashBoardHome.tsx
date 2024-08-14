@@ -178,9 +178,9 @@ const DashBoardHome = () => {
   ]);
 
   return (
-    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw">
+    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
       <Flex direction={"column"} gap={"4vh"} as={"section"}>
-        <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={5}>
+        <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={5}>
           {/* currency total amount */}
           <GridItem colSpan={{ base: 6, md: 5 }} alignContent={"center"}>
             <Stack direction={"column"} justify={"center"}>
@@ -260,7 +260,7 @@ const DashBoardHome = () => {
         </Grid>
 
         {/* assets chart */}
-        <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={5}>
+        <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={5}>
           <GridItem
             colSpan={{ base: 6, lg: 4 }}
             bgColor={"rgba(0, 129, 69, 0.05)"}
@@ -320,7 +320,7 @@ const DashBoardHome = () => {
 
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
         <Heading size={"lg"}>Protect your loved ones</Heading>
-        <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={3}>
+        <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={3}>
           {commonCardData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
               <CommonCard {...data} />

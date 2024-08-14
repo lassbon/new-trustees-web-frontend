@@ -49,7 +49,12 @@ const Dashboard = () => {
         <DashBoardPageNavigation handleLogout={handleLogout} info={info} />
       </Hide>
 
-      <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%">
+      <Grid
+        templateColumns="repeat(6, 1fr)"
+        w="100%"
+        h="100%"
+        pt={{ base: "7vh", lg: 0 }}
+      >
         <GridItem colSpan={1} bgColor={"green"} px={"2vw"} hideBelow={"lg"}>
           <Sidebar />
         </GridItem>
@@ -57,9 +62,7 @@ const Dashboard = () => {
           colSpan={{ base: 6, lg: 5 }}
           bgColor={"white"}
           rounded={{ lg: "xl" }}
-          h="full"
           overflow={"auto"}
-          pb={"2vh"}
         >
           <Flex
             w="100%"
@@ -128,7 +131,9 @@ const Dashboard = () => {
             </HStack>
           </Flex>
           <Divider hideBelow={"lg"} mb={"3vh"} />
-          <Outlet />
+          <Flex w="100%" pb={{ base: "12vh", lg: 0 }}>
+            <Outlet />
+          </Flex>
         </GridItem>
       </Grid>
 
