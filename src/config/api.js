@@ -11,6 +11,88 @@ export const postRegister = async (data) => {
   );
 }; //used
 
+export const postAddAssets = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/assets/add`,
+    data,
+    { headers }
+  );
+}; //used
+
+export const postBeneficiary = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/beneficiary/add`,
+    data,
+    { headers }
+  );
+}; //used
+
+export const postEstatePlan = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/estate-plan/add`,
+    data,
+    { headers }
+  );
+}; //used
+
+export const patchBeneficiary = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  const { id } = data;
+  delete data?.id;
+  return await axios.patch(
+    `${import.meta.env.VITE_APP_API_URL}/beneficiary/update/${id}`,
+    data,
+    { headers }
+  );
+}; //used
+
+export const patchNewPassword = async (data) => {
+  console.log("new", data);
+  const { password, hash } = data;
+  const newpassword = { newPassword: password };
+  return await axios.patch(
+    `${import.meta.env.VITE_APP_API_URL}/user/forget-password/complete/${hash}`,
+    newpassword
+  );
+}; //used
+
+export const patchUser = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  return await axios.patch(`${import.meta.env.VITE_APP_API_URL}/user`, data, {
+    headers,
+  });
+}; //used
+
+export const patchNin = async (data, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  const { nin } = data;
+  return await axios.patch(
+    `${import.meta.env.VITE_APP_API_URL}/user/submit-nin/${nin}`,
+    null,
+    {
+      headers,
+    }
+  );
+}; //used
+
 export const getUser = async ({ queryKey }) => {
   const [_key, { token }] = queryKey;
   const headers = {
@@ -20,6 +102,31 @@ export const getUser = async ({ queryKey }) => {
   return await axios.get(`${import.meta.env.VITE_APP_API_URL}/user`, {
     headers,
   });
+}; //used
+
+export const getAssets = async ({ queryKey }) => {
+  const [_key, { token }] = queryKey;
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.get(`${import.meta.env.VITE_APP_API_URL}/assets`, {
+    headers,
+  });
+}; //used
+
+export const getAssetsCurrencies = async ({ queryKey }) => {
+  const [_key, { token }] = queryKey;
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.get(
+    `${import.meta.env.VITE_APP_API_URL}/assets/currency`,
+    {
+      headers,
+    }
+  );
 }; //used
 
 export const getBeneficiaries = async ({ queryKey }) => {
@@ -52,7 +159,6 @@ export const getAssetsCategory = async ({ queryKey }) => {
 
 export const getAssetInfo = async ({ queryKey }) => {
   const [_key, { token, asset_id }] = queryKey;
-  console.log(asset_id);
   const headers = {
     authorization: `Bearer ${token}`,
   };
@@ -76,16 +182,6 @@ export const getEstatePlans = async ({ queryKey }) => {
   });
 }; //used
 
-export const patchNewPassword = async (data) => {
-  console.log("new", data);
-  const { password, hash } = data;
-  const newpassword = { newPassword: password };
-  return await axios.patch(
-    `${import.meta.env.VITE_APP_API_URL}/user/forget-password/complete/${hash}`,
-    newpassword
-  );
-}; //used
-
 export const getResetPassword = async ({ queryKey }) => {
   const [_key, { email }] = queryKey;
   return await axios.get(
@@ -104,5 +200,17 @@ export const getResendOtp = async ({ queryKey }) => {
   const [_key, { email }] = queryKey;
   return await axios.get(
     `${import.meta.env.VITE_APP_API_URL}/user/resend-otp/${email}`
+  );
+}; //used
+
+export const DeleteBeneficiary = async (beneficiary_id, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  console.log(token, "token");
+  return await axios.delete(
+    `${import.meta.env.VITE_APP_API_URL}/beneficiary/delete/${beneficiary_id}`,
+    { headers }
   );
 }; //used

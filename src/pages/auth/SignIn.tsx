@@ -25,7 +25,7 @@ import isTokenExpired from "../../config/jwtDecode";
 
 const SignIn = () => {
   const { isPending, mutateAsync } = useLogin();
-  const [cookie, setCookie] = useCookies(["auth"], { doNotUpdate: false });
+  const [_cookie, setCookie] = useCookies(["auth"], { doNotUpdate: false });
   const toast = useToast();
   const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
@@ -53,13 +53,14 @@ const SignIn = () => {
     mutateAsync(values, {
       onSuccess: async (resData) => {
         console.log("Login success", resData);
-        const { message, data } = resData?.data;
+        const { message } = resData?.data;
+        console.log(resData?.data, "signin  data");
         //extract token
         const { token } = resData?.headers;
         //logic to extract the expiration time of the token
-        const exp = await isTokenExpired(token);
+        const expHour = await isTokenExpired(token);
 
-        if (!exp) {
+        if (!expHour) {
           toast({
             title: "error loginning in pls try again",
             position: "top-right",
@@ -70,15 +71,13 @@ const SignIn = () => {
           return;
         }
 
-        const age = exp / 1000;
-
-        console.log("exp", exp);
+        console.log(expHour, "date");
 
         //setting token to cookie storage, along side expiration time
         setCookie(
           "auth",
           { token: token, rememberMe: check },
-          { maxAge: 260, sameSite: "lax" }
+          { maxAge: 3600, sameSite: false }
         );
 
         navigate("/Dashboard");

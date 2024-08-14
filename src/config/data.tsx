@@ -40,6 +40,10 @@ export const navMenuData = [
     label: "Recommendations",
     link: "Recommendation",
   },
+  {
+    label: "SignIn",
+    link: "/auth/SignIn",
+  },
 ];
 
 export const featuresData = [
@@ -202,16 +206,19 @@ export const estatePlanningData = [
     bgImage: "/images/commonImg5.png",
     header: "Simple will",
     text: "Write a Will from the comfort of your home in few minutes. Include basic assets such as your cash, shares, and retirement savings.",
+    path: "simplewill",
   },
   {
     bgImage: "/images/commonImg6.png",
     header: "Comprehensive Will",
     text: "Do you want to include more assets in your Will such as Real estate, Jewellery, e.t.c then a comprehensive Will is more suitable for you.",
+    path: "comprehensivewill",
   },
   {
     bgImage: "/images/commonImg7.png",
     header: "Nominated Fund",
     text: "Nominate a Trustee to transfer your cash or  investments proceeds to your specified beneficiary in case of an eventuality.",
+    path: "nominatedfund",
   },
   {
     bgImage: "/images/commonImg8.png",
@@ -227,6 +234,7 @@ export const estatePlanningData = [
     bgImage: "/images/commonImg10.png",
     header: "Education Trust",
     text: "Set up an Education Trust fund to cater for your Children's Education and be guaranteed of their future in the event of your incapacitation.",
+    path: "educationTrust",
   },
 ];
 
@@ -330,5 +338,219 @@ export const beneficiaries = [
     relationship: "Child",
     EmailAddress: "emmanueloke@gmail.com",
     phoneNumber: "09087654322",
+  },
+];
+
+export const banks = [
+  "Access Bank Plc",
+
+  "Accion Microfinance Bank",
+
+  "Citibank Nigeria Limited",
+
+  "Coronation Merchant Bank",
+
+  "Covenant Microfinance Bank Ltd",
+
+  "Ecobank Nigeria",
+
+  "Empire Trust Microfinance Bank",
+
+  "Fidelity Bank Plc",
+
+  "Fina Trust Microfinance Bank",
+
+  "Finca Microfinance Bank Limited",
+
+  "First Bank of Nigeria Limited",
+
+  "First City Monument Bank Limited(FCMB)",
+
+  "Globus Bank Limited",
+
+  "Guaranty Trust Holding Company Plc",
+
+  "Heritage Bank Plc",
+
+  "Infinity Microfinance Bank",
+
+  "Jaiz Bank Plc",
+
+  "Keystone Bank Limited",
+
+  "Kuda Bank",
+
+  "LOTUS BANK",
+
+  "Mint Finex MFB",
+
+  "Mkobo MFB",
+
+  "Moniepoint Microfinance Bank",
+
+  "Mutual Trust Microfinance Bank",
+
+  "Nova Merchant Bank",
+
+  "Opay",
+
+  "Palmpay",
+  "Parallex Bank Limited",
+
+  "Sparkle Bank",
+
+  "Peace Microfinance Bank",
+
+  "Pearl Microfinance Bank Limited",
+
+  "Polaris Bank Limited. The successor to Skye Bank Plc.",
+
+  "PremiumTrust Bank Limited",
+
+  "Providus Bank Limited",
+
+  "Rand Merchant Bank",
+
+  "Rephidim Microfinance Bank",
+
+  "Rubies Bank",
+
+  "Shepherd Trust Microfinance Bank",
+
+  "Stanbic IBTC Bank Plc",
+
+  "Standard Chartered",
+
+  "Sterling Bank Plc",
+
+  "SunTrust Bank Nigeria Limited",
+
+  "TAJBank Limited",
+
+  "Titan Trust Bank Limited",
+
+  "Union Bank of Nigeria Plc",
+
+  "United Bank for Africa Plc",
+
+  "Unity Bank Plc",
+
+  "VFD Microfinance Bank",
+
+  "Wema Bank Plc",
+
+  "Zenith Bank Plc",
+
+  "OTHERS",
+];
+
+const comprehensive = [
+  {
+    label: "Do you have any of the documents listed below executed or filed?",
+    name: "comprehensivewill_document_owned",
+    explainerText: "",
+    placeholder: "",
+    options: [
+      "A will",
+      "A living Trust",
+      "Deed Of Gift",
+      "Joint Ownership",
+      "Power Of Attorney",
+      "Others",
+    ],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "Full name",
+    name: "comprehensivewill_settlor_name",
+    explainerText: "",
+    placeholder: "doe",
+    datatype: "string",
+    required: true,
+  },
+  {
+    label: "Religion",
+    name: "comprehensivewill_religion",
+    explainerText: "",
+    placeholder: "",
+    options: ["Christianity", "Islam", "Traditional", "Others"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "Marital Status",
+    name: "comprehensivewill_marital_status",
+    explainerText: "",
+    placeholder: "",
+    options: ["Single", "Married", "Widowed", "Divorced"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "If married, what type of marriage?",
+    name: "comprehensivewill_marriage_type",
+    explainerText: "",
+    placeholder: "",
+    options: ["Marriage by the Act", "Customary Marriage", "Islamic Marriage"],
+    datatype: "radio",
+    required: false,
+  },
+  {
+    label:
+      "Are there any customary traditions common to people from your region?",
+    name: "comprehensivewill_customary_tradition",
+    explainerText: "",
+    placeholder: "",
+    options: ["True", "False"],
+    datatype: "radio",
+    required: true,
+  },
+  {
+    label: "If yes kindly give details",
+    name: "comprehensivewill_customary_tradition_details",
+    explainerText: "",
+    placeholder: "",
+    datatype: "textarea",
+    required: false,
+  },
+  {
+    label: "Home address",
+    name: "comprehensivewill_address",
+    explainerText: "",
+    placeholder: "5 lekki road",
+    datatype: "textarea",
+    required: true,
+  },
+  {
+    label: "email",
+    name: "comprehensivewill_email",
+    placeholder: "johndoe@gmail.com",
+    datatype: "email",
+    required: true,
+  },
+  {
+    label: "Telephone number",
+    name: "comprehensivewill_phone",
+    placeholder: "09087777712",
+    datatype: "phone",
+    required: true,
+  },
+  {
+    label: "Occupation/Profession",
+    name: "comprehensivewill_occupation",
+    placeholder: "",
+    datatype: "select",
+    options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
+    required: true,
+  },
+  {
+    label: "Other Matters",
+    name: "comprehensivewill_others",
+    explainerText:
+      "(Describe or list here any facts or matters that do not seem to be covered by this questionnaire and that you believe may be important for us to know.)",
+    placeholder: "5 lekki road",
+    datatype: "textarea",
+    required: false,
   },
 ];

@@ -12,25 +12,31 @@ import {
   Avatar,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Skeleton,
 } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
 import Sidebar from "../../components/Sidebar";
 import DashBoardPageNavigation from "../../components/DashBoardPageNavigation";
 import { Outlet, useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 
 const Dashboard = () => {
+  const [_cookies, _setCookie, removeCookie] = useCookies(["auth"]);
   const { isLoading, error, data } = useUser();
   const info = data?.data?.data;
-  const loaded = !isLoading && !error ? true : false;
+  const loaded = !isLoading || error ? true : false;
   const location = useLocation();
-  console.log(location.pathname);
-  const path = location.pathname.split("/").pop();
+  const path: any = location.pathname.split("/").pop();
+  const paths = ["Dashboard", "Assets", "addassets", "EstatePlans", "settings"];
+
+  const handleLogout = () => {
+    removeCookie("auth");
+  };
   return (
     <Flex
       bgColor={"green"}
@@ -40,10 +46,15 @@ const Dashboard = () => {
     >
       {/* for small screen */}
       <Hide above="lg">
-        <DashBoardPageNavigation />
+        <DashBoardPageNavigation handleLogout={handleLogout} info={info} />
       </Hide>
 
-      <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%">
+      <Grid
+        templateColumns="repeat(6, 1fr)"
+        w="100%"
+        h="100%"
+        pt={{ base: "7vh", lg: 0 }}
+      >
         <GridItem colSpan={1} bgColor={"green"} px={"2vw"} hideBelow={"lg"}>
           <Sidebar />
         </GridItem>
@@ -51,9 +62,7 @@ const Dashboard = () => {
           colSpan={{ base: 6, lg: 5 }}
           bgColor={"white"}
           rounded={{ lg: "xl" }}
-          h="full"
           overflow={"auto"}
-          pb={"2vh"}
         >
           <Flex
             w="100%"
@@ -66,13 +75,15 @@ const Dashboard = () => {
               <Skeleton isLoaded={loaded}>
                 <Heading
                   size={{ base: "md", lg: "lg" }}
-                  textTransform={"lowercase"}
+                  textTransform={"capitalize"}
                 >
-                  {path === "Dashboard"
-                    ? `Welcome ${info?.surname} ${info?.othernames}`
-                    : path}
+                  {paths.includes(path) && path === "Dashboard"
+                    ? `Welcome ${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
+                    : paths.includes(path) && path === "addassets"
+                    ? "Add Assets"
+                    : paths.includes(path) && path}
                 </Heading>
-                {path === "Dashboard" && (
+                {paths.includes(path) && path === "Dashboard" && (
                   <Text>Here’s whats happening with your assets.</Text>
                 )}
               </Skeleton>
@@ -90,9 +101,10 @@ const Dashboard = () => {
               <Divider orientation="vertical" h={"4vh"} />
               <Avatar
                 name={info ? `${info?.surname} ${info?.othernames}` : ""}
-                src=""
+                src={info?.picture_url}
                 size="sm"
                 bgColor={"green"}
+                color={"white"}
               />
               <Menu>
                 <MenuButton
@@ -103,24 +115,32 @@ const Dashboard = () => {
                   _expanded={{ bg: "green.400" }}
                   _focus={{ boxShadow: "outline" }}
                   textTransform={"capitalize"}
+                  maxWidth={"fit-content"}
                 >
-                  {`${info?.surname} ${info?.othernames}` || "-  -"}{" "}
+                  {isLoading || error ? (
+                    <Skeleton height="2vh" w={"10vw"} />
+                  ) : (
+                    `${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
+                  )}
                   <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>New File</MenuItem>
-                  <MenuItem>New Window</MenuItem>
-                  <MenuDivider />
-                  <MenuItem>Open...</MenuItem>
-                  <MenuItem>Save File</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </HStack>
           </Flex>
           <Divider hideBelow={"lg"} mb={"3vh"} />
-          <Outlet />
+          <Flex w="100%" pb={{ base: "12vh", lg: 0 }}>
+            <Outlet />
+          </Flex>
         </GridItem>
       </Grid>
+
+      {/* <TawkMessengerReact
+        propertyId="5f7ee43c4704467e89f5b01f"
+        widgetId="default"
+      /> */}
     </Flex>
   );
 };
