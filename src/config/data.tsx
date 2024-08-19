@@ -33,17 +33,10 @@ export const navMenuData = [
     id: "Contact",
   },
   {
-    label: "Blog",
-    link: "Blog",
-  },
-  {
     label: "Recommendations",
     link: "Recommendation",
   },
-  {
-    label: "SignIn",
-    link: "/auth/SignIn",
-  },
+ 
 ];
 
 export const featuresData = [

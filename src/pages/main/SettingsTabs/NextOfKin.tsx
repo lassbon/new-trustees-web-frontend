@@ -96,7 +96,7 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_fullname"
-              placeholder="NOK fullname"
+              placeholder="Your Next of kin fullname"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -112,7 +112,7 @@ const NextOfKin = () => {
             <AppFormFields.textAreaInput
               type="text"
               name="next_of_kin_address"
-              placeholder="NOK address"
+              placeholder="Your Next of kin address"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -128,7 +128,7 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_phone"
-              placeholder="NOK phone number"
+              placeholder="Your Next of kin phone number"
               size="lg"
               disabled={patch?.isPending}
             />
@@ -144,7 +144,7 @@ const NextOfKin = () => {
             <AppFormFields.Input
               type="text"
               name="next_of_kin_relationship"
-              placeholder="NOK relationship"
+              placeholder="Your next of kin relationship"
               size="lg"
               disabled={patch?.isPending}
             />

@@ -36,8 +36,8 @@ const Security = () => {
       }
 
       if (error) {
-        const res = (error as { response?: any })?.response;
-        const { message } = res?.data;
+        const res: any = (error as { response?: any })?.response;
+        const { message } = res?.data ?? {};
 
         toast({
           title: message,
@@ -51,7 +51,7 @@ const Security = () => {
     }
 
     if (data && (!isRefetching || !isLoading)) {
-      const { message } = data?.data;
+      const { message } = data?.data ?? {};
       toast({
         title: message,
         position: "top-right",
@@ -68,7 +68,7 @@ const Security = () => {
     };
   }, []);
 
-  console.log(data, isRefetching, isLoading, "issue");
+
   return (
     <Flex direction={"column"} gap={"2vh"} w="100%">
       <Flex direction={"column"} gap={"2vh"}>
@@ -100,7 +100,7 @@ const Security = () => {
           </Button>
         </Flex>
       </Flex>
-      <Flex direction={"column"} gap={"2vh"}>
+      {/* <Flex direction={"column"} gap={"2vh"}>
         <Heading size={"sm"}>PIN settings</Heading>
         <Flex
           direction={"column"}
@@ -124,7 +124,7 @@ const Security = () => {
             Set up PIN
           </Button>
         </Flex>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };
