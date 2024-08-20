@@ -7,11 +7,13 @@ import {
   Image,
   Text,
   Button,
+  Link
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { sidebarData } from "../config/data";
 
 import Logo from "../assets/images/logo2.png";
+import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
 
 const Sidebar = () => {
   return (
@@ -71,14 +73,19 @@ const Sidebar = () => {
           <br />
           mapp@meristemng.com
         </Text>
-        <Button
+        {/* <Button
           variant="outline"
           colorScheme="green"
           bgColor={"white"}
           borderRadius="100px"
         >
           Help & Support
-        </Button>
+        </Button> */}
+        <br />
+        <Link href="https://wa.me/" isExternal>
+           <Image  boxSize="full" objectFit="contain" src={chatOnWhatsapp} alt="Dan Abramov" />
+        </Link>
+       
       </VStack>
       {/* contact info */}
     </Flex>
