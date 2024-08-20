@@ -12,7 +12,7 @@ const AddEstatePlan = () => {
 
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%">
-      <Flex direction={"column"} gap={"2vh"} as={"section"}>
+      {/* <Flex direction={"column"} gap={"2vh"} as={"section"}>
         <Heading size={"md"}>Recommendations</Heading>
         <Flex
           w="full"
@@ -34,7 +34,7 @@ const AddEstatePlan = () => {
             <CommonCard {...data} key={i} />
           ))}
         </Flex>
-      </Flex>
+      </Flex> */}
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
         <Heading size={"md"}>
           Estate Planning Tools to Protect your loved ones

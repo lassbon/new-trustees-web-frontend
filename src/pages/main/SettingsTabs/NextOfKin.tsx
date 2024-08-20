@@ -35,7 +35,7 @@ const NextOfKin = () => {
     console.log(values, "next profile");
     patch.mutateAsync(values, {
       onSuccess: async (resData) => {
-        const { message } = resData?.data;
+        const { message } = resData?.data ?? {};
         toast({
           title: message,
           position: "top-right",
@@ -56,7 +56,7 @@ const NextOfKin = () => {
           });
           return;
         }
-        const { status, message } = error?.response.data;
+        const { status, message } = error?.response.data ?? {};
         if (!status) {
           toast({
             title: message,

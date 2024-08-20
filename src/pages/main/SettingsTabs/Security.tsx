@@ -85,7 +85,7 @@ const Security = () => {
           borderWidth={1}
         >
           <Text>
-            Click the Reset password button to reset your MAPP password.
+            Click the Reset password button to reset your MAPP password.
           </Text>
           <Button
             bgColor={"#008145"}

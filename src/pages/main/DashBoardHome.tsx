@@ -125,7 +125,7 @@ const DashBoardHome = () => {
     }
 
     if (assets.data && (!assets.isRefetching || !assets.isLoading)) {
-      const { data, assetGrouped } = assets.data?.data;
+      const { data = null, assetGrouped = null } = assets.data && assets.data.data ? assets.data.data : {};
       //i  Grouped the data response by Currency
       if (assets.data?.data) {
         const groupedByCurrency = data.reduce((acc: any, obj: any) => {
@@ -150,7 +150,7 @@ const DashBoardHome = () => {
           // setCurrencies(currencies);
 
           // Check if currency exists in totalAmountByCurrency object
-          if (groupedByCurrency.hasOwnProperty(currency)) {
+          if (Object.prototype.hasOwnProperty.call(groupedByCurrency, currency)) {
             const amounts = groupedByCurrency[currency];
 
             // Calculate total sum of amounts for current currency
@@ -161,7 +161,7 @@ const DashBoardHome = () => {
             totalAmountByCurrency[currency] = totalAmount.toLocaleString();
           }
         }
-        console.log(assetGrouped, "assetGrouped");
+
         setCurrencyTotalAmount(totalAmountByCurrency);
       } else {
         // setCurrencies(null);
@@ -176,6 +176,8 @@ const DashBoardHome = () => {
     assets.isRefetching,
     assets.error,
   ]);
+
+
 
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
@@ -210,7 +212,7 @@ const DashBoardHome = () => {
                       value={currency?.currency}
                       style={{ textTransform: "capitalize" }}
                     >
-                      {currency?.currency.toLowerCase()}
+                      {currency?.currency.toUpperCase()}
                     </option>
                   ))}
                 </Select>

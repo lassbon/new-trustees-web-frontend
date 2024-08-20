@@ -61,7 +61,7 @@ const Sidebar = () => {
         <Text textAlign={"center"}>Need help? Get in touch with us via</Text>
         <Text
           textAlign={"center"}
-          textTransform={"capitalize"}
+       
           as={"b"}
           size={"xs"}
         >

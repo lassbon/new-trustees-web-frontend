@@ -16,12 +16,13 @@ import {
   Icon,
   Img,
   useToast,
-  Skeleton,
+  Skeleton
 } from "@chakra-ui/react";
 // import { myEstatePlanData } from "../../../config/data";
 import EmptyDataImg from "../../../assets/images/emptyData.png";
 import useEstatePlans from "../../../custom-hooks/http-services/use-GET/useEstatePlans";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const MyEstatePlan = () => {
   const {
@@ -78,6 +79,7 @@ const MyEstatePlan = () => {
     <Flex direction={"column"} gap={"4vh"} w="100%">
       <Stack direction={"row"} justify={"space-between"} align={"center"}>
         <Heading size={"md"}>My Estate Plan</Heading>
+        <NavLink to="/Dashboard/EstatePlans/AddPlans">
         <Button
           colorScheme="green"
           size="md"
@@ -86,6 +88,7 @@ const MyEstatePlan = () => {
         >
           Add Estate Plan
         </Button>
+        </NavLink>
       </Stack>
 
       {!isLoading && estatePlans && estatePlans.length === 0 ? (
@@ -106,6 +109,7 @@ const MyEstatePlan = () => {
           <Heading size={"sm"} color={"gray"}>
             You haven't added any estate plan
           </Heading>
+          <NavLink to="/Dashboard/EstatePlans/AddPlans">
           <Button
             colorScheme="green"
             size="md"
@@ -114,6 +118,7 @@ const MyEstatePlan = () => {
           >
             Add Estate Plan
           </Button>
+          </NavLink>
         </Flex>
       ) : (
         <TableContainer
