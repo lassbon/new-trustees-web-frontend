@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -33,7 +34,37 @@ import ComprehensiveWill from "./pages/main/EstatePlan/Plans/ComprehensiveWill";
 import EducationTrust from "./pages/main/EstatePlan/Plans/EducationTrust";
 import NominatedFund from "./pages/main/EstatePlan/Plans/NominatedFund";
 
+declare global {
+  interface Window {
+    Tawk_API: any;
+  }
+}
 function App() {
+
+
+  
+  useEffect(() => {
+    let Tawk_API = window.Tawk_API || {};
+    const s1 = document.createElement("script");
+  
+    s1.async = false;
+    s1.src = `https://embed.tawk.to/${import.meta.env.VITE_APP_TAWKTO_ID}/default`;
+    s1.charset = "UTF-8";
+    s1.setAttribute("crossorigin", "*");
+  
+    const s0 = document.getElementsByTagName("script")[0];
+    if (s0.parentNode) {
+      s0.parentNode.insertBefore(s1, s0);
+    }
+  
+    s1.onload = () => {
+      Tawk_API = window.Tawk_API;
+    };
+  
+ 
+  }, []);
+
+
   const [cookie] = useCookies(["auth"]);
 
   const ProtectedRoutes = () => {
