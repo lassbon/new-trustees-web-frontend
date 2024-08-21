@@ -527,7 +527,7 @@ const SimpleWill = () => {
     setAddedBanks((_prevstate: any) => {
       return [...updatedAddedBanks, newBank];
     });
-    console.log("addBank");
+
   };
 
   const addShare = () => {
@@ -647,7 +647,7 @@ const SimpleWill = () => {
     setAddedWillExecutors(updatedAddedWillExecutors);
     setAddedDependants(updatedAddedDependants);
     setAddedBeneficiaries(updatedAddedBeneficiaries);
-    console.log("addShare");
+  
 
     setAddedShares((_prevstate: any) => {
       return [...updatedAddedShares, newShare];
@@ -752,7 +752,7 @@ const SimpleWill = () => {
     setAddedSpouse((_prevstate: any) => {
       return [...updatedAddedSpouses, newSpouse];
     });
-    console.log("addSpouse");
+   
   };
 
   const addExecutor = () => {
@@ -861,7 +861,7 @@ const SimpleWill = () => {
     setAddedWillExecutors((_prevstate: any) => {
       return [...updatedAddedWillExecutors, newExecutor];
     });
-    console.log("addExecutor");
+  
   };
 
   const addDependant = () => {
@@ -962,11 +962,11 @@ const SimpleWill = () => {
     setAddedDependants((_prevstate: any) => {
       return [...updatedAddedDependants, newDependant];
     });
-    console.log("addDependant");
+   
   };
 
   const addBeneficiary = async () => {
-    console.log("addBeneficiary");
+
     const newId = addedBeneficiaries.length + 1;
     const newBene = {
       [`name_${newId}`]: {
@@ -1527,11 +1527,11 @@ const SimpleWill = () => {
       }
     });
 
-    console.log("Grouped", groupedData);
+  
     add.mutateAsync(groupedData, {
       onSuccess: async (resData) => {
-        const { message } = resData?.data;
-        console.log(resData?.data, "success");
+        const { message } = resData?.data ?? {};
+    
         toast({
           title: message,
           position: "top-right",
@@ -1540,7 +1540,7 @@ const SimpleWill = () => {
           variant: "top-accent",
         });
       },
-      onError: (error: any) => {
+      onError: (error: Error) => {
         if (error.response === undefined) {
           toast({
             title: "something went wrong check network or try again!",
@@ -1551,8 +1551,8 @@ const SimpleWill = () => {
           });
           return;
         }
-        const { status, message } = error?.response.data;
-        console.log(message, "error");
+        const { status, message } = error?.response.data ?? {};
+  
 
         if (!status) {
           toast({

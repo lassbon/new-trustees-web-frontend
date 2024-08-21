@@ -82,7 +82,7 @@ const Sidebar = () => {
           Help & Support
         </Button> */}
         <br />
-        <Link href="https://wa.me/" isExternal>
+        <Link href="https://wa.me/2348084259372" isExternal>
            <Image  boxSize="full" objectFit="contain" src={chatOnWhatsapp} alt="Dan Abramov" />
         </Link>
        

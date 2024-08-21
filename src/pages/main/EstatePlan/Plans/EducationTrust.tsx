@@ -419,7 +419,7 @@ const EducationTrust = () => {
               if (e.target.value !== "")
                 handleBeneficiarySelect(info[e.target.value], index);
 
-              console.log(info[e.target.value], "inof");
+       
             }}
             disabled={error || isLoading || isRefetching ? true : false}
           >
@@ -512,12 +512,12 @@ const EducationTrust = () => {
       trust_beneficiary: beneficiariesData,
     };
 
-    console.log(formData, "formData");
+  
 
     add.mutateAsync(formData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
-        console.log(resData?.data, "success");
+
         toast({
           title: message,
           position: "top-right",
@@ -538,7 +538,7 @@ const EducationTrust = () => {
           return;
         }
         const { status, message } = error?.response.data;
-        console.log(message, "error");
+      
 
         if (!status) {
           toast({

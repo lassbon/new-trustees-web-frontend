@@ -52,9 +52,9 @@ const SignIn = () => {
   const handleLogin = async (values: any) => {
     mutateAsync(values, {
       onSuccess: async (resData) => {
-        console.log("Login success", resData);
+       
         const { message } = resData?.data;
-        console.log(resData?.data, "signin  data");
+        
         //extract token
         const { token } = resData?.headers;
         //logic to extract the expiration time of the token
@@ -71,7 +71,7 @@ const SignIn = () => {
           return;
         }
 
-        console.log(expHour, "date");
+
 
         //setting token to cookie storage, along side expiration time
         setCookie(

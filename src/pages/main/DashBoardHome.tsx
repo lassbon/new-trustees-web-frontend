@@ -37,7 +37,10 @@ import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 
+
 const DashBoardHome = () => {
+
+
   const [show, setShow] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
@@ -57,6 +60,7 @@ const DashBoardHome = () => {
 
   const toast = useToast();
 
+
   useEffect(() => {
     if ((isLoadingError && !isLoading) || (isRefetchError && !isRefetching)) {
       if (error && (error as { response?: unknown })?.response === undefined) {
@@ -72,7 +76,7 @@ const DashBoardHome = () => {
 
       if (error) {
         const res = (error as { response?: any })?.response;
-        const { message } = res?.data;
+        const { message } = res?.data ?? {};
 
         toast({
           title: message,
@@ -86,7 +90,7 @@ const DashBoardHome = () => {
     }
 
     if (data && (!isLoading || !isRefetching)) {
-      console.log(data?.data, "user");
+  
     }
   }, [data, isLoadingError, isLoading, isRefetchError, isRefetching, error]);
 
@@ -111,7 +115,7 @@ const DashBoardHome = () => {
 
       if (assets.error) {
         const res = (assets.error as { response?: any })?.response;
-        const { message } = res?.data;
+        const { message } = res?.data ?? {};
 
         toast({
           title: message,

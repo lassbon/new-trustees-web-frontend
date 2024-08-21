@@ -69,7 +69,6 @@ function App() {
 
   const ProtectedRoutes = () => {
     const auth = cookie.auth;
-    console.log(auth, "auth");
     return auth?.token || (auth?.token && auth?.rememberMe) ? (
       <Dashboard />
     ) : (
