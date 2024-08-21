@@ -135,12 +135,11 @@ const Dashboard = () => {
             <Outlet />
           </Flex>
         </GridItem>
+        <TawkMessengerReact
+          propertyId="5f7ee43c4704467e89f5b01f"
+          widgetId="default"
+        />
       </Grid>
-
-      {/* <TawkMessengerReact
-        propertyId="5f7ee43c4704467e89f5b01f"
-        widgetId="default"
-      /> */}
     </Flex>
   );
 };

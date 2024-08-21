@@ -50,6 +50,9 @@ const PersonalInfo = () => {
   });
 
   const handleUpdateProfile = (values: any) => {
+    delete values?.surname, delete values?.othernames, delete values?.email;
+
+    console.log(values);
     //Make a POST request to update the profile
     patch.mutateAsync(values, {
       onSuccess: async (resData) => {
