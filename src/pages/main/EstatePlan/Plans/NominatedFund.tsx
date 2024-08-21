@@ -604,12 +604,12 @@ const NominatedFund = () => {
       ...nominatorsData,
       nominatedfund_beneficiary: beneficiariesData,
     };
-    console.log(formData, "formData");
+
 
     add.mutateAsync(formData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
-        console.log(resData?.data, "success");
+
         toast({
           title: message,
           position: "top-right",
@@ -631,7 +631,7 @@ const NominatedFund = () => {
           return;
         }
         const { status, message } = error?.response.data;
-        console.log(message, "error");
+  
 
         if (!status) {
           toast({

@@ -54,7 +54,7 @@ const MyEstatePlan = () => {
       if (error) {
         const res = (error as { response?: any })?.response;
         const { message } = res?.data;
-        console.log(res?.data);
+    
 
         toast({
           title: message,

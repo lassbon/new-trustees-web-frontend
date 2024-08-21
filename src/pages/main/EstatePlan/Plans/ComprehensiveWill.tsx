@@ -394,7 +394,7 @@ const ComprehensiveWill = () => {
     setChildren((_prevstate: any) => {
       return [...updatedChildren, newChild];
     });
-    console.log("addchild");
+   
   };
 
   const addBeneficiary = async () => {
@@ -502,7 +502,7 @@ const ComprehensiveWill = () => {
     setBeneficiaries((_prevstate: any) => {
       return [...updatedBeneficiaries, newBene];
     });
-    console.log("addBeneficiary");
+  
   };
 
   const addAsset = () => {
@@ -578,7 +578,7 @@ const ComprehensiveWill = () => {
     setAssets((_prevstate: any) => {
       return [...updatedAssets, newAsset];
     });
-    console.log("addAsset");
+   
   };
 
   const addExecutor = () => {
@@ -662,7 +662,7 @@ const ComprehensiveWill = () => {
     setExecutors((_prevstate: any) => {
       return [...updatedExecutors, newExecutor];
     });
-    console.log("addExecutor");
+   
   };
 
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
@@ -1101,12 +1101,12 @@ const ComprehensiveWill = () => {
       }
     });
 
-    console.log("Grouped", groupedData);
+   
 
     add.mutateAsync(groupedData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
-        console.log(resData?.data, "success");
+    
         toast({
           title: message,
           position: "top-right",
@@ -1127,7 +1127,7 @@ const ComprehensiveWill = () => {
           return;
         }
         const { status, message } = error?.response.data;
-        console.log(message, "error");
+      
 
         if (!status) {
           toast({

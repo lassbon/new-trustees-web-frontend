@@ -32,7 +32,7 @@ const NextOfKin = () => {
 
   const handleUpdateProfile = (values: any) => {
     //Make a POST request to update the profile
-    console.log(values, "next profile");
+
     patch.mutateAsync(values, {
       onSuccess: async (resData) => {
         const { message } = resData?.data ?? {};

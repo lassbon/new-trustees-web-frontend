@@ -50,7 +50,7 @@ const Beneficiaries = () => {
     isRefetchError,
     refetch,
   } = useBeneficiaries();
-  console.log(isLoading, isRefetching, "load", data);
+
   const del = useDeleteBeneficiary();
   const upd = useUpdateBeneficiary();
   const add = useAddBeneficiary();
@@ -197,9 +197,9 @@ const Beneficiaries = () => {
       del.mutateAsync(selectedBeneficiary?.user_id, {
         onSuccess: async (resData) => {
           onClose();
-          console.log("Login success", resData);
+       
           const { message } = resData?.data;
-          console.log(resData?.data, "delete");
+ 
           toast({
             title: message,
             position: "top-right",
@@ -241,7 +241,7 @@ const Beneficiaries = () => {
   };
 
   const handleAddBeneficiary = (values: any) => {
-    console.log(values, "add");
+
     add.mutateAsync(values, {
       onSuccess: async (resData) => {
         addBene.onClose();
@@ -298,7 +298,7 @@ const Beneficiaries = () => {
       if (error) {
         const res = (error as { response?: any })?.response;
         const { message } = res?.data;
-        console.log(res?.data);
+
 
         toast({
           title: message,
