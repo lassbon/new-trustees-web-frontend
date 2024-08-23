@@ -6,8 +6,7 @@ import {
   ListIcon,
   Image,
   Text,
-  Button,
-  Link
+  Link,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { sidebarData } from "../config/data";
@@ -61,31 +60,23 @@ const Sidebar = () => {
         color={"white"}
       >
         <Text textAlign={"center"}>Need help? Get in touch with us via</Text>
-        <Text
-          textAlign={"center"}
-       
-          as={"b"}
-          size={"xs"}
-        >
+        <Text textAlign={"center"} as={"b"} size={"xs"}>
           07025640071
           <br />
           or
           <br />
           mapp@meristemng.com
         </Text>
-        {/* <Button
-          variant="outline"
-          colorScheme="green"
-          bgColor={"white"}
-          borderRadius="100px"
-        >
-          Help & Support
-        </Button> */}
-        <br />
+        {/* <br /> */}
         <Link href="https://wa.me/2348084259372" isExternal>
-           <Image  boxSize="full" objectFit="contain" src={chatOnWhatsapp} alt="Dan Abramov" />
+          <Image
+            width={"50vw"}
+            height={"10vh"}
+            objectFit="contain"
+            src={chatOnWhatsapp}
+            alt="Dan Abramov"
+          />
         </Link>
-       
       </VStack>
       {/* contact info */}
     </Flex>

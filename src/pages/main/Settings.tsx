@@ -25,9 +25,7 @@ const Settings = () => {
           <Tab flexShrink={0} minW={"auto"}>
             Next of Kin
           </Tab>
-          <Tab flexShrink={0} minW={"auto"}>
-            Verify Identity
-          </Tab>
+          <Tab>Verify Identity</Tab>
         </TabList>
         <TabPanels>
           <TabPanel px={0}>

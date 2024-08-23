@@ -21,6 +21,8 @@ const EstatePlans = () => {
           borderColor={"#E6E6E6"}
           rounded={"md"}
           p="5px"
+          w="100%"
+          overflow={"auto"}
         >
           {estatePlanBreadcrumbData.map((data, i) => (
             <NavLink to={data?.link} end key={i}>
@@ -31,6 +33,8 @@ const EstatePlans = () => {
                     rounded={"lg"}
                     color={isActive ? "white" : "black"}
                     p="10px"
+                    flexShrink={0}
+                    w={"fit-content"}
                   >
                     <Text>{data.label}</Text>
                   </BreadcrumbItem>

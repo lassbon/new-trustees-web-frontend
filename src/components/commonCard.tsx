@@ -18,7 +18,7 @@ const CommonCard = ({ bgImage, text, header, onclick }: Props) => {
       backgroundRepeat="no-repeat"
       backgroundSize="cover"
       width={"100%"}
-      h={{ base: "20vh", lg: "40vh" }}
+      h={{ lg: "40vh" }}
       p={"20px"}
       filter="auto"
       rounded={"xl"}

@@ -36,7 +36,10 @@ export const navMenuData = [
     label: "Recommendations",
     link: "Recommendation",
   },
- 
+  {
+    label: "Log in",
+    link: "/auth/SignIn",
+  },
 ];
 
 export const featuresData = [

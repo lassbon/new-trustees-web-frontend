@@ -36,10 +36,16 @@ const AddEstatePlan = () => {
         </Flex>
       </Flex> */}
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
-        <Heading size={"md"}>
+        <Heading size={"sm"}>
           Estate Planning Tools to Protect your loved ones
         </Heading>
-        <Grid templateColumns="repeat(6, 1fr)" w="100%" h="100%" gap={3}>
+        <Grid
+          templateColumns="repeat(6, 1fr)"
+          w="100%"
+          h="100%"
+          rowGap={10}
+          gap={4}
+        >
           {estatePlanningData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
               <CommonCard {...data} onclick={() => handleToAddAsset(data)} />
