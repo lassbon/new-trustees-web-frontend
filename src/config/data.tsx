@@ -102,42 +102,70 @@ export const faqData = [
 export const RecommendationData = [
   {
     header: "Single",
+    id: "A",
     text: "With minimal financial obligations, ready to accumulate wealth.",
+    modalHeader: "Single & Secure!!!",
+    modalText:
+      "Congratulations on embracing the journey to financial freedom! 🌟 Managing your assets can be like a jigsaw puzzle. The first step? Bringing order to everything you've worked hard for. You’ll need to document a simple but solid plan to make the most of your resources and plan for those close to your heart on your own terms.",
   },
   {
     header: "Married",
+    id: "B",
     text: "Without children, with average to high living expenses.",
+    modalHeader: "Married Bliss",
+    modalText:
+      "Cheers to a dynamic duo navigating life's journey together!🌟 If it's just the two of you or the beginning of a larger chapter, your financial journey ought to be planned to make your lifestyle both sustainable and fulfilling. An Estate plan tailored to your unique needs, which ensures your assets are organized and your future plans are crystal clear will totally safeguard your legacy.",
   },
   {
     header: "Mature Family",
+    id: "C",
     text: "With children who are growing up or have left home, both Parents are income earners in your peak earning years.",
+    modalHeader: "Mature Family (Nom Fund)",
+    modalText:
+      "Your dedication to your children's future is admirable 🌟 We know it's not just about providing for them today, but about creating a secured and prosperous tomorrow. You’ll need a secured documentation that ensures your hard-earned income is protected and your legacy echoes through generations.",
   },
   {
     header: "Young Family",
+    id: "D",
     text: "With a home and financial obligations such as childcare (School fees), Mortgage and other living expenses.",
+    modalHeader: "Family First!!!",
+    modalText:
+      "Cheers to being a champion for your children's dreams 🌟 Your commitment to their education is a true gift, and we understand that securing their future is your top priority. Our crystal ball suggests building a foundation for your children's through our expert guidance, your clear wishes regarding their education & future moves from just being a possibility to certainty.",
   },
   {
     header: "Preparing for retirement",
+    id: "E",
     text: "Homeowner with minimal financial obligation.",
+    modalHeader: "Preparing for retirement",
+    modalText:
+      "Congratulations on reaching this exciting milestone! Your commitment to securing your family's future is unmatched.🌟 Ensuring your hard-earned legacy reaches the right hands becomes paramount. You’ll  need a comprehensive tool and expert guidance to help organize your assets and crafting a solid retirement and estate plan.",
   },
   {
     header: "Retiree",
+    id: "F",
     text: "You rely solely on funds and investments accumulated over time and intend to maintain your lifestyle for an estimate of 10-15 years and above.",
+    modalHeader: "Retired & Resolute!!!",
+    modalText:
+      "Congratulations on building a great net worth and having a happy circle of friends & family!  Your positivity shines through 🌟 We understand the importance of your family's well-being and your desire to navigate life's uncertainties with grace. Based on this we believe you need an Estate Plan that will ensure that during your lifetime and after, what you've worked so hard to build will be preserved and passed on in line with your wishes",
   },
 ];
 
 export const outComeData = [
   {
     text: "There may be family dispute over my assets",
+    id: "A",
   },
   {
     text: "My assets would be passed on to my next of kin.",
+    id: "B",
   },
   {
     text: "The Government will take over my assets.",
+    id: "C",
   },
   {
     text: "My family would have access to all my assets without hitches.",
+    id: "D",
   },
 ];
 
@@ -440,113 +468,24 @@ export const banks = [
   "OTHERS",
 ];
 
-const comprehensive = [
-  {
-    label: "Do you have any of the documents listed below executed or filed?",
-    name: "comprehensivewill_document_owned",
-    explainerText: "",
-    placeholder: "",
-    options: [
-      "A will",
-      "A living Trust",
-      "Deed Of Gift",
-      "Joint Ownership",
-      "Power Of Attorney",
-      "Others",
-    ],
-    datatype: "radio",
-    required: true,
-  },
-  {
-    label: "Full name",
-    name: "comprehensivewill_settlor_name",
-    explainerText: "",
-    placeholder: "doe",
-    datatype: "string",
-    required: true,
-  },
-  {
-    label: "Religion",
-    name: "comprehensivewill_religion",
-    explainerText: "",
-    placeholder: "",
-    options: ["Christianity", "Islam", "Traditional", "Others"],
-    datatype: "radio",
-    required: true,
-  },
-  {
-    label: "Marital Status",
-    name: "comprehensivewill_marital_status",
-    explainerText: "",
-    placeholder: "",
-    options: ["Single", "Married", "Widowed", "Divorced"],
-    datatype: "radio",
-    required: true,
-  },
-  {
-    label: "If married, what type of marriage?",
-    name: "comprehensivewill_marriage_type",
-    explainerText: "",
-    placeholder: "",
-    options: ["Marriage by the Act", "Customary Marriage", "Islamic Marriage"],
-    datatype: "radio",
-    required: false,
-  },
-  {
-    label:
-      "Are there any customary traditions common to people from your region?",
-    name: "comprehensivewill_customary_tradition",
-    explainerText: "",
-    placeholder: "",
-    options: ["True", "False"],
-    datatype: "radio",
-    required: true,
-  },
-  {
-    label: "If yes kindly give details",
-    name: "comprehensivewill_customary_tradition_details",
-    explainerText: "",
-    placeholder: "",
-    datatype: "textarea",
-    required: false,
-  },
-  {
-    label: "Home address",
-    name: "comprehensivewill_address",
-    explainerText: "",
-    placeholder: "5 lekki road",
-    datatype: "textarea",
-    required: true,
-  },
-  {
-    label: "email",
-    name: "comprehensivewill_email",
-    placeholder: "johndoe@gmail.com",
-    datatype: "email",
-    required: true,
-  },
-  {
-    label: "Telephone number",
-    name: "comprehensivewill_phone",
-    placeholder: "09087777712",
-    datatype: "phone",
-    required: true,
-  },
-  {
-    label: "Occupation/Profession",
-    name: "comprehensivewill_occupation",
-    placeholder: "",
-    datatype: "select",
-    options: ["lawyer", "doctor", "employee", "teacher", "realtor"],
-    required: true,
-  },
-  {
-    label: "Other Matters",
-    name: "comprehensivewill_others",
-    explainerText:
-      "(Describe or list here any facts or matters that do not seem to be covered by this questionnaire and that you believe may be important for us to know.)",
-    placeholder: "5 lekki road",
-    datatype: "textarea",
-    required: false,
-  },
+export const PFAs = [
+  "Access Pension Managers Limited",
+  "ARM Pension Managers Limited",
+  "CrusaderSterling Pensions Limited",
+  "FCMB Pension Limited",
+  "Fidelity Pension Managers",
+  "Guaranty Trust Pension Managers Limited",
+  "Leadway Pensure PFA Limited",
+  "Nigerian University Pension Management Company (NUPEMCO)",
+  "NLPC Pension Fund Administrators Limited",
+  "Norrenberger Pensions Limited",
+  "NPF Pensions Limited",
+  "OAK Pensions Limited",
+  "Pensions Alliance Limited",
+  "Premium Pension Limited",
+  "Radix Pension Managers Limited",
+  "Stanbic IBTC Pension Managers Limited",
+  "Tangerine APT Pensions Limited",
+  "Trustfund Pensions Limited",
+  "Veritas Glanvills Pensions Limited",
 ];

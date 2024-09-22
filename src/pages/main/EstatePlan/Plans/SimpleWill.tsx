@@ -19,7 +19,7 @@ import {
 import * as Yup from "yup";
 import { useRef, useState, useEffect } from "react";
 import AppForm from "../../../../components/form/AppForm";
-import { banks } from "../../../../config/data";
+import { banks, PFAs } from "../../../../config/data";
 import { useDispatch, useSelector } from "react-redux";
 import useBeneficiaries from "../../../../custom-hooks/http-services/use-GET/useBeneficiaries";
 import AppFormFields from "../../../../components/form/AppFields";
@@ -136,7 +136,7 @@ const SimpleWill = () => {
       explainerText: "",
       placeholder: "",
       datatype: "select",
-      options: ["Crusader Pension"],
+      options: PFAs,
       required: true,
     },
     {
@@ -527,7 +527,6 @@ const SimpleWill = () => {
     setAddedBanks((_prevstate: any) => {
       return [...updatedAddedBanks, newBank];
     });
-
   };
 
   const addShare = () => {
@@ -647,7 +646,6 @@ const SimpleWill = () => {
     setAddedWillExecutors(updatedAddedWillExecutors);
     setAddedDependants(updatedAddedDependants);
     setAddedBeneficiaries(updatedAddedBeneficiaries);
-  
 
     setAddedShares((_prevstate: any) => {
       return [...updatedAddedShares, newShare];
@@ -752,7 +750,6 @@ const SimpleWill = () => {
     setAddedSpouse((_prevstate: any) => {
       return [...updatedAddedSpouses, newSpouse];
     });
-   
   };
 
   const addExecutor = () => {
@@ -861,7 +858,6 @@ const SimpleWill = () => {
     setAddedWillExecutors((_prevstate: any) => {
       return [...updatedAddedWillExecutors, newExecutor];
     });
-  
   };
 
   const addDependant = () => {
@@ -962,11 +958,9 @@ const SimpleWill = () => {
     setAddedDependants((_prevstate: any) => {
       return [...updatedAddedDependants, newDependant];
     });
-   
   };
 
   const addBeneficiary = async () => {
-
     const newId = addedBeneficiaries.length + 1;
     const newBene = {
       [`name_${newId}`]: {
@@ -1527,11 +1521,10 @@ const SimpleWill = () => {
       }
     });
 
-  
     add.mutateAsync(groupedData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data ?? {};
-    
+
         toast({
           title: message,
           position: "top-right",
@@ -1540,7 +1533,7 @@ const SimpleWill = () => {
           variant: "top-accent",
         });
       },
-      onError: (error: Error) => {
+      onError: (error: any) => {
         if (error.response === undefined) {
           toast({
             title: "something went wrong check network or try again!",
@@ -1552,7 +1545,6 @@ const SimpleWill = () => {
           return;
         }
         const { status, message } = error?.response.data ?? {};
-  
 
         if (!status) {
           toast({
