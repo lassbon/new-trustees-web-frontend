@@ -36,6 +36,7 @@ import NominatedFund from "./pages/main/EstatePlan/Plans/NominatedFund";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Tawk_API: any;
   }
 }

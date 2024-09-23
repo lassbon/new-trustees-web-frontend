@@ -17,12 +17,15 @@ import { useState } from "react";
 
 const Recommendation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selected, setSelected] = useState<any>(null);
-  const [selectedOtp, setSelectedOtp] = useState<String>("");
+  const [selectedOtp, setSelectedOtp] = useState<string>("");
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnSelectRec = (item: any) => {
     setSelected(item);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnSelectopt = (item: any) => {
     setSelectedOtp(item.id);
   };
@@ -46,7 +49,8 @@ const Recommendation = () => {
           A. What’s your status?
         </Heading>
         <Grid templateColumns="repeat(4, 1fr)" gap={"2vh"}>
-          {RecommendationData.map((rec, i) => (
+          {
+            RecommendationData.map((rec, i) => (
             <GridItem colSpan={{ base: 4, md: 2, lg: 1 }} key={i}>
               <Box
                 display={"flex"}
