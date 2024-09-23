@@ -51,7 +51,7 @@ const LandingPageNavigation = ({ onScrollToSection }: Props) => {
               location.pathname === "/Recommendation" ? "black" : "white"
             }
           >
-            {navMenuData.map((nav, i) => (
+            {navMenuData.slice(0, -1).map((nav, i) => (
               <ListItem key={i}>
                 {nav?.link ? (
                   <NavLink to={nav.link && nav.link}>{nav.label}</NavLink>

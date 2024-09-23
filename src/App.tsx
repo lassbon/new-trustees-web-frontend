@@ -40,30 +40,26 @@ declare global {
   }
 }
 function App() {
-
-
-  
   useEffect(() => {
     let Tawk_API = window.Tawk_API || {};
     const s1 = document.createElement("script");
-  
+
     s1.async = false;
-    s1.src = `https://embed.tawk.to/${import.meta.env.VITE_APP_TAWKTO_ID}/default`;
+    s1.src = `https://embed.tawk.to/${
+      import.meta.env.VITE_APP_TAWKTO_ID
+    }/default`;
     s1.charset = "UTF-8";
     s1.setAttribute("crossorigin", "*");
-  
+
     const s0 = document.getElementsByTagName("script")[0];
     if (s0.parentNode) {
       s0.parentNode.insertBefore(s1, s0);
     }
-  
+
     s1.onload = () => {
       Tawk_API = window.Tawk_API;
     };
-  
- 
   }, []);
-
 
   const [cookie] = useCookies(["auth"]);
 
@@ -82,9 +78,13 @@ function App() {
       element: <RootLayout />,
       children: [
         { index: true, element: <Home /> },
-        { path: "Recommendation", element: <Recommendation /> },
+        {
+          path: "Recommendation",
+          element: <Recommendation />,
+        },
       ],
     },
+
     {
       path: "/auth",
       element: <AuthRootLayout />,
@@ -96,6 +96,7 @@ function App() {
         { path: "newpassword", element: <NewPassword /> },
       ],
     },
+
     {
       path: "/Dashboard",
       element: <ProtectedRoutes />,

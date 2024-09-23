@@ -14,7 +14,6 @@ import {
   ListItem,
   VStack,
   Text,
-  Button,
   Center,
   Avatar,
   Divider,
@@ -23,6 +22,7 @@ import {
   MenuItem,
   MenuButton,
   MenuList,
+  Link,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { sidebarData } from "../config/data";
@@ -30,6 +30,7 @@ import { sidebarData } from "../config/data";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from "../assets/images/logo2.png";
+import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 type Props = {
@@ -120,7 +121,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
               bgColor={"rgba(247, 251, 249, 0.2)"}
               p="16px"
               display={"flex"}
-              top={{ base: "40vh", lg: "25vh" }}
+              top={{ base: "10vh", lg: "25vh" }}
               position={"relative"}
               color={"white"}
             >
@@ -139,14 +140,15 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                 <br />
                 mapp@meristemng.com
               </Text>
-              <Button
-                variant="outline"
-                colorScheme="green"
-                bgColor={"white"}
-                borderRadius="100px"
-              >
-                Help & Support
-              </Button>
+              <Link href="https://wa.me/2348084259372" isExternal>
+                <Image
+                  width={"50vw"}
+                  height={"10vh"}
+                  objectFit="contain"
+                  src={chatOnWhatsapp}
+                  alt="WhatsApp"
+                />
+              </Link>
             </VStack>
             {/* contact info */}
           </DrawerBody>

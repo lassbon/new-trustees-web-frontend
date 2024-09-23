@@ -37,10 +37,7 @@ import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 
-
 const DashBoardHome = () => {
-
-
   const [show, setShow] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
@@ -59,7 +56,6 @@ const DashBoardHome = () => {
   const currencies = info?.data;
 
   const toast = useToast();
-
 
   useEffect(() => {
     if ((isLoadingError && !isLoading) || (isRefetchError && !isRefetching)) {
@@ -90,7 +86,6 @@ const DashBoardHome = () => {
     }
 
     if (data && (!isLoading || !isRefetching)) {
-  
     }
   }, [data, isLoadingError, isLoading, isRefetchError, isRefetching, error]);
 
@@ -129,7 +124,8 @@ const DashBoardHome = () => {
     }
 
     if (assets.data && (!assets.isRefetching || !assets.isLoading)) {
-      const { data = null, assetGrouped = null } = assets.data && assets.data.data ? assets.data.data : {};
+      const { data = null, assetGrouped = null } =
+        assets.data && assets.data.data ? assets.data.data : {};
       //i  Grouped the data response by Currency
       if (assets.data?.data) {
         const groupedByCurrency = data.reduce((acc: any, obj: any) => {
@@ -154,7 +150,9 @@ const DashBoardHome = () => {
           // setCurrencies(currencies);
 
           // Check if currency exists in totalAmountByCurrency object
-          if (Object.prototype.hasOwnProperty.call(groupedByCurrency, currency)) {
+          if (
+            Object.prototype.hasOwnProperty.call(groupedByCurrency, currency)
+          ) {
             const amounts = groupedByCurrency[currency];
 
             // Calculate total sum of amounts for current currency
@@ -180,8 +178,6 @@ const DashBoardHome = () => {
     assets.isRefetching,
     assets.error,
   ]);
-
-
 
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
@@ -326,7 +322,7 @@ const DashBoardHome = () => {
 
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
         <Heading size={"lg"}>Protect your loved ones</Heading>
-        <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={3}>
+        <Grid templateColumns="repeat(6, 1fr)" w="100%" rowGap={10} gap={4}>
           {commonCardData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
               <CommonCard {...data} />
