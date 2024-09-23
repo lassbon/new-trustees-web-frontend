@@ -14,11 +14,13 @@ import {
 import { RecommendationData, outComeData } from "../../config/data";
 import RecModal from "../../components/RecModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Recommendation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<any>(null);
   const [selectedOtp, setSelectedOtp] = useState<String>("");
+  const navigate = useNavigate();
 
   const handleOnSelectRec = (item: any) => {
     setSelected(item);
@@ -29,6 +31,10 @@ const Recommendation = () => {
   const showModal = () => {
     if (selected === null) return;
     onOpen();
+  };
+
+  const handleGetStarted = () => {
+    navigate("/auth/SignUp");
   };
 
   return (
@@ -108,7 +114,12 @@ const Recommendation = () => {
         Submit
       </Button>
 
-      <RecModal rec={selected} isOpen={isOpen} onClose={onClose} />
+      <RecModal
+        rec={selected}
+        isOpen={isOpen}
+        onClose={onClose}
+        handleGetStarted={handleGetStarted}
+      />
     </Flex>
   );
 };

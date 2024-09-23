@@ -14,10 +14,11 @@ type Props = {
   rec: any;
   isOpen: boolean;
   onClose: () => void;
+  handleGetStarted: () => void;
 };
 
-const RecModal = ({ rec, isOpen, onClose }: Props) => {
-  const paragraph = rec?.modalText.split(".").filter((p: string) => p.trim());
+const RecModal = ({ rec, isOpen, onClose, handleGetStarted }: Props) => {
+  const paragraph = rec?.modalText?.split(".").filter((p: string) => p.trim());
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -32,11 +33,12 @@ const RecModal = ({ rec, isOpen, onClose }: Props) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {paragraph.map((p: string) => (
-            <Text mb="1rem" textIndent={"3"}>
-              {p + "."}
-            </Text>
-          ))}
+          {paragraph &&
+            paragraph.map((p: string) => (
+              <Text mb="1rem" textIndent={"3"}>
+                {p + "."}
+              </Text>
+            ))}
         </ModalBody>
 
         <ModalFooter flexDirection={"column"} gap={"3vh"}>
@@ -45,6 +47,7 @@ const RecModal = ({ rec, isOpen, onClose }: Props) => {
             borderRadius="100px"
             colorScheme="green"
             w={"100%"}
+            onClick={() => handleGetStarted()}
           >
             Get Started
           </Button>
