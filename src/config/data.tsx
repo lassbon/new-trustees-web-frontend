@@ -174,6 +174,7 @@ export const sidebarData = [
     label: "Home",
     link: "/Dashboard",
     icon: RiHome7Line,
+    end: true,
   },
   {
     label: "Assets",
@@ -192,7 +193,7 @@ export const sidebarData = [
   },
 ];
 
-export const chartData = [
+export const chartData1 = [
   { name: "Jan", uv: 400, pv: 2400, amt: 2400 },
   { name: "Feb", uv: 350, pv: 2400, amt: 2400 },
   { name: "Mar", uv: 100, pv: 2400, amt: 2400 },
@@ -262,38 +263,38 @@ export const estatePlanningData = [
   },
 ];
 
-export const tableData = [
-  {
-    asset: "car",
-    value: "100,000,000",
-    interestRate: "7.5%",
-    DateAdded: "20-03-2023",
-  },
-  {
-    asset: "Public Entities",
-    value: "400,000",
-    interestRate: "7.5%",
-    DateAdded: "19-05-2023",
-  },
-  {
-    asset: "Private Equities",
-    value: "40,000",
-    interestRate: "7.5%",
-    DateAdded: "10-07-2022",
-  },
-  {
-    asset: "Fintech Wallets",
-    value: "90,000",
-    interestRate: "7.5%",
-    DateAdded: "10-04-2021",
-  },
-  {
-    asset: "Alternate Assets (Cryptocurrency & NFTs)",
-    value: "900,000",
-    interestRate: "7.5%",
-    DateAdded: "10-04-2000",
-  },
-];
+// export const tableData = [
+//   {
+//     asset: "car",
+//     value: "100,000,000",
+//     interestRate: "7.5%",
+//     DateAdded: "20-03-2023",
+//   },
+//   {
+//     asset: "Public Entities",
+//     value: "400,000",
+//     interestRate: "7.5%",
+//     DateAdded: "19-05-2023",
+//   },
+//   {
+//     asset: "Private Equities",
+//     value: "40,000",
+//     interestRate: "7.5%",
+//     DateAdded: "10-07-2022",
+//   },
+//   {
+//     asset: "Fintech Wallets",
+//     value: "90,000",
+//     interestRate: "7.5%",
+//     DateAdded: "10-04-2021",
+//   },
+//   {
+//     asset: "Alternate Assets (Cryptocurrency & NFTs)",
+//     value: "900,000",
+//     interestRate: "7.5%",
+//     DateAdded: "10-04-2000",
+//   },
+// ];
 
 export const estatePlanBreadcrumbData = [
   {

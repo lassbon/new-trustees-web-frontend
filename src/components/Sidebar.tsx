@@ -27,7 +27,12 @@ const Sidebar = () => {
           w="100%"
         >
           {sidebarData.map((nav, i) => (
-            <NavLink to={nav?.link} end style={{ width: "80%" }} key={i}>
+            <NavLink
+              to={nav?.link}
+              end={nav?.end}
+              style={{ width: "80%" }}
+              key={i}
+            >
               {({ isActive }) => {
                 return (
                   <ListItem

@@ -197,9 +197,9 @@ const Beneficiaries = () => {
       del.mutateAsync(selectedBeneficiary?.user_id, {
         onSuccess: async (resData) => {
           onClose();
-       
+
           const { message } = resData?.data;
- 
+
           toast({
             title: message,
             position: "top-right",
@@ -241,7 +241,6 @@ const Beneficiaries = () => {
   };
 
   const handleAddBeneficiary = (values: any) => {
-
     add.mutateAsync(values, {
       onSuccess: async (resData) => {
         addBene.onClose();
@@ -298,7 +297,6 @@ const Beneficiaries = () => {
       if (error) {
         const res = (error as { response?: any })?.response;
         const { message } = res?.data;
-
 
         toast({
           title: message,
@@ -507,7 +505,7 @@ const Beneficiaries = () => {
         scrollBehavior={"inside"}
       >
         <ModalOverlay />
-        <ModalContent mx={"2vw"}>
+        <ModalContent mx={"2vw"} minWidth={{ lg: "50vw" }}>
           <ModalHeader>Add Beneficiary</ModalHeader>
           <ModalCloseButton disabled={add?.isPending ? true : false} />
           <ModalBody pb={6}>

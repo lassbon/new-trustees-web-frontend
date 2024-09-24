@@ -11,8 +11,14 @@ import About from "./About";
 import Features from "./Features";
 import Faq from "./Faq";
 import Contact from "./Contact";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/auth/SignUp");
+  };
   return (
     <Flex display={"row"}>
       {/* home */}
@@ -51,6 +57,7 @@ const Home = () => {
                 colorScheme="green"
                 borderRadius="100px"
                 w={{ base: "40vw", lg: "10vw" }}
+                onClick={() => handleGetStarted()}
               >
                 Get Started
               </Button>
