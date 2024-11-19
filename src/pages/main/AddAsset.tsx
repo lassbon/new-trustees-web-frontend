@@ -20,6 +20,7 @@ import AppForm from "../../components/form/AppForm";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useAddAssets from "../../custom-hooks/http-services/use-POST/useAddAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
+import { colors } from "../../constants/colors";
 
 const AddAsset = () => {
   const { isLoading, data, isRefetching } = useAssetsCategory();
@@ -28,7 +29,8 @@ const AddAsset = () => {
   const currency = useAssetsCurrencies();
   const info = currency.data?.data;
   const currenciesArray = info?.data;
-  const currencies = currenciesArray.map((c: any) => c?.currency);
+  const currencies =
+    currenciesArray && currenciesArray.map((c: any) => c?.currency);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -78,9 +80,15 @@ const AddAsset = () => {
             .label(field.label);
           break;
         case "number":
-          fieldSchema = Yup.number()
-            .required(`${field.label} is required`)
-            .label(field.label);
+          if (field?.label === "Amount" || field?.label === "Value") {
+            fieldSchema = Yup.string()
+              .required(`${field.label} is required`)
+              .label(field.label);
+          } else {
+            fieldSchema = Yup.number()
+              .required(`${field.label} is required`)
+              .label(field.label);
+          }
           break;
         default:
           fieldSchema = Yup.string()
@@ -118,6 +126,7 @@ const AddAsset = () => {
         options: currencies,
       },
     }[key];
+
     switch (field.datatype) {
       case "string":
         return (
@@ -141,7 +150,7 @@ const AddAsset = () => {
               {field?.label}
             </FormLabel>
             <AppFormFields.Input
-              type="number"
+              type={key === "amount" ? "text" : "number"}
               name={key}
               placeholder={field?.explainer_text}
               disabled={add?.isPending}
@@ -150,20 +159,43 @@ const AddAsset = () => {
           </AppFormFields>
         );
       case "select":
-        return (
-          <AppFormFields name={key} isRequired={true}>
-            <FormLabel htmlFor={field?.label} as="legend">
-              {field?.label}
-            </FormLabel>
-            <AppFormFields.SelectionInput
-              name={key}
-              options={field?.options}
-              placeholder={field?.explainer_text || "select option"}
-              disabled={add?.isPending}
-            />
-            <AppFormFields.ErrorMessage name={key} />
-          </AppFormFields>
-        );
+        if (field?.label === "Bank") {
+          return (
+            <AppFormFields name={key} isRequired={true}>
+              <FormLabel htmlFor={field?.label} as="legend">
+                {field?.label}
+              </FormLabel>
+              {/* <AppFormFields.SelectionInput
+                 
+                /> */}
+              <AppFormFields.SelectionInputSearch
+                name={key}
+                options={field?.options}
+                placeholder={"select option"}
+                disabled={add?.isPending}
+                isSearchable
+              />
+              <AppFormFields.ErrorMessage name={key} />
+            </AppFormFields>
+          );
+        } else {
+          return (
+            <AppFormFields name={key} isRequired={true}>
+              <FormLabel htmlFor={field?.label} as="legend">
+                {field?.label}
+              </FormLabel>
+
+              <AppFormFields.SelectionInput
+                name={key}
+                options={field?.options}
+                // placeholder={field?.explainer_text || }
+                disabled={add?.isPending}
+              />
+              <AppFormFields.ErrorMessage name={key} />
+            </AppFormFields>
+          );
+        }
+
       case "textarea":
         return <textarea key={key} defaultValue={field.defaultValue} />;
       default:
@@ -205,10 +237,11 @@ const AddAsset = () => {
   };
 
   const handleAddAssets = (values: any) => {
+    console.log(values, "values");
     const mainData = {
       asset_category_id,
       asset_name: selectedCategory,
-      amount: values?.value || values?.amount,
+      amount: values?.value || values?.amount.replace(/,/g, ""),
       currency: values?.currency,
     };
 
@@ -304,6 +337,7 @@ const AddAsset = () => {
           <AppFormSubmitBtn
             mt="2vh"
             colorScheme="green"
+            backgroundColor={colors.green_01}
             variant="solid"
             textTransform={"capitalize"}
             isLoading={add?.isPending}

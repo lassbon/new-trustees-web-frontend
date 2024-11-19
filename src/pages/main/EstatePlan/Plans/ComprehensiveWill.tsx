@@ -19,6 +19,7 @@ import AppForm from "../../../../components/form/AppForm";
 import { IoIosAddCircle } from "react-icons/io";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
+import { colors } from "../../../../constants/colors";
 type stateProps = {
   state: any;
   form: any;
@@ -394,7 +395,6 @@ const ComprehensiveWill = () => {
     setChildren((_prevstate: any) => {
       return [...updatedChildren, newChild];
     });
-   
   };
 
   const addBeneficiary = async () => {
@@ -502,7 +502,6 @@ const ComprehensiveWill = () => {
     setBeneficiaries((_prevstate: any) => {
       return [...updatedBeneficiaries, newBene];
     });
-  
   };
 
   const addAsset = () => {
@@ -578,7 +577,6 @@ const ComprehensiveWill = () => {
     setAssets((_prevstate: any) => {
       return [...updatedAssets, newAsset];
     });
-   
   };
 
   const addExecutor = () => {
@@ -662,7 +660,6 @@ const ComprehensiveWill = () => {
     setExecutors((_prevstate: any) => {
       return [...updatedExecutors, newExecutor];
     });
-   
   };
 
   const handleBeneficiarySelect = (selectedBeneficiary: any, index: number) => {
@@ -1101,12 +1098,10 @@ const ComprehensiveWill = () => {
       }
     });
 
-   
-
     add.mutateAsync(groupedData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
-    
+
         toast({
           title: message,
           position: "top-right",
@@ -1127,7 +1122,6 @@ const ComprehensiveWill = () => {
           return;
         }
         const { status, message } = error?.response.data;
-      
 
         if (!status) {
           toast({
@@ -1299,6 +1293,7 @@ const ComprehensiveWill = () => {
 
           <AppFormSubmitBtn
             colorScheme="green"
+            backgroundColor={colors.green_01}
             variant="solid"
             textTransform={"capitalize"}
             isLoading={add?.isPending ? true : false}

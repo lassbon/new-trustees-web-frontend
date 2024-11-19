@@ -24,6 +24,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+import { colors } from "../../constants/colors";
 
 const Dashboard = () => {
   const [_cookies, _setCookie, removeCookie] = useCookies(["auth"]);
@@ -39,7 +40,7 @@ const Dashboard = () => {
   };
   return (
     <Flex
-      bgColor={"green"}
+      bgColor={colors.green_01}
       p={{ lg: "4px" }}
       h={"100vh"}
       direction={{ base: "column", lg: "row" }}
@@ -55,7 +56,12 @@ const Dashboard = () => {
         h="100%"
         pt={{ base: "7vh", lg: 0 }}
       >
-        <GridItem colSpan={1} bgColor={"green"} px={"2vw"} hideBelow={"lg"}>
+        <GridItem
+          colSpan={1}
+          bgColor={colors.green_01}
+          px={"2vw"}
+          hideBelow={"lg"}
+        >
           <Sidebar />
         </GridItem>
         <GridItem
@@ -74,7 +80,7 @@ const Dashboard = () => {
             <Stack display={"flex"} direction={"column"}>
               <Skeleton isLoaded={loaded}>
                 <Heading
-                  size={{ base: "md", lg: "lg" }}
+                  size={{ base: "sm", lg: "md" }}
                   textTransform={"capitalize"}
                 >
                   {paths.includes(path) && path === "Dashboard"
@@ -90,7 +96,7 @@ const Dashboard = () => {
             </Stack>
 
             <HStack hideBelow={"lg"}>
-              <IconButton
+              {/* <IconButton
                 variant={"unstyled"}
                 color={"black"}
                 aria-label="show"
@@ -98,12 +104,12 @@ const Dashboard = () => {
                 fontSize="20px"
                 icon={<IoIosNotificationsOutline />}
               />
-              <Divider orientation="vertical" h={"4vh"} />
+              <Divider orientation="vertical" h={"4vh"} /> */}
               <Avatar
                 name={info ? `${info?.surname} ${info?.othernames}` : ""}
                 src={info?.picture_url}
                 size="sm"
-                bgColor={"green"}
+                bgColor={colors.green_01}
                 color={"white"}
               />
               <Menu>

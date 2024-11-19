@@ -7,6 +7,7 @@ import AppFormFields from "../../components/form/AppFields";
 import AppForm from "../../components/form/AppForm";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useResetPassword from "../../custom-hooks/http-services/use-GET/useResetPassword";
+import { colors } from "../../constants/colors";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState<any>(null);
@@ -129,6 +130,7 @@ const ResetPassword = () => {
         <AppFormSubmitBtn
           mt="2vh"
           colorScheme="green"
+          backgroundColor={colors.green_01}
           variant="solid"
           textTransform={"capitalize"}
           isLoading={isLoading || isRefetching ? true : false}

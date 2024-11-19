@@ -5,6 +5,7 @@ import AppForm from "../../../components/form/AppForm";
 import AppFormSubmitBtn from "../../../components/form/AppFormSubmitBtn";
 import useUser from "../../../custom-hooks/http-services/use-GET/useUser";
 import useUpdateUser from "../../../custom-hooks/http-services/use-PATCH/useUpdateUser";
+import { colors } from "../../../constants/colors";
 
 const NextOfKin = () => {
   const { data, refetch } = useUser();
@@ -157,6 +158,7 @@ const NextOfKin = () => {
             bgColor={"#008145"}
             color={"white"}
             colorScheme="green"
+            backgroundColor={colors.green_01}
             textTransform={"capitalize"}
             isLoading={patch?.isPending ? true : false}
             rounded={"full"}

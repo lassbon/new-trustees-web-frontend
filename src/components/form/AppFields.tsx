@@ -18,6 +18,13 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { formSliceAction } from "../../store/formSlice";
+import {
+  AsyncCreatableSelect,
+  AsyncSelect,
+  ChakraStylesConfig,
+  CreatableSelect,
+  Select as SearchSelect,
+} from "chakra-react-select";
 
 type FormikProps = {
   errors: any;
@@ -80,8 +87,23 @@ const textInput = <T extends TextProps>({ name, ...others }: T) => {
   const inputValue = name ? values[name] : "";
 
   const error = errors[name];
+  const formatNumber = (num: any) => {
+    if (!num) return "";
+    return Number(num.replace(/,/g, "")).toLocaleString();
+  };
+
   const handleOnChange = (e: any) => {
     const text = e.target.value;
+    if (/^[0-9,]*$/.test(text) && name === "amount") {
+      setFieldValue(name, formatNumber(text));
+      dispatch(
+        formSliceAction.updateFormField({
+          name: name,
+          value: formatNumber(text),
+        })
+      );
+      return;
+    }
     setFieldValue(name, text);
     dispatch(formSliceAction.updateFormField({ name: name, value: text }));
   };
@@ -141,6 +163,7 @@ const selectionInput = <T extends SelectProps>({
   const inputValue = name ? values[name] : "";
   const error = errors[name];
   const selection = (value: any) => {
+    if (value === "") return;
     setFieldValue(name, value);
     dispatch(formSliceAction.updateFormField({ name: name, value: value }));
   };
@@ -156,6 +179,7 @@ const selectionInput = <T extends SelectProps>({
       {...others}
       value={inputValue}
       isInvalid={error}
+      _placeholder={{ color: "#9D9D9D" }}
     >
       {options?.map((opt: any, i: number) => (
         <option key={i} value={opt}>
@@ -166,6 +190,53 @@ const selectionInput = <T extends SelectProps>({
   );
 };
 
+const selectionInputSearch = <T extends SelectProps>({
+  name,
+  options,
+  handleSelectProduct,
+  ...others
+}: T) => {
+  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const { errors, values }: FormikProps = useFormikContext();
+  const inputValue = name ? values[name] : "";
+  const selected = { value: inputValue, label: inputValue };
+  const error = errors[name];
+  const selection = (value: any) => {
+    if (value === "") return;
+    setFieldValue(name, value);
+  };
+
+  const optgroup = options.map((opt) => ({
+    value: opt,
+    label: opt,
+  }));
+  return (
+    <CreatableSelect
+      // variant="filled"
+      bgColor={"rgba(9, 9, 9, 0.02)"}
+      borderColor={"rgba(9, 9, 9, 0.1)"}
+      onChange={(e) => {
+        if (e?.value !== "") selection(e?.value);
+      }}
+      onBlur={() => setFieldTouched(name)}
+      {...others}
+      value={selected}
+      isInvalid={error}
+      // _placeholder={{ color: "#9D9D9D" }}
+      options={optgroup}
+      isClearable
+    />
+  );
+};
+
+{
+  /* {options?.map((opt: any, i: number) => (
+        <option key={i} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </SearchSelect> */
+}
 const radioInput = <T extends RadioProps>({
   name,
   options,
@@ -269,6 +340,7 @@ AppFormFields.Input = textInput;
 AppFormFields.textAreaInput = textAreaInput;
 AppFormFields.ErrorMessage = errorMessage;
 AppFormFields.SelectionInput = selectionInput;
+AppFormFields.SelectionInputSearch = selectionInputSearch;
 AppFormFields.RangeInput = rangeInput;
 AppFormFields.RadioInput = radioInput;
 

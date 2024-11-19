@@ -1,4 +1,6 @@
-import { AddIcon } from "@chakra-ui/icons";
+// import { AddIcon } from "@chakra-ui/icons";
+import AddIcon from "../../../assets/icons/AddIcon.svg";
+
 import { GoDotFill } from "react-icons/go";
 import { BiEditAlt } from "react-icons/bi";
 import {
@@ -16,13 +18,14 @@ import {
   Icon,
   Img,
   useToast,
-  Skeleton
+  Skeleton,
 } from "@chakra-ui/react";
 // import { myEstatePlanData } from "../../../config/data";
 import EmptyDataImg from "../../../assets/images/emptyData.png";
 import useEstatePlans from "../../../custom-hooks/http-services/use-GET/useEstatePlans";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { colors } from "../../../constants/colors";
 
 const MyEstatePlan = () => {
   const {
@@ -54,7 +57,6 @@ const MyEstatePlan = () => {
       if (error) {
         const res = (error as { response?: any })?.response;
         const { message } = res?.data;
-    
 
         toast({
           title: message,
@@ -80,14 +82,15 @@ const MyEstatePlan = () => {
       <Stack direction={"row"} justify={"space-between"} align={"center"}>
         <Heading size={"md"}>My Estate Plan</Heading>
         <NavLink to="/Dashboard/EstatePlans/AddPlans">
-        <Button
-          colorScheme="green"
-          size="md"
-          rounded={"full"}
-          rightIcon={<AddIcon />}
-        >
-          Add Estate Plan
-        </Button>
+          <Button
+            colorScheme="green"
+            backgroundColor={colors.green_01}
+            size="md"
+            rounded={"full"}
+            rightIcon={<AddIcon />}
+          >
+            Add Estate Plan
+          </Button>
         </NavLink>
       </Stack>
 
@@ -110,14 +113,15 @@ const MyEstatePlan = () => {
             You haven't added any estate plan
           </Heading>
           <NavLink to="/Dashboard/EstatePlans/AddPlans">
-          <Button
-            colorScheme="green"
-            size="md"
-            rounded={"full"}
-            rightIcon={<AddIcon />}
-          >
-            Add Estate Plan
-          </Button>
+            <Button
+              colorScheme="green"
+              backgroundColor={colors.green_01}
+              size="md"
+              rounded={"full"}
+              rightIcon={<AddIcon />}
+            >
+              Add Estate Plan
+            </Button>
           </NavLink>
         </Flex>
       ) : (

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { ChevronDownIcon, AddIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import AddIcon from "../../assets/icons/AddIcon.svg";
+import DeleteIcon from "../../assets/icons/DeleteIcon.svg";
+
 import {
   Button,
   Flex,
@@ -31,17 +34,17 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
-// import { LiaFlagUsaSolid } from "react-icons/lia";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { LuEuro } from "react-icons/lu";
-// import { tableData } from "../../config/data";
 import EmptyDataImg from "../../assets/images/emptyData.png";
 
 import useAssetsCategory from "../../custom-hooks/http-services/use-GET/useAssetsCategory";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
-// import useAssetsInfo from "../../custom-hooks/http-services/use-GET/useAssetsInfo.";
+import { groupBy } from "../../custom-hooks/http-services/utils/groupBy";
+import { calculateTotalAmount } from "../../custom-hooks/http-services/utils/totalAmount";
+import { colors } from "../../constants/colors";
 
 const Assets = () => {
   const navigate = useNavigate();
@@ -64,7 +67,6 @@ const Assets = () => {
   const [show, setShow] = useState<boolean>(false);
   const [category, setCategory] = useState<any>(null);
   const [asset, setAsset] = useState<any>(null);
-  // const [asset_id, setAsset_id] = useState<any>(null);
   const [selected, setSelected] = useState<any>("All Assets");
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
@@ -142,37 +144,28 @@ const Assets = () => {
     if (assets.data && (!assets.isRefetching || !assets.isLoading)) {
       const { data } = assets.data?.data;
       //i Grouped the data response by Currency
+
       if (assets.data?.data) {
         setAsset(data);
-        const groupedByCurrency = data.reduce((acc: any, obj: any) => {
-          const { currency, amount } = obj;
-
-          // Check if currency already exists in accumulator
-          if (!acc[currency]) {
-            acc[currency] = [];
-          }
-
-          // Push current object to its respective currency array
-          acc[currency].push({ amount: parseInt(amount) });
-
-          return acc;
-        }, {});
+        const groupedByCurrency = groupBy(data, "currency");
 
         //then sum Amounts for each Currency
         const totalAmountByCurrency: any = {};
+
         for (const currency in groupedByCurrency) {
           // Check if currency exists in totalAmountByCurrency object
-          if (groupedByCurrency.hasOwnProperty(currency)) {
+          if (
+            Object.prototype.hasOwnProperty.call(groupedByCurrency, currency)
+          ) {
             const amounts = groupedByCurrency[currency];
 
             // Calculate total sum of amounts for current currency
-            const totalAmount = amounts.reduce((sum: any, obj: any) => {
-              return sum + obj?.amount;
-            }, 0);
+            const totalAmount: any = calculateTotalAmount(amounts);
 
             totalAmountByCurrency[currency] = totalAmount.toLocaleString();
           }
         }
+
         setCurrencyTotalAmount(totalAmountByCurrency);
       } else {
         setCurrencyTotalAmount(null);
@@ -194,12 +187,13 @@ const Assets = () => {
   );
 
   return (
-    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" my="4vh">
+    <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
       <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={5}>
         <GridItem colSpan={{ base: 6, md: 5 }} alignContent={"center"}>
           <Stack direction={"column"} justify={"center"}>
             <HStack gap={"2vw"}>
               <Text textAlign={"center"}>Total Value</Text>
+
               <Select
                 placeholder="Assets"
                 variant="filled"
@@ -254,6 +248,7 @@ const Assets = () => {
           <Flex h="100%" w="100%" align={"end"}>
             <Button
               colorScheme="green"
+              backgroundColor={colors.green_01}
               size="md"
               rounded={"full"}
               rightIcon={<AddIcon />}
@@ -319,7 +314,7 @@ const Assets = () => {
                 >
                   {selected ? selected : "All Assets"}
                 </MenuButton>
-                <MenuList>
+                <MenuList maxH={"40vh"} overflowY={"auto"}>
                   <MenuOptionGroup
                     title="Assets Category"
                     type="radio"
@@ -346,6 +341,7 @@ const Assets = () => {
                 <Th>Assest</Th>
                 <Th isNumeric>Value</Th>
                 <Th>Date Added</Th>
+                <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -354,6 +350,9 @@ const Assets = () => {
                     <Tr key={i}>
                       <Td>
                         <Skeleton height="20px" w={"30px"} />
+                      </Td>
+                      <Td>
+                        <Skeleton height="20px" />
                       </Td>
                       <Td>
                         <Skeleton height="20px" />
@@ -383,10 +382,23 @@ const Assets = () => {
                         <Td>{i + 1}</Td>
                         <Td>{data?.asset_name || "-"}</Td>
                         <Td isNumeric>
-                          {" "}
                           {sign} {amt || "-"}
                         </Td>
                         <Td>{formattedDate || "-"}</Td>
+                        <Td>
+                          <Button
+                            bgColor={"rgba(255, 0, 0, 0.1)"}
+                            color={"red"}
+                            variant={"solid"}
+                            leftIcon={<DeleteIcon />}
+                            rounded={"full"}
+                            size={"sm"}
+                            fontSize={"10px"}
+                            onClick={() => {}}
+                          >
+                            Delete
+                          </Button>
+                        </Td>
                       </Tr>
                     );
                   })

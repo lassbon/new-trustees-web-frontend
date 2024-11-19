@@ -14,12 +14,17 @@ import {
 import { RecommendationData, outComeData } from "../../config/data";
 import RecModal from "../../components/RecModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { colors } from "../../constants/colors";
 
 const Recommendation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selected, setSelected] = useState<any>(null);
-  const [selectedOtp, setSelectedOtp] = useState<string>("");
+
+  const [selectedOtp, setSelectedOtp] = useState<String>("");
+  const navigate = useNavigate();
+
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnSelectRec = (item: any) => {
@@ -32,6 +37,10 @@ const Recommendation = () => {
   const showModal = () => {
     if (selected === null) return;
     onOpen();
+  };
+
+  const handleGetStarted = () => {
+    navigate("/auth/SignUp");
   };
 
   return (
@@ -102,6 +111,9 @@ const Recommendation = () => {
 
       <Button
         colorScheme={selected !== null && selectedOtp !== "" ? "green" : "gray"}
+        backgroundColor={
+          selected !== null && selectedOtp !== "" ? colors.green_01 : undefined
+        }
         disabled={selected !== null && selectedOtp !== "" ? false : true}
         cursor={selected !== null && selectedOtp !== "" ? "" : "not-allowed"}
         borderRadius="100px"
@@ -112,7 +124,12 @@ const Recommendation = () => {
         Submit
       </Button>
 
-      <RecModal rec={selected} isOpen={isOpen} onClose={onClose} />
+      <RecModal
+        rec={selected}
+        isOpen={isOpen}
+        onClose={onClose}
+        handleGetStarted={handleGetStarted}
+      />
     </Flex>
   );
 };

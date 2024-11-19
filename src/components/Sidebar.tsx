@@ -13,6 +13,7 @@ import { sidebarData } from "../config/data";
 
 import Logo from "../assets/images/logo2.png";
 import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
+import { colors } from "../constants/colors";
 
 const Sidebar = () => {
   return (
@@ -27,7 +28,12 @@ const Sidebar = () => {
           w="100%"
         >
           {sidebarData.map((nav, i) => (
-            <NavLink to={nav?.link} end style={{ width: "80%" }} key={i}>
+            <NavLink
+              to={nav?.link}
+              end={nav?.end}
+              style={{ width: "80%" }}
+              key={i}
+            >
               {({ isActive }) => {
                 return (
                   <ListItem
@@ -37,7 +43,7 @@ const Sidebar = () => {
                     rounded={"md"}
                     p="5px"
                   >
-                    <ListIcon as={nav?.icon} />
+                    <ListIcon as={isActive ? nav?.icons2 : nav?.icon} />
                     {nav?.label}
                   </ListItem>
                 );

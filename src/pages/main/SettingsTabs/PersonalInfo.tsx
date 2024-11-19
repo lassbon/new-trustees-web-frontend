@@ -12,6 +12,7 @@ import AppForm from "../../../components/form/AppForm";
 import useUser from "../../../custom-hooks/http-services/use-GET/useUser";
 import AppFormSubmitBtn from "../../../components/form/AppFormSubmitBtn";
 import useUpdateUser from "../../../custom-hooks/http-services/use-PATCH/useUpdateUser";
+import { colors } from "../../../constants/colors";
 
 const PersonalInfo = () => {
   const { data, refetch } = useUser();
@@ -108,7 +109,7 @@ const PersonalInfo = () => {
           <Avatar
             size="xl"
             name={`${info?.surname} ${info?.othernames}`}
-            bgColor={"green"}
+            bgColor={colors.green_01}
             color={"white"}
           />
         </HStack>
@@ -229,6 +230,7 @@ const PersonalInfo = () => {
           <AppFormSubmitBtn
             colorScheme="green"
             variant="solid"
+            backgroundColor={colors.green_01}
             textTransform={"capitalize"}
             isLoading={patch?.isPending ? true : false}
             rounded={"full"}

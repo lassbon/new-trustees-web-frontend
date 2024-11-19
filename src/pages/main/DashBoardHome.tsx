@@ -13,6 +13,7 @@ import {
   Icon,
   useToast,
   Select,
+  Box,
 } from "@chakra-ui/react";
 import {
   LineChart,
@@ -32,16 +33,21 @@ import { TbCurrencyNaira } from "react-icons/tb";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { LuEuro } from "react-icons/lu";
 import { DownloadIcon } from "@chakra-ui/icons";
-import { chartData, commonCardData } from "../../config/data";
+import { chartData1, commonCardData } from "../../config/data";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
+import { groupBy } from "../../custom-hooks/http-services/utils/groupBy";
+import { calculateTotalAmount } from "../../custom-hooks/http-services/utils/totalAmount";
+import { colors } from "../../constants/colors";
+import { useNavigate } from "react-router-dom";
 
 const DashBoardHome = () => {
   const [show, setShow] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string>("Naira");
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
-
+  const [groupedAssets, setGroupedAssets] = useState<any>({});
+  const [chartData, setChartData] = useState<any>([]);
   const {
     isLoading,
     data,
@@ -56,6 +62,18 @@ const DashBoardHome = () => {
   const currencies = info?.data;
 
   const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleCurrencyChange = (e: any) => {
+    if (e.target.value !== "") {
+      setSelectedCurrency(e.target.value);
+    }
+  };
+
+  const handleRoute = (data: any) => {
+    if (!data?.route) return;
+    navigate(data?.route);
+  };
 
   useEffect(() => {
     if ((isLoadingError && !isLoading) || (isRefetchError && !isRefetching)) {
@@ -124,31 +142,17 @@ const DashBoardHome = () => {
     }
 
     if (assets.data && (!assets.isRefetching || !assets.isLoading)) {
-      const { data = null, assetGrouped = null } =
-        assets.data && assets.data.data ? assets.data.data : {};
+      const { data = null } = assets?.data?.data || {};
       //i  Grouped the data response by Currency
       if (assets.data?.data) {
-        const groupedByCurrency = data.reduce((acc: any, obj: any) => {
-          const { currency, amount } = obj;
+        const groupedByCurrency = groupBy(data, "currency");
 
-          // Check if currency already exists in accumulator
-          if (!acc[currency]) {
-            acc[currency] = [];
-          }
-
-          // Push current object to its respective currency array
-          acc[currency].push({ amount: parseInt(amount) });
-
-          return acc;
-        }, {});
+        const groupedByAssets = groupBy(data, "asset_name");
 
         //then sum Amounts for each Currency
         const totalAmountByCurrency: any = {};
-        for (const currency in groupedByCurrency) {
-          // Get all available currencies from data response
-          // const currencies = Object.keys(groupedByCurrency);
-          // setCurrencies(currencies);
 
+        for (const currency in groupedByCurrency) {
           // Check if currency exists in totalAmountByCurrency object
           if (
             Object.prototype.hasOwnProperty.call(groupedByCurrency, currency)
@@ -156,18 +160,17 @@ const DashBoardHome = () => {
             const amounts = groupedByCurrency[currency];
 
             // Calculate total sum of amounts for current currency
-            const totalAmount = amounts.reduce((sum: any, obj: any) => {
-              return sum + obj?.amount;
-            }, 0);
+            const totalAmount: any = calculateTotalAmount(amounts);
 
             totalAmountByCurrency[currency] = totalAmount.toLocaleString();
           }
         }
 
         setCurrencyTotalAmount(totalAmountByCurrency);
+        setGroupedAssets(groupedByAssets);
       } else {
-        // setCurrencies(null);
         setCurrencyTotalAmount(null);
+        setGroupedAssets(null);
       }
     }
   }, [
@@ -178,6 +181,28 @@ const DashBoardHome = () => {
     assets.isRefetching,
     assets.error,
   ]);
+
+  useEffect(() => {
+    if (Object.keys(groupedAssets).length > 0) {
+      const chartData = Object.keys(groupedAssets).map((assetName) => {
+        const assetGroup = groupedAssets[assetName];
+
+        // Filter by selected currency
+        const filteredAssets = assetGroup.filter(
+          (asset: any) => asset.currency === selectedCurrency
+        );
+
+        const totalAmount: any = calculateTotalAmount(filteredAssets);
+
+        return {
+          name: assetName,
+          amount: totalAmount,
+        };
+      });
+
+      setChartData(chartData);
+    }
+  }, [selectedCurrency, groupedAssets]);
 
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
@@ -194,10 +219,7 @@ const DashBoardHome = () => {
                   variant="filled"
                   width={"fit-content"}
                   value={selectedCurrency}
-                  onChange={(e) => {
-                    if (e.target.value !== "")
-                      setSelectedCurrency(e.target.value);
-                  }}
+                  onChange={(e) => handleCurrencyChange(e)}
                   disabled={
                     currency?.error ||
                     currency?.isLoading ||
@@ -219,15 +241,15 @@ const DashBoardHome = () => {
               </HStack>
               <Flex align={"center"} py={"2px"}>
                 {selectedCurrency === "Naira" && (
-                  <Icon as={TbCurrencyNaira} w={10} h={10} />
+                  <Icon as={TbCurrencyNaira} w={5} h={5} />
                 )}
                 {selectedCurrency === "Dollar" && (
-                  <Icon as={BsCurrencyDollar} w={10} h={10} />
+                  <Icon as={BsCurrencyDollar} w={5} h={5} />
                 )}
                 {selectedCurrency === "Euro" && (
-                  <Icon as={LuEuro} w={10} h={10} />
+                  <Icon as={LuEuro} w={5} h={5} />
                 )}
-                <Heading size={"lg"}>
+                <Heading size={"md"}>
                   {show
                     ? currencyTotalAmount[selectedCurrency] || "0.00"
                     : "* * * * * * "}
@@ -250,6 +272,7 @@ const DashBoardHome = () => {
             <Flex h="100%" w="100%" align={"end"}>
               <Button
                 colorScheme="green"
+                backgroundColor={colors.green_01}
                 size="lg"
                 rounded={"full"}
                 rightIcon={<DownloadIcon />}
@@ -270,7 +293,7 @@ const DashBoardHome = () => {
           >
             <ResponsiveContainer width="100%" height={300}>
               <LineChart
-                data={chartData}
+                data={chartData1}
                 syncId="anyId"
                 margin={{
                   top: 10,
@@ -287,7 +310,7 @@ const DashBoardHome = () => {
                   type="monotone"
                   dataKey="uv"
                   stroke="#82ca9d"
-                  fill="#82ca9d"
+                  fill={colors.green_01}
                 />
                 <Brush />
               </LineChart>
@@ -302,13 +325,13 @@ const DashBoardHome = () => {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  dataKey="uv"
+                  dataKey="amount"
                   isAnimationActive={true}
                   data={chartData}
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
-                  fill="#82ca9d"
+                  fill={colors.green_01}
                   label
                   nameKey={"name"}
                 />
@@ -321,11 +344,11 @@ const DashBoardHome = () => {
       </Flex>
 
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
-        <Heading size={"lg"}>Protect your loved ones</Heading>
+        <Heading size={"md"}>Protect your loved ones</Heading>
         <Grid templateColumns="repeat(6, 1fr)" w="100%" rowGap={10} gap={4}>
           {commonCardData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
-              <CommonCard {...data} />
+              <CommonCard {...data} onclick={() => handleRoute(data)} />
             </GridItem>
           ))}
         </Grid>

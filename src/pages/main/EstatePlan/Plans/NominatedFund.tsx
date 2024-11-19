@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { formSliceAction } from "../../../../store/formSlice";
 import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../../../constants/colors";
 
 type field = {
   label: string;
@@ -605,7 +606,6 @@ const NominatedFund = () => {
       nominatedfund_beneficiary: beneficiariesData,
     };
 
-
     add.mutateAsync(formData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
@@ -631,7 +631,6 @@ const NominatedFund = () => {
           return;
         }
         const { status, message } = error?.response.data;
-  
 
         if (!status) {
           toast({
@@ -700,6 +699,7 @@ const NominatedFund = () => {
           {nominieFormFields && addedBeneficiaries.length > 0 && (
             <AppFormSubmitBtn
               colorScheme="green"
+              backgroundColor={colors.green_01}
               variant="solid"
               textTransform={"capitalize"}
               isLoading={add?.isPending ? true : false}

@@ -14,6 +14,7 @@ import {
 import { EmailIcon, Icon } from "@chakra-ui/icons";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
+import { colors } from "../../constants/colors";
 
 const Contact = () => {
   return (
@@ -43,7 +44,7 @@ const Contact = () => {
         px={"8vw"}
         gap={"4vh"}
       >
-        <Heading color={"white"} size={"md"}>
+        <Heading color={"white"} as="h2">
           Get started with your assets tracking journey
         </Heading>
         <Text>
@@ -51,7 +52,11 @@ const Contact = () => {
           real-time asset tracking to secure wealth transfers, MAPP is the
           catalyst for a smarter, more organized financial journey.
         </Text>
-        <Button colorScheme="green" borderRadius="100px">
+        <Button
+          colorScheme="green"
+          background={colors.green_01}
+          borderRadius="100px"
+        >
           Get Started
         </Button>
       </Box>
@@ -79,7 +84,7 @@ const Contact = () => {
                 Our friendly team is here to help.
               </Text>
 
-              <Text fontSize="sm" as="b" color={"green"}>
+              <Text fontSize="sm" as="b" color={colors.green_01}>
                 mapp@meristemng.com
               </Text>
             </Center>
@@ -106,7 +111,7 @@ const Contact = () => {
                 Come say hello at our office.
               </Text>
 
-              <Text fontSize="sm" as="b" color={"green"}>
+              <Text fontSize="sm" as="b" color={colors.green_01}>
                 20A Gerrard Road, Ikoyi Lagos
               </Text>
             </Center>
@@ -133,7 +138,7 @@ const Contact = () => {
                 Mon-Fri from 9am to 4:30pm.
               </Text>
 
-              <Text fontSize="sm" as="b" color={"green"}>
+              <Text fontSize="sm" as="b" color={colors.green_01}>
                 +234 702 5640 071
               </Text>
             </Center>
