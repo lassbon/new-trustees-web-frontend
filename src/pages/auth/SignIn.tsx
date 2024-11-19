@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Flex,
   Heading,
@@ -22,6 +22,7 @@ import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useLogin from "../../custom-hooks/http-services/use-POST/useLogin";
 import { useCookies } from "react-cookie";
 import isTokenExpired from "../../config/jwtDecode";
+import { colors } from "../../constants/colors";
 
 const SignIn = () => {
   const { isPending, mutateAsync } = useLogin();
@@ -30,10 +31,14 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
   const [check, setChecked] = useState<boolean>(true);
+  const [userData, setUserData] = useState<null | {
+    username: string;
+    password: string;
+  }>(null);
   //initial value of the signin form schema
   const initialValues = {
-    email: "",
-    password: "",
+    email: userData?.username || "",
+    password: userData?.password || "",
   };
 
   //Yup library used to handle form validation requirements
@@ -48,12 +53,40 @@ const SignIn = () => {
       .label("Password"),
   });
 
+  const saveCredentials = async (username: string, password: string) => {
+    localStorage.setItem("check", JSON.stringify(check));
+    if (!check) {
+      localStorage.removeItem("rememberMeData");
+      return;
+    }
+
+    const credentials = JSON.stringify({ username, password });
+
+    localStorage.setItem("rememberMeData", credentials);
+  };
+
+  const loadCredentials = async () => {
+    const data = localStorage.getItem("rememberMeData");
+    const data2 = localStorage.getItem("check");
+    const check: boolean = data2 && JSON.parse(data2);
+    const storedData = data && JSON.parse(data);
+    setChecked(check);
+
+    if (!storedData) {
+      setUserData(null);
+      return;
+    }
+
+    setUserData(storedData);
+  };
+
   //to handle user login logic
   const handleLogin = async (values: any) => {
     mutateAsync(values, {
       onSuccess: async (resData) => {
-        const { message } = resData?.data;
+        await saveCredentials(values.email, values.password);
 
+        const { message } = resData?.data;
         console.log(resData?.data, "info");
 
         //extract token
@@ -63,7 +96,7 @@ const SignIn = () => {
 
         if (!expHour) {
           toast({
-            title: "error loginning in pls try again",
+            title: "error logining in pls try again",
             position: "top-right",
             isClosable: true,
             status: "error",
@@ -114,6 +147,10 @@ const SignIn = () => {
     });
   };
 
+  useEffect(() => {
+    loadCredentials();
+  }, []);
+
   return (
     <Flex
       w={{ base: "100%", xl: "37vw" }}
@@ -132,6 +169,7 @@ const SignIn = () => {
         initialValues={initialValues}
         onSubmit={handleLogin}
         validateSchema={schema}
+        enableReinitialize={true}
       >
         {/* email */}
         <AppFormFields name="email" isRequired={true}>
@@ -179,9 +217,9 @@ const SignIn = () => {
         <Stack spacing={5} direction={"row"} justify={"space-between"}>
           <Checkbox
             colorScheme="green"
-            defaultChecked
             size={"sm"}
             onChange={(e) => setChecked(e.target.checked)}
+            isChecked={check}
           >
             Remember me
           </Checkbox>
@@ -189,7 +227,7 @@ const SignIn = () => {
           <Text
             cursor={"pointer"}
             fontSize="xs"
-            color={"green"}
+            color={colors.green_01}
             as="b"
             onClick={() => navigate("/auth/ResetPassword")}
           >
@@ -202,6 +240,7 @@ const SignIn = () => {
         <AppFormSubmitBtn
           mt="2vh"
           colorScheme="green"
+          backgroundColor={colors.green_01}
           variant="solid"
           textTransform={"capitalize"}
           isLoading={isPending}
@@ -218,7 +257,7 @@ const SignIn = () => {
           </Text>
           <Text
             fontSize="md"
-            color={"green"}
+            color={colors.green_01}
             cursor={"pointer"}
             onClick={() => navigate("/auth/SignUp")}
           >

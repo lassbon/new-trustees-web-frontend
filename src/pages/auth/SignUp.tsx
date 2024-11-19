@@ -22,6 +22,7 @@ import AppForm from "../../components/form/AppForm";
 import AppFormFields from "../../components/form/AppFields";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useRegister from "../../custom-hooks/http-services/use-POST/useRegister";
+import { colors } from "../../constants/colors";
 
 const SignUp = () => {
   const { isPending, mutateAsync } = useRegister();
@@ -226,6 +227,7 @@ const SignUp = () => {
         </Button>
         <AppFormSubmitBtn
           colorScheme="green"
+          backgroundColor={colors.green_01}
           variant="solid"
           textTransform={"capitalize"}
           isLoading={false}
@@ -354,6 +356,7 @@ const SignUp = () => {
             )}
             <AppFormSubmitBtn
               colorScheme="green"
+              backgroundColor={colors.green_01}
               variant="solid"
               textTransform={"capitalize"}
               isLoading={isPending ? true : false}

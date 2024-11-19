@@ -27,6 +27,7 @@ import { formSliceAction } from "../../../../store/formSlice";
 import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import { IoIosAddCircle } from "react-icons/io";
 import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
+import { colors } from "../../../../constants/colors";
 
 type field = {
   label: string;
@@ -1770,6 +1771,7 @@ const SimpleWill = () => {
               <Button
                 isDisabled={tabIndex === 2 ? true : false}
                 colorScheme="green"
+                backgroundColor={colors.green_01}
                 variant="solid"
                 textTransform={"capitalize"}
                 isLoading={false}

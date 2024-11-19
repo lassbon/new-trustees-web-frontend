@@ -15,6 +15,7 @@ import { RecommendationData, outComeData } from "../../config/data";
 import RecModal from "../../components/RecModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../constants/colors";
 
 const Recommendation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,6 +105,9 @@ const Recommendation = () => {
 
       <Button
         colorScheme={selected !== null && selectedOtp !== "" ? "green" : "gray"}
+        backgroundColor={
+          selected !== null && selectedOtp !== "" ? colors.green_01 : undefined
+        }
         disabled={selected !== null && selectedOtp !== "" ? false : true}
         cursor={selected !== null && selectedOtp !== "" ? "" : "not-allowed"}
         borderRadius="100px"

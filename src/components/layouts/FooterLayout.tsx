@@ -9,13 +9,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Logo2 from "../../assets/images/logo2.png";
+import { colors } from "../../constants/colors";
 
 const FooterLayout = () => {
   const year = new Date().getFullYear();
   return (
     <Flex
       as={"footer"}
-      bgColor={"green"}
+      bgColor={colors.green_01}
       py="20px"
       px="5vw"
       direction={"column"}

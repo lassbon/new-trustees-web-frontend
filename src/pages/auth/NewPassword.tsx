@@ -16,6 +16,7 @@ import AppFormFields from "../../components/form/AppFields";
 import AppForm from "../../components/form/AppForm";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useSetNewPassword from "../../custom-hooks/http-services/use-PATCH/useSetNewPassword";
+import { colors } from "../../constants/colors";
 
 const NewPassword = () => {
   const location = useLocation();
@@ -194,6 +195,7 @@ const NewPassword = () => {
         <AppFormSubmitBtn
           mt="2vh"
           colorScheme="green"
+          backgroundColor={colors.green_01}
           variant="solid"
           textTransform={"capitalize"}
           isLoading={isPending}

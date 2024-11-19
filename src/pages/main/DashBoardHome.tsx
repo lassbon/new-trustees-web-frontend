@@ -13,6 +13,7 @@ import {
   Icon,
   useToast,
   Select,
+  Box,
 } from "@chakra-ui/react";
 import {
   LineChart,
@@ -38,6 +39,8 @@ import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 import { groupBy } from "../../custom-hooks/http-services/utils/groupBy";
 import { calculateTotalAmount } from "../../custom-hooks/http-services/utils/totalAmount";
+import { colors } from "../../constants/colors";
+import { useNavigate } from "react-router-dom";
 
 const DashBoardHome = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -45,7 +48,6 @@ const DashBoardHome = () => {
   const [currencyTotalAmount, setCurrencyTotalAmount] = useState<any>(null);
   const [groupedAssets, setGroupedAssets] = useState<any>({});
   const [chartData, setChartData] = useState<any>([]);
-
   const {
     isLoading,
     data,
@@ -60,11 +62,17 @@ const DashBoardHome = () => {
   const currencies = info?.data;
 
   const toast = useToast();
+  const navigate = useNavigate();
 
   const handleCurrencyChange = (e: any) => {
     if (e.target.value !== "") {
       setSelectedCurrency(e.target.value);
     }
+  };
+
+  const handleRoute = (data: any) => {
+    if (!data?.route) return;
+    navigate(data?.route);
   };
 
   useEffect(() => {
@@ -233,15 +241,15 @@ const DashBoardHome = () => {
               </HStack>
               <Flex align={"center"} py={"2px"}>
                 {selectedCurrency === "Naira" && (
-                  <Icon as={TbCurrencyNaira} w={10} h={10} />
+                  <Icon as={TbCurrencyNaira} w={5} h={5} />
                 )}
                 {selectedCurrency === "Dollar" && (
-                  <Icon as={BsCurrencyDollar} w={10} h={10} />
+                  <Icon as={BsCurrencyDollar} w={5} h={5} />
                 )}
                 {selectedCurrency === "Euro" && (
-                  <Icon as={LuEuro} w={10} h={10} />
+                  <Icon as={LuEuro} w={5} h={5} />
                 )}
-                <Heading size={"lg"}>
+                <Heading size={"md"}>
                   {show
                     ? currencyTotalAmount[selectedCurrency] || "0.00"
                     : "* * * * * * "}
@@ -264,6 +272,7 @@ const DashBoardHome = () => {
             <Flex h="100%" w="100%" align={"end"}>
               <Button
                 colorScheme="green"
+                backgroundColor={colors.green_01}
                 size="lg"
                 rounded={"full"}
                 rightIcon={<DownloadIcon />}
@@ -301,7 +310,7 @@ const DashBoardHome = () => {
                   type="monotone"
                   dataKey="uv"
                   stroke="#82ca9d"
-                  fill="#82ca9d"
+                  fill={colors.green_01}
                 />
                 <Brush />
               </LineChart>
@@ -322,7 +331,7 @@ const DashBoardHome = () => {
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
-                  fill="#82ca9d"
+                  fill={colors.green_01}
                   label
                   nameKey={"name"}
                 />
@@ -335,11 +344,11 @@ const DashBoardHome = () => {
       </Flex>
 
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
-        <Heading size={"lg"}>Protect your loved ones</Heading>
+        <Heading size={"md"}>Protect your loved ones</Heading>
         <Grid templateColumns="repeat(6, 1fr)" w="100%" rowGap={10} gap={4}>
           {commonCardData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
-              <CommonCard {...data} />
+              <CommonCard {...data} onclick={() => handleRoute(data)} />
             </GridItem>
           ))}
         </Grid>

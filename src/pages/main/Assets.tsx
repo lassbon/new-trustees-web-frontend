@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { ChevronDownIcon, AddIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import AddIcon from "../../assets/icons/AddIcon.svg";
+import DeleteIcon from "../../assets/icons/DeleteIcon.svg";
+
 import {
   Button,
   Flex,
@@ -41,6 +44,7 @@ import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
 import { groupBy } from "../../custom-hooks/http-services/utils/groupBy";
 import { calculateTotalAmount } from "../../custom-hooks/http-services/utils/totalAmount";
+import { colors } from "../../constants/colors";
 
 const Assets = () => {
   const navigate = useNavigate();
@@ -244,6 +248,7 @@ const Assets = () => {
           <Flex h="100%" w="100%" align={"end"}>
             <Button
               colorScheme="green"
+              backgroundColor={colors.green_01}
               size="md"
               rounded={"full"}
               rightIcon={<AddIcon />}
@@ -336,6 +341,7 @@ const Assets = () => {
                 <Th>Assest</Th>
                 <Th isNumeric>Value</Th>
                 <Th>Date Added</Th>
+                <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -344,6 +350,9 @@ const Assets = () => {
                     <Tr key={i}>
                       <Td>
                         <Skeleton height="20px" w={"30px"} />
+                      </Td>
+                      <Td>
+                        <Skeleton height="20px" />
                       </Td>
                       <Td>
                         <Skeleton height="20px" />
@@ -373,10 +382,23 @@ const Assets = () => {
                         <Td>{i + 1}</Td>
                         <Td>{data?.asset_name || "-"}</Td>
                         <Td isNumeric>
-                          {" "}
                           {sign} {amt || "-"}
                         </Td>
                         <Td>{formattedDate || "-"}</Td>
+                        <Td>
+                          <Button
+                            bgColor={"rgba(255, 0, 0, 0.1)"}
+                            color={"red"}
+                            variant={"solid"}
+                            leftIcon={<DeleteIcon />}
+                            rounded={"full"}
+                            size={"sm"}
+                            fontSize={"10px"}
+                            onClick={() => {}}
+                          >
+                            Delete
+                          </Button>
+                        </Td>
                       </Tr>
                     );
                   })

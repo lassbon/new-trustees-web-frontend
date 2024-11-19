@@ -6,10 +6,18 @@ import whyImage1 from "../assets/images/whyImage1.png";
 import whyImage2 from "../assets/images/whyImage2.png";
 import whyImage3 from "../assets/images/whyImage3.png";
 
-import { RiHome7Line } from "react-icons/ri";
-import { TbDiamond } from "react-icons/tb";
-import { MdOutlineRealEstateAgent } from "react-icons/md";
-import { CiSettings } from "react-icons/ci";
+// import { RiHome7Line } from "react-icons/ri";
+// import { TbDiamond } from "react-icons/tb";
+// import { MdOutlineRealEstateAgent } from "react-icons/md";
+// import { CiSettings } from "react-icons/ci";
+import RiHome7Line from "../assets/icons/RiHome7Line.svg";
+import RiHome7Line2 from "../assets/icons/RiHome7Line2.svg";
+import TbDiamond from "../assets/icons/TbDiamond.svg";
+import TbDiamond2 from "../assets/icons/TbDiamond2.svg";
+import MdOutlineRealEstateAgent from "../assets/icons/MdOutlineRealEstateAgent.svg";
+import MdOutlineRealEstateAgent2 from "../assets/icons/MdOutlineRealEstateAgent2.svg";
+import CiSettings from "../assets/icons/CiSettings.svg";
+import CiSettings2 from "../assets/icons/CiSettings2.svg";
 
 export const navMenuData = [
   {
@@ -174,22 +182,27 @@ export const sidebarData = [
     label: "Home",
     link: "/Dashboard",
     icon: RiHome7Line,
+    icons2: RiHome7Line2,
+
     end: true,
   },
   {
     label: "Assets",
     link: "Assets",
     icon: TbDiamond,
+    icons2: TbDiamond2,
   },
   {
     label: "Estate Plans",
     link: "EstatePlans",
     icon: MdOutlineRealEstateAgent,
+    icons2: MdOutlineRealEstateAgent2,
   },
   {
     label: "settings",
     link: "settings",
     icon: CiSettings,
+    icons2: CiSettings2,
   },
 ];
 
@@ -208,21 +221,25 @@ export const commonCardData = [
     bgImage: "/images/commonImg1.png",
     header: "Set up a Trust",
     text: "Relieve yourself and your beneficiaries of the hassle associated with managing and transferring multiple asset classes by setting up a Trust.",
+    route: "EstatePlans/AddPlans/simplewill",
   },
   {
     bgImage: "/images/commonImg2.png",
     header: "Secure your Child’s future",
     text: "Give your children/wards a foundation for a bright future.",
+    route: "EstatePlans/AddPlans/educationTrust",
   },
   {
     bgImage: "/images/commonImg4.png",
     header: "Appoint a nominee",
     text: "Appoint a Nominee to transfer specific funds to your beneficiaries in the event of incapacity or demise. ",
+    route: "EstatePlans/AddPlans/nominatedfund",
   },
   {
     bgImage: "/images/commonImg3.png",
     header: "Write a Will",
     text: "Relieve yourself and your beneficiaries of the hassle associated with managing and transferring multiple asset classes by setting up a Trust. ",
+    route: "EstatePlans/AddPlans/simplewill",
   },
 ];
 
@@ -245,16 +262,16 @@ export const estatePlanningData = [
     text: "Nominate a Trustee to transfer your cash or  investments proceeds to your specified beneficiary in case of an eventuality.",
     path: "nominatedfund",
   },
-  {
-    bgImage: "/images/commonImg8.png",
-    header: "Living Trust",
-    text: "Transfer your Assets into a Trust, The Trustee will manage it for you & your beneficiaries during and after your lifetime. You will still have oversight over such assets.",
-  },
-  {
-    bgImage: "/images/commonImg9.png",
-    header: "Testamentary Trust",
-    text: "With this, your written Will instructs that specific assets should be transferred a Trust upon your demise and managed by the Trustee for the benefit of your beneficiaries.",
-  },
+  // {
+  //   bgImage: "/images/commonImg8.png",
+  //   header: "Living Trust",
+  //   text: "Transfer your Assets into a Trust, The Trustee will manage it for you & your beneficiaries during and after your lifetime. You will still have oversight over such assets.",
+  // },
+  // {
+  //   bgImage: "/images/commonImg9.png",
+  //   header: "Testamentary Trust",
+  //   text: "With this, your written Will instructs that specific assets should be transferred a Trust upon your demise and managed by the Trustee for the benefit of your beneficiaries.",
+  // },
   {
     bgImage: "/images/commonImg10.png",
     header: "Education Trust",

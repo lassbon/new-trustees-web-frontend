@@ -22,6 +22,7 @@ import AppFormSubmitBtn from "../../../../components/form/AppFormSubmitBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { formSliceAction } from "../../../../store/formSlice";
 import useAddEstatePlan from "../../../../custom-hooks/http-services/use-POST/useAddEstatePlan";
+import { colors } from "../../../../constants/colors";
 
 type stateProps = {
   state: any;
@@ -418,8 +419,6 @@ const EducationTrust = () => {
             onChange={(e) => {
               if (e.target.value !== "")
                 handleBeneficiarySelect(info[e.target.value], index);
-
-       
             }}
             disabled={error || isLoading || isRefetching ? true : false}
           >
@@ -512,8 +511,6 @@ const EducationTrust = () => {
       trust_beneficiary: beneficiariesData,
     };
 
-  
-
     add.mutateAsync(formData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
@@ -538,7 +535,6 @@ const EducationTrust = () => {
           return;
         }
         const { status, message } = error?.response.data;
-      
 
         if (!status) {
           toast({
@@ -608,6 +604,7 @@ const EducationTrust = () => {
           {eduFormFields && addedBene.length > 0 && (
             <AppFormSubmitBtn
               colorScheme="green"
+              backgroundColor={colors.green_01}
               variant="solid"
               textTransform={"capitalize"}
               isLoading={add?.isPending ? true : false}

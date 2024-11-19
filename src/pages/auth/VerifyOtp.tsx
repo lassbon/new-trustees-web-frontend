@@ -16,6 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useVerifyOtp from "../../custom-hooks/http-services/use-GET/useVerifyOtp";
 import useResendOtp from "../../custom-hooks/http-services/use-GET/useResendOtp";
 import { useQueryClient } from "@tanstack/react-query";
+import { colors } from "../../constants/colors";
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
@@ -238,7 +239,7 @@ const VerifyOtp = () => {
           <Text>
             Didn't get otp{" "}
             {resend.isLoading || resend.isRefetching ? (
-              <Spinner color="green" size={"xs"} />
+              <Spinner color={colors.green_01} size={"xs"} />
             ) : (
               <Text as={"b"} onClick={() => resendCode()} cursor={"pointer"}>
                 Resend
@@ -259,6 +260,7 @@ const VerifyOtp = () => {
 
       <Button
         colorScheme="green"
+        backgroundColor={colors.green_01}
         rounded={"full"}
         onClick={() => handleVerifyOtp(otp)}
         isLoading={isLoading || isRefetching ? true : false}

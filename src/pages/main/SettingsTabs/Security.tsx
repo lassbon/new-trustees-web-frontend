@@ -3,6 +3,7 @@ import useUser from "../../../custom-hooks/http-services/use-GET/useUser";
 import useResetPassword from "../../../custom-hooks/http-services/use-GET/useResetPassword";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { colors } from "../../../constants/colors";
 
 const Security = () => {
   const user = useUser();
@@ -68,7 +69,6 @@ const Security = () => {
     };
   }, []);
 
-
   return (
     <Flex direction={"column"} gap={"2vh"} w="100%">
       <Flex direction={"column"} gap={"2vh"}>
@@ -90,6 +90,7 @@ const Security = () => {
           <Button
             bgColor={"#008145"}
             color={"white"}
+            backgroundColor={colors.green_01}
             colorScheme="green"
             rounded={"full"}
             w={"fit-content"}

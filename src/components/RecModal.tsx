@@ -9,6 +9,7 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+import { colors } from "../constants/colors";
 
 type Props = {
   rec: any;
@@ -46,6 +47,7 @@ const RecModal = ({ rec, isOpen, onClose, handleGetStarted }: Props) => {
             variant="solid"
             borderRadius="100px"
             colorScheme="green"
+            backgroundColor={colors.green_01}
             w={"100%"}
             onClick={() => handleGetStarted()}
           >
@@ -54,7 +56,7 @@ const RecModal = ({ rec, isOpen, onClose, handleGetStarted }: Props) => {
           <Button
             variant="solid"
             bgColor="white"
-            textColor="green"
+            textColor={colors.green_01}
             borderRadius="100px"
             borderWidth={"0.5px"}
             borderColor={"rgba(0, 129, 69, 0.2)"}

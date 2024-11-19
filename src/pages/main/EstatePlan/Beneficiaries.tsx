@@ -1,4 +1,3 @@
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -26,10 +25,13 @@ import {
   Text,
   FormLabel,
 } from "@chakra-ui/react";
+import DeleteIcon from "../../../assets/icons/DeleteIcon.svg";
+import AddIcon from "../../../assets/icons/AddIcon.svg";
+import BiEditAlt from "../../../assets/icons/BiEditAlt.svg";
+
 import * as Yup from "yup";
 // import { beneficiaries } from "../../../config/data";
 import EmptyDataImg from "../../../assets/images/emptyData.png";
-import { BiEditAlt } from "react-icons/bi";
 import useBeneficiaries from "../../../custom-hooks/http-services/use-GET/useBeneficiaries";
 import { useEffect, useState } from "react";
 import AppFormFields from "../../../components/form/AppFields";
@@ -39,6 +41,7 @@ import AppFormSubmitBtn from "../../../components/form/AppFormSubmitBtn";
 import useDeleteBeneficiary from "../../../custom-hooks/http-services/use-DELETE/UseDeleteBeneficiary";
 import useUpdateBeneficiary from "../../../custom-hooks/http-services/use-PATCH/useUpdateBeneficiary";
 import useAddBeneficiary from "../../../custom-hooks/http-services/use-POST/useAddBeneficiary";
+import { colors } from "../../../constants/colors";
 
 const Beneficiaries = () => {
   const {
@@ -62,6 +65,10 @@ const Beneficiaries = () => {
 
   const [beneficiaries, setBeneficiaries] = useState<any>(null);
   const [selectedBeneficiary, setSelectedBeneficiary] = useState<any>(null);
+
+  const genderOpt = ["male", "female"];
+  const maritalOpt = ["single", "married", "divorced"];
+  const relatinshipOpt = ["child", "father", "mother"];
 
   //initial value of beneficiary info form schema
   const initialValues = {
@@ -323,6 +330,7 @@ const Beneficiaries = () => {
         <Heading size={"md"}>Beneficiaries</Heading>
         <Button
           colorScheme="green"
+          backgroundColor={colors.green_01}
           size="md"
           rounded={"full"}
           rightIcon={<AddIcon />}
@@ -554,10 +562,10 @@ const Beneficiaries = () => {
                 <FormLabel htmlFor="beneficiary_relationship" as="legend">
                   Relationship
                 </FormLabel>
-                <AppFormFields.Input
-                  type="text"
+                <AppFormFields.SelectionInput
                   name="beneficiary_relationship"
-                  placeholder="child"
+                  options={relatinshipOpt}
+                  placeholder="select"
                   disabled={add?.isPending}
                 />
                 <AppFormFields.ErrorMessage name="beneficiary_relationship" />
@@ -569,10 +577,16 @@ const Beneficiaries = () => {
                 <FormLabel htmlFor="gender" as="legend">
                   Gender
                 </FormLabel>
-                <AppFormFields.Input
+                {/* <AppFormFields.Input
                   type="text"
                   name="gender"
                   placeholder="male"
+                  disabled={add?.isPending}
+                /> */}
+                <AppFormFields.SelectionInput
+                  name="gender"
+                  options={genderOpt}
+                  placeholder="select"
                   disabled={add?.isPending}
                 />
                 <AppFormFields.ErrorMessage name="gender" />
@@ -644,10 +658,16 @@ const Beneficiaries = () => {
                 <FormLabel htmlFor="marital_status" as="legend">
                   Marital Status
                 </FormLabel>
-                <AppFormFields.Input
+                {/* <AppFormFields.Input
                   type="text"
                   name="marital_status"
                   placeholder="married"
+                  disabled={add?.isPending}
+                /> */}
+                <AppFormFields.SelectionInput
+                  name="marital_status"
+                  options={maritalOpt}
+                  placeholder="select"
                   disabled={add?.isPending}
                 />
                 <AppFormFields.ErrorMessage name="marital_status" />
@@ -704,6 +724,7 @@ const Beneficiaries = () => {
                 <ButtonGroup justifyContent={"space-between"} mt={"20px"}>
                   <AppFormSubmitBtn
                     colorScheme="green"
+                    backgroundColor={colors.green_01}
                     variant="solid"
                     textTransform={"capitalize"}
                     isLoading={add?.isPending ? true : false}
@@ -949,7 +970,7 @@ const Beneficiaries = () => {
                     textTransform={"capitalize"}
                     isLoading={upd?.isPending}
                   >
-                    Edit
+                    Save
                   </AppFormSubmitBtn>
                   <Button
                     isDisabled={upd?.isPending}

@@ -32,6 +32,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from "../assets/images/logo2.png";
 import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { colors } from "../constants/colors";
 
 type Props = {
   handleLogout: () => void;
@@ -103,7 +104,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                           rounded={"md"}
                           p="5px"
                         >
-                          <ListIcon as={nav?.icon} />
+                          <ListIcon as={isActive ? nav?.icons2 : nav?.icon} />
                           {nav?.label}
                         </ListItem>
                       );
@@ -156,7 +157,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
       </Drawer>
 
       <HStack>
-        <Center>
+        {/* <Center>
           <IconButton
             variant={"unstyled"}
             color={"black"}
@@ -164,13 +165,13 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
             size="xl"
             icon={<IoIosNotificationsOutline />}
           />
-        </Center>
+        </Center> */}
         <Divider orientation="vertical" h={"3vh"} />
         <Avatar
           name={info ? `${info?.surname} ${info?.othernames}` : ""}
           src={info?.picture_url}
           size="sm"
-          bgColor={"green"}
+          bgColor={colors.green_01}
           color={"white"}
         />
         <Menu>

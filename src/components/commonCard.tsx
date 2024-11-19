@@ -1,6 +1,6 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-
+import { colors } from "../constants/colors";
 type Props = {
   bgImage?: any;
   text?: string;
@@ -38,8 +38,11 @@ const CommonCard = ({ bgImage, text, header, onclick }: Props) => {
       <Button
         colorScheme="green"
         variant="ghost"
+        color={colors.green_01}
         rightIcon={<ArrowForwardIcon />}
         justifyContent={"flex-start"}
+        width={"50%"}
+        size={"md"}
         onClick={() => {
           if (onclick) onclick();
         }}

@@ -14,7 +14,7 @@ const About = () => {
           hideBelow={"xl"}
         />
         <Box>
-          <Heading>
+          <Heading as="h4">
             MAPP is a great way to Track, Organise and Transfer your Wealth
           </Heading>
           <Text my={"3vh"}>

@@ -12,6 +12,7 @@ import Features from "./Features";
 import Faq from "./Faq";
 import Contact from "./Contact";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../constants/colors";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Home = () => {
             <Heading
               color={"white"}
               textTransform="uppercase"
-              size="2xl"
+              as={"h1"}
               lineHeight={1.2}
             >
               Track, Organise and Transfer your Wealth
@@ -54,7 +55,9 @@ const Home = () => {
                 estate planning products tailored to your needs.
               </Text>
               <Button
-                colorScheme="green"
+                backgroundColor={colors.green_01}
+                color={"white"}
+                _hover={{ color: "white" }}
                 borderRadius="100px"
                 w={{ base: "40vw", lg: "10vw" }}
                 onClick={() => handleGetStarted()}
