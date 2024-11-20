@@ -8,7 +8,6 @@ import {
   Text,
   Stack,
   HStack,
-  IconButton,
   Avatar,
   Menu,
   MenuButton,
@@ -20,7 +19,6 @@ import { useCookies } from "react-cookie";
 import Sidebar from "../../components/Sidebar";
 import DashBoardPageNavigation from "../../components/DashBoardPageNavigation";
 import { Outlet, useLocation } from "react-router-dom";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";

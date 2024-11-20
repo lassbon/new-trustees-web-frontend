@@ -5,11 +5,6 @@ import FtImage4 from "../assets/images/ftImage4.png";
 import whyImage1 from "../assets/images/whyImage1.png";
 import whyImage2 from "../assets/images/whyImage2.png";
 import whyImage3 from "../assets/images/whyImage3.png";
-
-// import { RiHome7Line } from "react-icons/ri";
-// import { TbDiamond } from "react-icons/tb";
-// import { MdOutlineRealEstateAgent } from "react-icons/md";
-// import { CiSettings } from "react-icons/ci";
 import RiHome7Line from "../assets/icons/RiHome7Line.svg";
 import RiHome7Line2 from "../assets/icons/RiHome7Line2.svg";
 import TbDiamond from "../assets/icons/TbDiamond.svg";
@@ -279,39 +274,6 @@ export const estatePlanningData = [
     path: "educationTrust",
   },
 ];
-
-// export const tableData = [
-//   {
-//     asset: "car",
-//     value: "100,000,000",
-//     interestRate: "7.5%",
-//     DateAdded: "20-03-2023",
-//   },
-//   {
-//     asset: "Public Entities",
-//     value: "400,000",
-//     interestRate: "7.5%",
-//     DateAdded: "19-05-2023",
-//   },
-//   {
-//     asset: "Private Equities",
-//     value: "40,000",
-//     interestRate: "7.5%",
-//     DateAdded: "10-07-2022",
-//   },
-//   {
-//     asset: "Fintech Wallets",
-//     value: "90,000",
-//     interestRate: "7.5%",
-//     DateAdded: "10-04-2021",
-//   },
-//   {
-//     asset: "Alternate Assets (Cryptocurrency & NFTs)",
-//     value: "900,000",
-//     interestRate: "7.5%",
-//     DateAdded: "10-04-2000",
-//   },
-// ];
 
 export const estatePlanBreadcrumbData = [
   {

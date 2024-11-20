@@ -13,7 +13,6 @@ import {
   Icon,
   useToast,
   Select,
-  Box,
 } from "@chakra-ui/react";
 import {
   LineChart,

@@ -14,7 +14,6 @@ import {
   ListItem,
   VStack,
   Text,
-  Center,
   Avatar,
   Divider,
   HStack,
@@ -28,7 +27,6 @@ import { NavLink } from "react-router-dom";
 import { sidebarData } from "../config/data";
 
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from "../assets/images/logo2.png";
 import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
 import { ChevronDownIcon } from "@chakra-ui/icons";
@@ -104,6 +102,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                           rounded={"md"}
                           p="5px"
                         >
+                          {/* @ts-ignore */}
                           <ListIcon as={isActive ? nav?.icons2 : nav?.icon} />
                           {nav?.label}
                         </ListItem>

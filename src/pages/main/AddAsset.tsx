@@ -61,7 +61,7 @@ const AddAsset = () => {
           datatype: "select",
           options: currencies,
         },
-      } || {}
+      } 
     ).reduce((schemaObj, fieldName) => {
       const field = {
         ...formFields,

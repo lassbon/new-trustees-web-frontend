@@ -18,13 +18,7 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { formSliceAction } from "../../store/formSlice";
-import {
-  AsyncCreatableSelect,
-  AsyncSelect,
-  ChakraStylesConfig,
-  CreatableSelect,
-  Select as SearchSelect,
-} from "chakra-react-select";
+import { CreatableSelect } from "chakra-react-select";
 
 type FormikProps = {
   errors: any;

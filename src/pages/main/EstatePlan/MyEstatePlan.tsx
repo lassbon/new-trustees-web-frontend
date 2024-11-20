@@ -1,8 +1,6 @@
 // import { AddIcon } from "@chakra-ui/icons";
 import AddIcon from "../../../assets/icons/AddIcon.svg";
-
 import { GoDotFill } from "react-icons/go";
-import { BiEditAlt } from "react-icons/bi";
 import {
   Flex,
   Stack,
@@ -142,7 +140,7 @@ const MyEstatePlan = () => {
             </Thead>
             <Tbody>
               {error || isLoading
-                ? new Array(4).fill({}).map((item, i) => (
+                ? new Array(4).fill({}).map((_item, i) => (
                     <Tr key={i}>
                       <Td>
                         <Skeleton height="20px" />

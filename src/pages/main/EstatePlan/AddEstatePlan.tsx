@@ -1,6 +1,6 @@
 import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import CommonCard from "../../../components/commonCard";
-import { commonCardData, estatePlanningData } from "../../../config/data";
+import { estatePlanningData } from "../../../config/data";
 import { useNavigate } from "react-router-dom";
 
 const AddEstatePlan = () => {

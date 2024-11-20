@@ -10,7 +10,7 @@ import {
   Spinner,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import useVerifyOtp from "../../custom-hooks/http-services/use-GET/useVerifyOtp";
