@@ -13,7 +13,6 @@ import { sidebarData } from "../config/data";
 
 import Logo from "../assets/images/logo2.png";
 import chatOnWhatsapp from "../assets/images/chatonwhatsapp.png";
-import { colors } from "../constants/colors";
 
 const Sidebar = () => {
   return (
@@ -43,6 +42,7 @@ const Sidebar = () => {
                     rounded={"md"}
                     p="5px"
                   >
+                    {/* @ts-ignore */}
                     <ListIcon as={isActive ? nav?.icons2 : nav?.icon} />
                     {nav?.label}
                   </ListItem>
