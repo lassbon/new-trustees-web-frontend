@@ -42,7 +42,7 @@ declare global {
 }
 function App() {
   useEffect(() => {
-    let Tawk_API = window.Tawk_API || {};
+    //let Tawk_API = window.Tawk_API || {};
     const s1 = document.createElement("script");
 
     s1.async = false;
@@ -58,7 +58,7 @@ function App() {
     }
 
     s1.onload = () => {
-      Tawk_API = window.Tawk_API;
+   //   Tawk_API = window.Tawk_API;
     };
   }, []);
 

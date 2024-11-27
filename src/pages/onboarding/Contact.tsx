@@ -8,7 +8,7 @@ import {
   GridItem,
   Center,
   Circle,
-  Link,
+
 } from "@chakra-ui/react";
 
 import { EmailIcon, Icon } from "@chakra-ui/icons";
