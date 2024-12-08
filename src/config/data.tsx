@@ -401,8 +401,6 @@ export const banks = [
   "Palmpay",
   "Parallex Bank Limited",
 
-  "Sparkle Bank",
-
   "Peace Microfinance Bank",
 
   "Pearl Microfinance Bank Limited",
@@ -429,6 +427,8 @@ export const banks = [
 
   "SunTrust Bank Nigeria Limited",
 
+  "Sparkle Bank",
+
   "TAJBank Limited",
 
   "Titan Trust Bank Limited",
@@ -444,8 +444,6 @@ export const banks = [
   "Wema Bank Plc",
 
   "Zenith Bank Plc",
-
-  "OTHERS",
 ];
 
 export const PFAs = [

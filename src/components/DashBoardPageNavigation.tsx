@@ -140,7 +140,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                 <br />
                 mapp@meristemng.com
               </Text>
-              <Link href="https://wa.me/2348084259372" isExternal>
+              <Link href="https://wa.me/07025640071" isExternal>
                 <Image
                   width={"50vw"}
                   height={"10vh"}

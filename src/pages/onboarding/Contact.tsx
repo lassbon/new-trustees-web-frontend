@@ -15,6 +15,7 @@ import { EmailIcon, Icon } from "@chakra-ui/icons";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { colors } from "../../constants/colors";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   return (
@@ -52,13 +53,15 @@ const Contact = () => {
           real-time asset tracking to secure wealth transfers, MAPP is the
           catalyst for a smarter, more organized financial journey.
         </Text>
-        <Button
+       <Link to="/auth/SignUp">
+       <Button
           colorScheme="green"
           background={colors.green_01}
           borderRadius="100px"
         >
           Get Started
         </Button>
+       </Link>
       </Box>
       <Flex direction={"column"} w="full" align={"center"} gap={"5vh"}>
         <Heading>Get In Touch</Heading>
