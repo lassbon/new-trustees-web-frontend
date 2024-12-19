@@ -122,6 +122,7 @@ const SignIn = () => {
         });
       },
       onError: (error: any) => {
+        console.log(error.response, "first");
         if (error.response === undefined) {
           toast({
             title: "something went wrong check network or try again!",
@@ -133,6 +134,7 @@ const SignIn = () => {
           return;
         }
         const { status, message } = error?.response.data;
+
         if (!status) {
           toast({
             title: message,

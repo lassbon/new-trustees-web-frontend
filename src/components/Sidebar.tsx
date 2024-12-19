@@ -67,7 +67,7 @@ const Sidebar = () => {
       >
         <Text textAlign={"center"}>Need help? Get in touch with us via</Text>
         <Text textAlign={"center"} as={"b"} size={"xs"}>
-          07025640071
+          +2347025640071
           <br />
           or
           <br />

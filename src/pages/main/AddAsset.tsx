@@ -53,16 +53,14 @@ const AddAsset = () => {
 
   //Yup library used to dynamically handle form validation requirments for fieldsData
   const schema = Yup.object().shape(
-    Object.keys(
-      {
-        ...formFields,
-        currency: {
-          label: "Currency",
-          datatype: "select",
-          options: currencies,
-        },
-      } 
-    ).reduce((schemaObj, fieldName) => {
+    Object.keys({
+      ...formFields,
+      currency: {
+        label: "Currency",
+        datatype: "select",
+        options: currencies,
+      },
+    }).reduce((schemaObj, fieldName) => {
       const field = {
         ...formFields,
         currency: {
@@ -160,6 +158,13 @@ const AddAsset = () => {
         );
       case "select":
         if (field?.label === "Bank") {
+          const sortedOptions = field?.options?.sort((a: string, b: string) => {
+            const labelA = a.toLowerCase();
+            const labelB = b.toLowerCase();
+            if (labelA < labelB) return -1;
+            if (labelA > labelB) return 1;
+            return 0;
+          });
           return (
             <AppFormFields name={key} isRequired={true}>
               <FormLabel htmlFor={field?.label} as="legend">
@@ -170,7 +175,7 @@ const AddAsset = () => {
                 /> */}
               <AppFormFields.SelectionInputSearch
                 name={key}
-                options={field?.options}
+                options={sortedOptions}
                 placeholder={"select option"}
                 disabled={add?.isPending}
                 isSearchable

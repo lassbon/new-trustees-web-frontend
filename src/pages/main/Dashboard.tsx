@@ -18,7 +18,7 @@ import {
 import { useCookies } from "react-cookie";
 import Sidebar from "../../components/Sidebar";
 import DashBoardPageNavigation from "../../components/DashBoardPageNavigation";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
@@ -30,11 +30,16 @@ const Dashboard = () => {
   const info = data?.data?.data;
   const loaded = !isLoading || error ? true : false;
   const location = useLocation();
+  const navigate = useNavigate();
   const path: any = location.pathname.split("/").pop();
   const paths = ["Dashboard", "Assets", "addassets", "EstatePlans", "settings"];
 
   const handleLogout = () => {
     removeCookie("auth");
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
   };
   return (
     <Flex
@@ -81,12 +86,30 @@ const Dashboard = () => {
                   size={{ base: "sm", lg: "md" }}
                   textTransform={"capitalize"}
                 >
-                  {paths.includes(path) && path === "Dashboard"
-                    ? `Welcome ${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
-                    : paths.includes(path) && path === "addassets"
-                    ? "Add Assets"
-                    : paths.includes(path) && path}
+                  {paths.includes(path) && path === "Dashboard" ? (
+                    `Welcome ${info?.surname.toLowerCase()} ${info?.othernames.toLowerCase()}`
+                  ) : paths.includes(path) && path === "addassets" ? (
+                    "Add Assets"
+                  ) : paths.includes(path) ? (
+                    path
+                  ) : (
+                    <Text
+                      as="button"
+                      onClick={handleBackClick}
+                      _hover={{ textDecoration: "underline" }}
+                    >
+                      Back
+                    </Text>
+                  )}
                 </Heading>
+                {/* {paths.includes(path) && path === "EstatePlans/AddPlans" && (
+                  <Heading
+                    size={{ base: "sm", lg: "md" }}
+                    textTransform={"capitalize"}
+                  >
+                    Back
+                  </Heading>
+                )} */}
                 {paths.includes(path) && path === "Dashboard" && (
                   <Text>Here’s whats happening with your assets.</Text>
                 )}

@@ -89,7 +89,7 @@ export const faqData = [
   {
     question: "When should i establish a trust?",
     answer:
-      "With MAPP, you can track your assets, designate beneficiaries, and plan for those you love. You can also access our recommendations and services to find the best fit for your needs.",
+      "You should establish a trust when you have clear goals such as asset protection, provision for dependents and loved ones, simplifying wealth transfer, and to ensure privacy in your estate planning",
   },
   {
     question: "What if I lose my device or password?",
@@ -130,7 +130,7 @@ export const RecommendationData = [
   {
     header: "Young Family",
     id: "D",
-    text: "With a home and financial obligations such as childcare (School fees), Mortgage and other living expenses.",
+    text: "With a home and financial obligations such as childcare (School fees), Mortgage and others.",
     modalHeader: "Family First!!!",
     modalText:
       "Cheers to being a champion for your children's dreams 🌟 Your commitment to their education is a true gift, and we understand that securing their future is your top priority. Our crystal ball suggests building a foundation for your children's through our expert guidance, your clear wishes regarding their education & future moves from just being a possibility to certainty.",
@@ -257,16 +257,16 @@ export const estatePlanningData = [
     text: "Nominate a Trustee to transfer your cash or  investments proceeds to your specified beneficiary in case of an eventuality.",
     path: "nominatedfund",
   },
-  // {
-  //   bgImage: "/images/commonImg8.png",
-  //   header: "Living Trust",
-  //   text: "Transfer your Assets into a Trust, The Trustee will manage it for you & your beneficiaries during and after your lifetime. You will still have oversight over such assets.",
-  // },
-  // {
-  //   bgImage: "/images/commonImg9.png",
-  //   header: "Testamentary Trust",
-  //   text: "With this, your written Will instructs that specific assets should be transferred a Trust upon your demise and managed by the Trustee for the benefit of your beneficiaries.",
-  // },
+  {
+    bgImage: "/images/commonImg8.png",
+    header: "Living Trust",
+    text: "Transfer your Assets into a Trust, The Trustee will manage it for you & your beneficiaries during and after your lifetime. You will still have oversight over such assets.",
+  },
+  {
+    bgImage: "/images/commonImg9.png",
+    header: "Testamentary Trust",
+    text: "With this, your written Will instructs that specific assets should be transferred a Trust upon your demise and managed by the Trustee for the benefit of your beneficiaries.",
+  },
   {
     bgImage: "/images/commonImg10.png",
     header: "Education Trust",
