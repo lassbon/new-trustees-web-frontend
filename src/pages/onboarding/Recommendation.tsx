@@ -70,7 +70,7 @@ const Recommendation = () => {
                 onClick={() => handleOnSelectRec(rec)}
               >
                 <Heading size={"sm"}>{rec.header}</Heading>
-                <Text size={"xs"} noOfLines={4}>
+                <Text size={"xs"} noOfLines={6}>
                   {rec.text}
                 </Text>
               </Box>

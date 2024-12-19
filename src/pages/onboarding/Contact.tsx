@@ -10,6 +10,7 @@ import {
   Circle,
   Link,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import { EmailIcon, Icon } from "@chakra-ui/icons";
 import { FaWhatsapp } from "react-icons/fa";
@@ -17,6 +18,11 @@ import { IoLocationOutline } from "react-icons/io5";
 import { colors } from "../../constants/colors";
 
 const Contact = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/auth/SignUp");
+  };
   return (
     <Flex
       as={"section"}
@@ -56,6 +62,7 @@ const Contact = () => {
           colorScheme="green"
           background={colors.green_01}
           borderRadius="100px"
+          onClick={() => handleGetStarted()}
         >
           Get Started
         </Button>

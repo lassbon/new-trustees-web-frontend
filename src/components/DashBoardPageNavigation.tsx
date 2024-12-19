@@ -134,7 +134,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                 as={"b"}
                 size={"xs"}
               >
-                07025640071
+                +2347025640071
                 <br />
                 or
                 <br />
