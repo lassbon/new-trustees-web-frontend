@@ -61,7 +61,6 @@ export const patchBeneficiary = async (data, token) => {
 }; //used
 
 export const patchNewPassword = async (data) => {
-
   const { password, hash } = data;
   const newpassword = { newPassword: password };
   return await axios.patch(
@@ -207,7 +206,6 @@ export const DeleteBeneficiary = async (beneficiary_id, token) => {
   const headers = {
     authorization: `Bearer ${token}`,
   };
-
 
   return await axios.delete(
     `${import.meta.env.VITE_APP_API_URL}/beneficiary/delete/${beneficiary_id}`,
