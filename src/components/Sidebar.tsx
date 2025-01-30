@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Flex,
   VStack,
@@ -42,7 +43,7 @@ const Sidebar = () => {
                     rounded={"md"}
                     p="5px"
                   >
-                    {/* @ts-ignore */}
+                    {/* @ts-expect-error */}
                     <ListIcon as={isActive ? nav?.icons2 : nav?.icon} />
                     {nav?.label}
                   </ListItem>
@@ -74,13 +75,13 @@ const Sidebar = () => {
           mapp@meristemng.com
         </Text>
         {/* <br /> */}
-        <Link href="https://wa.me/2348084259372" isExternal>
+        <Link href="https://wa.me/2347025640071" isExternal>
           <Image
             width={"50vw"}
             height={"10vh"}
             objectFit="contain"
             src={chatOnWhatsapp}
-            alt="Dan Abramov"
+            alt="Meristem Trustees Whatsapp"
           />
         </Link>
       </VStack>

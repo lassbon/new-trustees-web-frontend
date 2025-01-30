@@ -37,7 +37,7 @@ const SignUp = () => {
 
   const [accountInfo, setAccountInfo] = useState<any>(null);
 
-  const [check, setChecked] = useState<any>(null);
+  const [check, setChecked] = useState<unknown>(null);
 
   //to switch between account info and create password form component
   const [tab, setTab] = useState<number>(1);
@@ -169,7 +169,7 @@ const SignUp = () => {
         <FormLabel htmlFor="othernames" as="legend">
           First Name
         </FormLabel>
-        <AppFormFields.Input type="text" name="othernames" placeholder="john" />
+        <AppFormFields.Input type="text" name="othernames" placeholder="John" />
         <AppFormFields.ErrorMessage name="othernames" />
       </AppFormFields>
       {/*  First Name */}
@@ -177,9 +177,9 @@ const SignUp = () => {
       {/*  surname */}
       <AppFormFields name="surname" isRequired={true}>
         <FormLabel htmlFor="surname" as="legend">
-          last Name
+          Last Name
         </FormLabel>
-        <AppFormFields.Input type="text" name="surname" placeholder="doe" />
+        <AppFormFields.Input type="text" name="surname" placeholder="Doe" />
         <AppFormFields.ErrorMessage name="surname" />
       </AppFormFields>
       {/*  surname */}
@@ -192,7 +192,7 @@ const SignUp = () => {
         <AppFormFields.Input
           type="email"
           name="email"
-          placeholder="johndoe@gmail.com"
+          placeholder="Johndoe@gmail.com"
         />
         <AppFormFields.ErrorMessage name="email" />
       </AppFormFields>

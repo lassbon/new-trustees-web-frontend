@@ -146,7 +146,7 @@ const DashBoardPageNavigation = ({ handleLogout, info }: Props) => {
                   height={"10vh"}
                   objectFit="contain"
                   src={chatOnWhatsapp}
-                  alt="WhatsApp"
+                  alt="Meristem Trustees Whatsapp"
                 />
               </Link>
             </VStack>

@@ -181,7 +181,7 @@ const SignIn = () => {
           <AppFormFields.Input
             type="email"
             name="email"
-            placeholder="johndoe@gmail.com"
+            placeholder="Johndoe@gmail.com"
             disabled={isPending}
           />
           <AppFormFields.ErrorMessage name="email" />

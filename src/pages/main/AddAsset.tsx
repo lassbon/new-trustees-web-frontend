@@ -303,7 +303,7 @@ const AddAsset = () => {
           isLoading={isLoading || isRefetching ? true : false}
           isDisabled={add?.isPending ? true : false}
         >
-          {selectedCategory ? selectedCategory : "select assets category"}
+          {selectedCategory ? selectedCategory : "Select Assets Category"}
         </MenuButton>
         <MenuList>
           <MenuOptionGroup

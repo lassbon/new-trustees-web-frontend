@@ -82,12 +82,12 @@ export const whyData = [
 
 export const faqData = [
   {
-    question: "I have a living trust already; do i also need a will?",
+    question: "I have a living trust already; do I also need a will?",
     answer:
       "This is largely dependent on your estate planning objective and the kind of assets owned, some assets may be suitably planned by writing a will.",
   },
   {
-    question: "When should i establish a trust?",
+    question: "When should I establish a trust?",
     answer:
       "You should establish a trust when you have clear goals such as asset protection, provision for dependents and loved ones, simplifying wealth transfer, and to ensure privacy in your estate planning",
   },
@@ -194,7 +194,7 @@ export const sidebarData = [
     icons2: MdOutlineRealEstateAgent2,
   },
   {
-    label: "settings",
+    label: "Settings",
     link: "settings",
     icon: CiSettings,
     icons2: CiSettings2,
@@ -347,25 +347,15 @@ export const beneficiaries = [
 
 export const banks = [
   "Access Bank Plc",
-
   "Accion Microfinance Bank",
-
   "Citibank Nigeria Limited",
-
   "Coronation Merchant Bank",
-
   "Covenant Microfinance Bank Ltd",
-
   "Ecobank Nigeria",
-
   "Empire Trust Microfinance Bank",
-
   "Fidelity Bank Plc",
-
   "Fina Trust Microfinance Bank",
-
   "Finca Microfinance Bank Limited",
-
   "First Bank of Nigeria Limited",
 
   "First City Monument Bank Limited(FCMB)",
