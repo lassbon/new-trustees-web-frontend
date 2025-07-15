@@ -24,7 +24,7 @@ const EstatePlans = () => {
       ) : (
         <Breadcrumb spacing="8px" p="5px" w="100%" overflow={"auto"}>
           {estatePlanBreadcrumbData.map((data, i) => (
-            <NavLink to={data?.link} end key={i}>
+            <NavLink to={path === 'simplewill' ? 'https://meristemtrustees.com/simple-will/' :  data?.link} end key={i}>
               {({ isActive }) => {
                 return (
                   <BreadcrumbItem

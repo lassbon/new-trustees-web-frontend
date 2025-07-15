@@ -8,6 +8,7 @@ import {
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
+  // others,
   Stack,
   useToast,
 } from "@chakra-ui/react";
@@ -47,6 +48,10 @@ const AddAsset = () => {
             datatype: "select",
             options: currencies,
           },
+          other_details: {
+            label: "Others(If details is different from the above, please specify)",
+            datatype: "string",
+          }
         }).map((field) => [field, ""])
       )
     : {};
@@ -60,6 +65,10 @@ const AddAsset = () => {
         datatype: "select",
         options: currencies,
       },
+      // other_details: {
+      //   label: "Others(If details is different from the above, please specify)",
+      //   datatype: "string",
+      // }
     }).reduce((schemaObj, fieldName) => {
       const field = {
         ...formFields,
@@ -68,30 +77,40 @@ const AddAsset = () => {
           datatype: "select",
           options: ["naira", "euro", "pounds"],
         },
+        // other_details: {
+        //   label: "Others(If details is different from the above, please specify)",
+        //   datatype: "string",
+        // }
       }[fieldName];
       let fieldSchema;
 
-      switch (field.datatype) {
+      switch (field?.datatype) {
         case "string":
+          if (field?.label === "Others(If details is different from the above, please specify)") {
+            fieldSchema = Yup.string()
+              .optional()
+              .label(field.label);
+          }else{
           fieldSchema = Yup.string()
             .required(`${field.label} is required`)
             .label(field.label);
+          }
           break;
         case "number":
           if (field?.label === "Amount" || field?.label === "Value") {
             fieldSchema = Yup.string()
-              .required(`${field.label} is required`)
-              .label(field.label);
+              .required(`${field?.label} is required`)
+              .label(field?.label);
           } else {
             fieldSchema = Yup.number()
-              .required(`${field.label} is required`)
-              .label(field.label);
+              .required(`${field?.label} is required`)
+              .label(field?.label);
           }
           break;
         default:
           fieldSchema = Yup.string()
-            .required(`${field.label} is required`)
-            .label(field.label);
+            .required(`${field?.label} is required`)
+            .label(field?.label);
           break;
       }
 
@@ -122,13 +141,17 @@ const AddAsset = () => {
         label: "Currency",
         datatype: "select",
         options: currencies,
-      },
+      }, 
+      others: {
+        label: "Others(If details is different from the above, please specify)",
+        datatype: "string",
+      }
     }[key];
 
     switch (field.datatype) {
       case "string":
         return (
-          <AppFormFields name={key} isRequired={true}>
+          <AppFormFields name={key} {...(field?.required && { isRequired: true })}>
             <FormLabel htmlFor={field?.label} as="legend">
               {field?.label}
             </FormLabel>
@@ -219,6 +242,10 @@ const AddAsset = () => {
         datatype: "select",
         options: ["naira", "euro", "pounds"],
       },
+      others: {
+        label: "Others(If details is different from the above, please specify)",
+        datatype: "string",
+      }
     });
 
     for (let i = 0; i < keys.length; i += 2) {
@@ -242,16 +269,17 @@ const AddAsset = () => {
   };
 
   const handleAddAssets = (values: any) => {
-    console.log(values, "values");
+    
     const mainData = {
       asset_category_id,
       asset_name: selectedCategory,
       amount: values?.value || values?.amount.replace(/,/g, ""),
       currency: values?.currency,
+      other_details: values?.other_details
     };
 
     delete values?.value, values?.currency, values?.amount;
-    const finalData: any = { ...mainData, others: { ...values } };
+    const finalData: any = { ...mainData, others: { ...values }, other_details:values.other_details  };
     add.mutateAsync(finalData, {
       onSuccess: async (resData) => {
         const { message } = resData?.data;
@@ -314,8 +342,9 @@ const AddAsset = () => {
             }}
           >
             {assetCategories &&
-              assetCategories?.map((item: any) => (
+              assetCategories?.map((item: any, id:any) => (
                 <MenuItemOption
+                 key={id}
                   onClick={async () => {
                     setAsset_category_id(item?._id);
                   }}

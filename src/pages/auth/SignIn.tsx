@@ -11,6 +11,7 @@ import {
   Checkbox,
   Center,
   useToast,
+  Img
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
@@ -23,6 +24,8 @@ import useLogin from "../../custom-hooks/http-services/use-POST/useLogin";
 import { useCookies } from "react-cookie";
 import isTokenExpired from "../../config/jwtDecode";
 import { colors } from "../../constants/colors";
+import { Link } from "react-router-dom";
+import back from "../../assets/images/arrow-back.webp";
 
 const SignIn = () => {
   const { isPending, mutateAsync } = useLogin();
@@ -163,6 +166,14 @@ const SignIn = () => {
       rounded={"3xl"}
       gap={"1vh"}
     >
+      <Link  to={"/"}>
+      <Flex align="center" gap={".3vw"} cursor={"pointer"}>
+        <Img src={back} alt="back" boxSize="10px" />
+        <Text fontSize="sm" fontWeight="bold">
+          back
+        </Text>
+      </Flex>
+      </Link>
       <Heading as="h2" size="lg">
         Welcome back
       </Heading>

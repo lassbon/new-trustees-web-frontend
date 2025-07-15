@@ -45,6 +45,8 @@ import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCur
 import { groupBy } from "../../custom-hooks/http-services/utils/groupBy";
 import { calculateTotalAmount } from "../../custom-hooks/http-services/utils/totalAmount";
 import { colors } from "../../constants/colors";
+import useDeleteAsset from "../../custom-hooks/http-services/use-DELETE/useDeleteAsset";
+
 
 const Assets = () => {
   const navigate = useNavigate();
@@ -59,6 +61,7 @@ const Assets = () => {
 
   const assets = useAssets();
   const currency = useAssetsCurrencies();
+  const deleteAsset = useDeleteAsset();
   const info = currency.data?.data;
   const currencies = info?.data;
 
@@ -186,6 +189,48 @@ const Assets = () => {
       item.asset_name.toLowerCase().includes(selected.toLowerCase())
   );
 
+  const handleDeleteAsset = (id: any) => {
+    deleteAsset.mutateAsync(id, {
+      onSuccess: async (resData) => {
+        const { message } = resData?.data;
+        toast({
+          title: message,
+          position: "top-right",
+          isClosable: true,
+          status: "success",
+          variant: "top-accent",
+        });
+
+        await assets.refetch(); // refetch assetså
+
+
+        
+      },
+      onError: (error: any) => {
+        if (error.response === undefined) {
+          toast({
+            title: "something went wrong check network or try again!",
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "top-accent",
+          });
+          return;
+        }
+        const { status, message } = error?.response.data;
+        if (!status) {
+          toast({
+            title: message,
+            position: "top-right",
+            isClosable: true,
+            status: "error",
+            variant: "left-accent",
+          });
+          return;
+        }
+      },
+    });
+  }
   return (
     <Flex direction={"column"} gap={"4vh"} w="100%" px="2vw" pb="3vh">
       <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={5}>
@@ -283,6 +328,7 @@ const Assets = () => {
             size="md"
             rounded={"full"}
             rightIcon={<AddIcon />}
+             onClick={() => navigate("addassets")}
           >
             Add New Assets
           </Button>
@@ -326,8 +372,8 @@ const Assets = () => {
                       All Assets
                     </MenuItemOption>
                     {category &&
-                      category?.map((item: any) => (
-                        <MenuItemOption value={item?.name}>
+                      category?.map((item: any, id:any) => (
+                        <MenuItemOption value={item?.name} key={id}>
                           {item.name}
                         </MenuItemOption>
                       ))}
@@ -394,7 +440,7 @@ const Assets = () => {
                             rounded={"full"}
                             size={"sm"}
                             fontSize={"10px"}
-                            onClick={() => {}}
+                            onClick={() => {handleDeleteAsset(data?.asset_id)}}
                           >
                             Delete
                           </Button>

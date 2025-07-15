@@ -48,7 +48,11 @@ const AddEstatePlan = () => {
         >
           {estatePlanningData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
-              <CommonCard {...data} onclick={() => handleToAddAsset(data)} />
+              {
+                data.externalLink === null ? <CommonCard {...data} onclick={() => handleToAddAsset(data)} />
+                : <CommonCard  {...data} onclick={() => window.open(data.externalLink, "_blank")} />
+              }
+             
             </GridItem>
           ))}
         </Grid>

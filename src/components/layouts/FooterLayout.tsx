@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Logo2 from "../../assets/images/logo2.png";
 import { colors } from "../../constants/colors";
+import { Link } from "react-router-dom";
 
 const FooterLayout = () => {
   const year = new Date().getFullYear();
@@ -28,8 +29,7 @@ const FooterLayout = () => {
           <Flex direction={"column"} gap={"1vh"}>
             <Image src={Logo2} objectFit="contain" boxSize={"100px"} />
             <Text noOfLines={3} color={"white"}>
-              Our platform is designed to simplify the complexities of wealth
-              management, providing you with the tools you need.
+            Our platform is designed to simplify the complexities of organizing, tracking and transferring your assets, providing you with the tools you need. 
             </Text>
           </Flex>
         </GridItem>
@@ -65,9 +65,22 @@ const FooterLayout = () => {
             <Text color={"rgba(247, 251, 249, 0.6)"} size={"sm"}>
               Socials
             </Text>
-            <Text color={"white"}>Twitter</Text>
-            <Text color={"white"}>FaceBook</Text>
-            <Text color={"white"}>Instagram</Text>
+            <Text color={"white"}>
+              <Link to={"https://x.com/MeristemNigeria"}>Twitter</Link>
+            </Text>
+            <Text color={"white"}>
+              <Link to={"https://facebook.com/MeristemNigeria/"}>Facebook</Link>
+            </Text>
+            <Text color={"white"}>
+              <Link to={"https://www.instagram.com/meristemng/"}>Instagram</Link>
+            </Text>
+            <Text color={"white"}>
+              <Link to={" https://www.linkedin.com/company/meristem-securities-limited"}>LinkedIn </Link>
+            </Text>
+            <Text color={"white"}>
+              <Link to={"https://www.youtube.com/@MeristemNigeria"}>Youtube</Link>
+            </Text>
+          
           </VStack>
         </GridItem>
       </Grid>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import {
   RouterProvider,
   createBrowserRouter,
@@ -33,6 +33,7 @@ import SimpleWill from "./pages/main/EstatePlan/Plans/SimpleWill";
 import ComprehensiveWill from "./pages/main/EstatePlan/Plans/ComprehensiveWill";
 import EducationTrust from "./pages/main/EstatePlan/Plans/EducationTrust";
 import NominatedFund from "./pages/main/EstatePlan/Plans/NominatedFund";
+import { useEffect } from "react";
 
 declare global {
   interface Window {
@@ -41,6 +42,7 @@ declare global {
   }
 }
 function App() {
+
   useEffect(() => {
     //let Tawk_API = window.Tawk_API || {};
     const s1 = document.createElement("script");
@@ -48,7 +50,7 @@ function App() {
     s1.async = false;
     s1.src = `https://embed.tawk.to/${
       import.meta.env.VITE_APP_TAWKTO_ID
-    }/default`;
+    }/1ig4ekra9`;
     s1.charset = "UTF-8";
     s1.setAttribute("crossorigin", "*");
 
@@ -61,7 +63,28 @@ function App() {
    //   Tawk_API = window.Tawk_API;
     };
   }, []);
+  useEffect(() => {
 
+   // let Tawk_API = window.Tawk_API || {};
+    const s1 = document.createElement("script");
+  
+    s1.async = true;
+    s1.src = `https://embed.tawk.to/676ed39049e2fd8dfeff1e52`;
+    s1.charset = "UTF-8";
+    s1.setAttribute("crossorigin", "*");
+  
+    document.body.appendChild(s1);
+    // const s0 = document.getElementsByTagName("script")[0];
+    // s0.parentNode.insertBefore(s1, s0);
+  
+    // s1.onload = () => {
+    //   Tawk_API = window.Tawk_API;
+    // };
+  
+    return () => {
+     document.body.removeChild(s1);
+    };
+  }, []);
   const [cookie] = useCookies(["auth"]);
 
   const ProtectedRoutes = () => {

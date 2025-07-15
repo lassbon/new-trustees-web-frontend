@@ -59,7 +59,7 @@ export const featuresData = [
   {
     img: FtImage3,
     header: "Plan for those you Love",
-    text: "Give what you want, to whom you want, in the way and manner you want it. MAPP helps you protect the interests of your loved ones by creating by an estate plan tailored to your needs.",
+    text: "Give what you want, to whom you want, in the way and manner you want it. MAPP helps you protect the interests of your loved ones by creating an estate plan tailored to your needs.",
   },
   {
     img: FtImage4,
@@ -244,34 +244,40 @@ export const estatePlanningData = [
     header: "Simple will",
     text: "Write a Will from the comfort of your home in few minutes. Include basic assets such as your cash, shares, and retirement savings.",
     path: "simplewill",
+    externalLink: "https://meristemtrustees.com/simple-will",
   },
   {
     bgImage: "/images/commonImg6.png",
     header: "Comprehensive Will",
     text: "Do you want to include more assets in your Will such as Real estate, Jewellery, e.t.c then a comprehensive Will is more suitable for you.",
     path: "comprehensivewill",
+    externalLink: null,
   },
   {
     bgImage: "/images/commonImg7.png",
     header: "Nominated Fund",
     text: "Nominate a Trustee to transfer your cash or  investments proceeds to your specified beneficiary in case of an eventuality.",
     path: "nominatedfund",
+    externalLink: null
   },
   {
     bgImage: "/images/commonImg8.png",
     header: "Living Trust",
     text: "Transfer your Assets into a Trust, The Trustee will manage it for you & your beneficiaries during and after your lifetime. You will still have oversight over such assets.",
+    externalLink: null
   },
   {
     bgImage: "/images/commonImg9.png",
     header: "Testamentary Trust",
     text: "With this, your written Will instructs that specific assets should be transferred a Trust upon your demise and managed by the Trustee for the benefit of your beneficiaries.",
+    externalLink: null
   },
   {
     bgImage: "/images/commonImg10.png",
     header: "Education Trust",
     text: "Set up an Education Trust fund to cater for your Children's Education and be guaranteed of their future in the event of your incapacitation.",
     path: "educationTrust",
+    externalLink: null
   },
 ];
 

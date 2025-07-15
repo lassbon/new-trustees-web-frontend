@@ -102,6 +102,9 @@ const textInput = <T extends TextProps>({ name, ...others }: T) => {
     dispatch(formSliceAction.updateFormField({ name: name, value: text }));
   };
 
+
+
+
   return (
     <Input
       onBlur={() => {

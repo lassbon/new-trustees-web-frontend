@@ -201,7 +201,7 @@ const Beneficiaries = () => {
 
   const handleDeleteBeneficiary = () => {
     if (selectedBeneficiary) {
-      del.mutateAsync(selectedBeneficiary?.user_id, {
+      del.mutateAsync(selectedBeneficiary?.sn, {
         onSuccess: async (resData) => {
           onClose();
 
@@ -214,6 +214,8 @@ const Beneficiaries = () => {
             status: "success",
             variant: "top-accent",
           });
+          //dispatch to get the updated data from the server
+          refetch();
         },
         onError: (error: any) => {
           if (error.response === undefined) {

@@ -6,7 +6,7 @@ import {
   GridItem,
   Stack,
   Text,
-  Button,
+  // Button,
   HStack,
   Heading,
   IconButton,
@@ -31,8 +31,8 @@ import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { LuEuro } from "react-icons/lu";
-import { DownloadIcon } from "@chakra-ui/icons";
-import { chartData1, commonCardData } from "../../config/data";
+// import { DownloadIcon } from "@chakra-ui/icons";
+import { chartData1, estatePlanningData } from "../../config/data";
 import useUser from "../../custom-hooks/http-services/use-GET/useUser";
 import useAssets from "../../custom-hooks/http-services/use-GET/useAssets";
 import useAssetsCurrencies from "../../custom-hooks/http-services/use-GET/useCurrencies";
@@ -269,7 +269,7 @@ const DashBoardHome = () => {
           {/* download assets statement button */}
           <GridItem colSpan={{ base: 6, md: 1 }}>
             <Flex h="100%" w="100%" align={"end"}>
-              <Button
+              {/* <Button
                 colorScheme="green"
                 backgroundColor={colors.green_01}
                 size="lg"
@@ -277,7 +277,7 @@ const DashBoardHome = () => {
                 rightIcon={<DownloadIcon />}
               >
                 Download Asset Statement
-              </Button>
+              </Button> */}
             </Flex>
           </GridItem>
           {/* download assets statement button */}
@@ -345,11 +345,20 @@ const DashBoardHome = () => {
       <Flex direction={"column"} gap={"2vh"} as={"section"}>
         <Heading size={"md"}>Protect your loved ones</Heading>
         <Grid templateColumns="repeat(6, 1fr)" w="100%" rowGap={10} gap={4}>
-          {commonCardData.map((data, i) => (
+          {/* {commonCardData.map((data, i) => (
             <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
               <CommonCard {...data} onclick={() => handleRoute(data)} />
             </GridItem>
-          ))}
+          ))} */}
+           {estatePlanningData.map((data, i) => (
+                      <GridItem colSpan={{ base: 6, lg: 3 }} key={i}>
+                        {
+                          data.externalLink === null ? <CommonCard {...data} onclick={() => handleRoute(data)} />
+                          : <CommonCard  {...data} onclick={() => window.open(data.externalLink, "_blank")} />
+                        }
+                       
+                      </GridItem>
+                    ))}
         </Grid>
       </Flex>
     </Flex>

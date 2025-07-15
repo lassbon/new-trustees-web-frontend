@@ -12,6 +12,7 @@ import {
   Button,
   Checkbox,
   useToast,
+  Img
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -23,6 +24,8 @@ import AppFormFields from "../../components/form/AppFields";
 import AppFormSubmitBtn from "../../components/form/AppFormSubmitBtn";
 import useRegister from "../../custom-hooks/http-services/use-POST/useRegister";
 import { colors } from "../../constants/colors";
+import back from "../../assets/images/arrow-back.webp";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const { isPending, mutateAsync } = useRegister();
@@ -242,7 +245,9 @@ const SignUp = () => {
   );
 
   return (
-    <Flex
+    <>
+      <br />
+      <Flex
       w={{ base: "100%", xl: "37vw" }}
       px={"3vw"}
       py={"3vh"}
@@ -251,6 +256,15 @@ const SignUp = () => {
       rounded={"3xl"}
       gap={"1vh"}
     >
+     
+       <Link  to={"/"}>
+            <Flex align="center" gap={".3vw"} cursor={"pointer"}>
+              <Img src={back} alt="back" boxSize="10px" />
+              <Text fontSize="sm" fontWeight="bold">
+                back
+              </Text>
+            </Flex>
+      </Link>
       <Heading as="h2" size="lg">
         Sign Up
       </Heading>
@@ -387,6 +401,8 @@ const SignUp = () => {
 
       {/* optionals */}
     </Flex>
+    </>
+   
   );
 };
 

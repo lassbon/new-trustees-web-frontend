@@ -212,3 +212,14 @@ export const DeleteBeneficiary = async (beneficiary_id, token) => {
     { headers }
   );
 }; //used
+
+export const deleteAsset = async (asset_id, token)=>{
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  return await axios.delete(
+    `${import.meta.env.VITE_APP_API_URL}/assets/delete/${asset_id}`,
+    { headers }
+  );
+}
